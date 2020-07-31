@@ -1,0 +1,125 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <TableLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="5sp">
+
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <TextView
+                android:id="@+id/txt_state_gps"
+                android:layout_width="wrap_content"
+                android:layout_height="40sp"
+                android:layout_gravity="center_vertical"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:lines="1"
+                android:text="定位服务关闭"
+                android:textColor="@color/read"
+                android:textSize="20sp" />
+        </TableRow>
+
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="40sp"
+                android:layout_gravity="center_vertical"
+                android:gravity="center_vertical"
+                android:lines="1"
+                android:text="定位方式："
+                android:textSize="18sp" />
+
+            <TextView
+                android:id="@+id/txt_provider_gps"
+                android:layout_width="wrap_content"
+                android:layout_height="40sp"
+                android:layout_gravity="center_vertical"
+                android:gravity="center_vertical"
+                android:lines="1"
+                android:text="***********"
+                android:textSize="18sp" />
+        </TableRow>
+
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="40sp"
+                android:layout_gravity="center_vertical"
+                android:gravity="center_vertical"
+                android:lines="1"
+                android:text="经度："
+                android:textSize="18sp" />
+
+            <TextView
+                android:id="@+id/txt_lot_gps"
+                android:layout_width="wrap_content"
+                android:layout_height="40sp"
+                android:layout_gravity="center_vertical"
+                android:gravity="center_vertical"
+                android:lines="1"
+                android:text="***********"
+                android:textSize="18sp" />
+        </TableRow>
+
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="40sp"
+                android:layout_gravity="center_vertical"
+                android:gravity="center_vertical"
+                android:lines="1"
+                android:text="纬度："
+                android:textSize="18sp" />
+
+            <TextView
+                android:id="@+id/txt_lat_gps"
+                android:layout_width="wrap_content"
+                android:layout_height="40sp"
+                android:layout_gravity="center_vertical"
+                android:gravity="center_vertical"
+                android:lines="1"
+                android:text="***********"
+                android:textSize="18sp" />
+        </TableRow>
+
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="40sp"
+                android:layout_gravity="center_vertical"
+                android:gravity="center_vertical"
+                android:lines="1"
+                android:text="地位位置："
+                android:textSize="18sp" />
+
+            <TextView
+                android:id="@+id/txt_address_gps"
+                android:layout_width="wrap_content"
+                android:layout_height="40sp"
+                android:layout_gravity="center_vertical"
+                android:gravity="center_vertical"
+                android:lines="1"
+                android:text="***********"
+                android:textSize="18sp" />
+        </TableRow>
+    </TableLayout>
+</LinearLayout>

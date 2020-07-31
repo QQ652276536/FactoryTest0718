@@ -1,0 +1,3 @@
+rootProject.name='FactoryTest0718'
+include ':app'
+include ':facelibrary'

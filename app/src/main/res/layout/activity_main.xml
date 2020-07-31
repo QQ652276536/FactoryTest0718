@@ -1,0 +1,222 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <TableLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <Button
+                android:id="@+id/btn_bluetooth"
+                android:layout_width="wrap_content"
+                android:layout_height="60sp"
+                android:layout_margin="5sp"
+                android:layout_weight="1"
+                android:background="@drawable/main_btn_background1"
+                android:text="蓝牙测试"
+                android:textColor="@color/white" />
+
+            <Button
+                android:id="@+id/btn_wifi"
+                android:layout_width="wrap_content"
+                android:layout_height="60sp"
+                android:layout_margin="5sp"
+                android:layout_weight="1"
+                android:background="@drawable/main_btn_background1"
+                android:text="WIFI测试"
+                android:textColor="@color/white" />
+
+            <Button
+                android:id="@+id/btn_gps"
+                android:layout_width="wrap_content"
+                android:layout_height="60sp"
+                android:layout_margin="5sp"
+                android:layout_weight="1"
+                android:background="@drawable/main_btn_background1"
+                android:text="GPS测试"
+                android:textColor="@color/white" />
+
+        </TableRow>
+
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <Button
+                android:id="@+id/btn_keydown"
+                android:layout_width="wrap_content"
+                android:layout_height="60sp"
+                android:layout_margin="5sp"
+                android:layout_weight="1"
+                android:background="@drawable/main_btn_background1"
+                android:text="按键测试"
+                android:textColor="@color/white" />
+
+            <Button
+                android:id="@+id/btn_sim"
+                android:layout_width="wrap_content"
+                android:layout_height="60sp"
+                android:layout_margin="5sp"
+                android:layout_weight="1"
+                android:background="@drawable/main_btn_background1"
+                android:text="SIM卡读取"
+                android:textColor="@color/white" />
+
+            <Button
+                android:id="@+id/btn_screen"
+                android:layout_width="wrap_content"
+                android:layout_height="60sp"
+                android:layout_margin="5sp"
+                android:layout_weight="1"
+                android:background="@drawable/main_btn_background1"
+                android:text="屏幕测试"
+                android:textColor="@color/white" />
+
+        </TableRow>
+
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <Button
+                android:id="@+id/btn_sound"
+                android:layout_width="wrap_content"
+                android:layout_height="60sp"
+                android:layout_margin="5sp"
+                android:layout_weight="1"
+                android:background="@drawable/main_btn_background1"
+                android:text="音频测试"
+                android:textColor="@color/white" />
+
+            <Button
+                android:id="@+id/btn_com"
+                android:layout_width="wrap_content"
+                android:layout_height="60sp"
+                android:layout_margin="5sp"
+                android:layout_weight="1"
+                android:background="@drawable/main_btn_background2"
+                android:text="串口测试"
+                android:textColor="@color/white" />
+
+            <Button
+                android:id="@+id/btn_touch"
+                android:layout_width="wrap_content"
+                android:layout_height="60sp"
+                android:layout_margin="5sp"
+                android:layout_weight="1"
+                android:background="@drawable/main_btn_background1"
+                android:text="触摸屏测试"
+                android:textColor="@color/white" />
+
+        </TableRow>
+
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <Button
+                android:id="@+id/btn_idcard"
+                android:layout_width="wrap_content"
+                android:layout_height="60sp"
+                android:layout_margin="5sp"
+                android:layout_weight="1"
+                android:background="@drawable/main_btn_background2"
+                android:text="身份证测试"
+                android:textColor="@color/white" />
+
+            <Button
+                android:id="@+id/btn_gpscamera"
+                android:layout_width="wrap_content"
+                android:layout_height="60sp"
+                android:layout_margin="5sp"
+                android:layout_weight="1"
+                android:background="@drawable/main_btn_background1"
+                android:text="水印相机"
+                android:textColor="@color/white" />
+
+            <Button
+                android:id="@+id/btn_systemcamera"
+                android:layout_width="wrap_content"
+                android:layout_height="60sp"
+                android:layout_margin="5sp"
+                android:layout_weight="1"
+                android:background="@drawable/main_btn_background1"
+                android:text="系统相机"
+                android:textColor="@color/white" />
+
+        </TableRow>
+
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <Button
+                android:id="@+id/btn_nfc"
+                android:layout_width="wrap_content"
+                android:layout_height="60sp"
+                android:layout_margin="5sp"
+                android:layout_weight="1"
+                android:background="@drawable/main_btn_background2"
+                android:text="NFC测试"
+                android:textColor="@color/white" />
+
+            <Button
+                android:id="@+id/btn_scancode"
+                android:layout_width="wrap_content"
+                android:layout_height="60sp"
+                android:layout_margin="5sp"
+                android:layout_weight="1"
+                android:background="@drawable/main_btn_background2"
+                android:text="扫码测试"
+                android:textColor="@color/white" />
+
+            <Button
+                android:id="@+id/btn_bankcard"
+                android:layout_width="wrap_content"
+                android:layout_height="60sp"
+                android:layout_margin="5sp"
+                android:layout_weight="1"
+                android:background="@drawable/main_btn_background2"
+                android:text="银行卡测试"
+                android:textColor="@color/white" />
+        </TableRow>
+
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <Button
+                android:id="@+id/btn_faceidcompare"
+                android:layout_width="wrap_content"
+                android:layout_height="60sp"
+                android:layout_margin="5sp"
+                android:layout_weight="1"
+                android:background="@drawable/main_btn_background1"
+                android:text="人证核验"
+                android:textColor="@color/white" />
+
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="60sp"
+                android:layout_margin="5sp"
+                android:layout_weight="1"
+                android:background="@drawable/main_btn_background3"
+                android:textColor="@color/white" />
+
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="60sp"
+                android:layout_margin="5sp"
+                android:layout_weight="1"
+                android:background="@drawable/main_btn_background3"
+                android:textColor="@color/white" />
+        </TableRow>
+    </TableLayout>
+</LinearLayout>

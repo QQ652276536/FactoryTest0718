@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorAccent">#03DAC5</color>
+    <color name="gray">#808080</color>
+    <color name="darkgray">#A9A9A9</color>
+    <color name="white">#FFFFFF</color>
+    <color name="black">#130c0e</color>
+    <color name="gray_bg">#f0eff5</color>
+    <color name="blue_band_dark">#12283d</color>
+    <color name="deepSkyBlue">#00BFFF</color>
+    <color name="blue_band_light">#86ecef</color>
+    <color name="blue_band_light2">#6ad9de</color>
+    <color name="turquoise">#40E0D0</color>
+    <color name="blue_band_dark2">#4d5d6d</color>
+    <color name="blue_band_dark3">#9688939e</color>
+    <color name="pureBlack">#000000</color>
+    <color name="springGreen">#3CB371</color>
+    <color name="sandyBrown">#D77C00</color>
+    <color name="navajoWhite">#FFDEAD</color>
+    <color name="orange">#FFA500</color>
+    <color name="bisque">#FFE4C4</color>
+    <color name="orchid">#DA70D6</color>
+    <color name="read">#FF0000</color>
+</resources>

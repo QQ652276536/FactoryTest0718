@@ -1,0 +1,270 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <TableLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="5sp">
+
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <TextView
+                android:id="@+id/txt_state_sim"
+                android:layout_width="wrap_content"
+                android:layout_height="40sp"
+                android:layout_gravity="center_vertical"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:lines="1"
+                android:text="无SIM卡"
+                android:textColor="@color/read"
+                android:textSize="20sp" />
+        </TableRow>
+
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="40sp"
+                android:layout_gravity="center_vertical"
+                android:gravity="center_vertical"
+                android:lines="1"
+                android:text="国家码："
+                android:textSize="18sp" />
+
+            <TextView
+                android:id="@+id/txt_countrycode_sim"
+                android:layout_width="wrap_content"
+                android:layout_height="40sp"
+                android:layout_gravity="center_vertical"
+                android:gravity="center_vertical"
+                android:lines="1"
+                android:text="***********"
+                android:textSize="18sp" />
+        </TableRow>
+
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="40sp"
+                android:layout_gravity="center_vertical"
+                android:gravity="center_vertical"
+                android:lines="1"
+                android:text="用户ID："
+                android:textSize="18sp" />
+
+            <TextView
+                android:id="@+id/txt_userid_sim"
+                android:layout_width="wrap_content"
+                android:layout_height="40sp"
+                android:layout_gravity="center_vertical"
+                android:gravity="center_vertical"
+                android:lines="1"
+                android:text="***********"
+                android:textSize="18sp" />
+        </TableRow>
+
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="40sp"
+                android:layout_gravity="center_vertical"
+                android:gravity="center_vertical"
+                android:lines="1"
+                android:text="设备ID："
+                android:textSize="18sp" />
+
+            <TextView
+                android:id="@+id/txt_deviceid_sim"
+                android:layout_width="wrap_content"
+                android:layout_height="40sp"
+                android:layout_gravity="center_vertical"
+                android:gravity="center_vertical"
+                android:lines="1"
+                android:text="***********"
+                android:textSize="18sp" />
+        </TableRow>
+
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="40sp"
+                android:layout_gravity="center_vertical"
+                android:gravity="center_vertical"
+                android:lines="1"
+                android:text="手机号："
+                android:textSize="18sp" />
+
+            <TextView
+                android:id="@+id/txt_phone_sim"
+                android:layout_width="wrap_content"
+                android:layout_height="40sp"
+                android:layout_gravity="center_vertical"
+                android:gravity="center_vertical"
+                android:lines="1"
+                android:text="***********"
+                android:textSize="18sp" />
+        </TableRow>
+
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="40sp"
+                android:layout_gravity="center_vertical"
+                android:gravity="center_vertical"
+                android:lines="1"
+                android:text="手机方位："
+                android:textSize="18sp" />
+
+            <TextView
+                android:id="@+id/txt_location_sim"
+                android:layout_width="wrap_content"
+                android:layout_height="40sp"
+                android:layout_gravity="center_vertical"
+                android:gravity="center_vertical"
+                android:lines="1"
+                android:text="***********"
+                android:textSize="18sp" />
+        </TableRow>
+
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="40sp"
+                android:layout_gravity="center_vertical"
+                android:gravity="center_vertical"
+                android:lines="1"
+                android:text="MCC+MNC："
+                android:textSize="18sp" />
+
+            <TextView
+                android:id="@+id/txt_mcc_sim"
+                android:layout_width="wrap_content"
+                android:layout_height="40sp"
+                android:layout_gravity="center_vertical"
+                android:gravity="center_vertical"
+                android:lines="1"
+                android:text="***********"
+                android:textSize="18sp" />
+        </TableRow>
+
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="40sp"
+                android:layout_gravity="center_vertical"
+                android:gravity="center_vertical"
+                android:lines="1"
+                android:text="网络码："
+                android:textSize="18sp" />
+
+            <TextView
+                android:id="@+id/txt_networkcode_sim"
+                android:layout_width="wrap_content"
+                android:layout_height="40sp"
+                android:layout_gravity="center_vertical"
+                android:gravity="center_vertical"
+                android:lines="1"
+                android:text="***********"
+                android:textSize="18sp" />
+        </TableRow>
+
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="40sp"
+                android:layout_gravity="center_vertical"
+                android:gravity="center_vertical"
+                android:lines="1"
+                android:text="服务商名称："
+                android:textSize="18sp" />
+
+            <TextView
+                android:id="@+id/txt_serviceprovider_sim"
+                android:layout_width="wrap_content"
+                android:layout_height="40sp"
+                android:layout_gravity="center_vertical"
+                android:gravity="center_vertical"
+                android:lines="1"
+                android:text="***********"
+                android:textSize="18sp" />
+        </TableRow>
+
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="40sp"
+                android:layout_gravity="center_vertical"
+                android:gravity="center_vertical"
+                android:lines="1"
+                android:text="SIM卡序列号："
+                android:textSize="18sp" />
+
+            <TextView
+                android:id="@+id/txt_sequence_sim"
+                android:layout_width="wrap_content"
+                android:layout_height="40sp"
+                android:layout_gravity="center_vertical"
+                android:gravity="center_vertical"
+                android:lines="1"
+                android:text="***********"
+                android:textSize="18sp" />
+        </TableRow>
+
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="40sp"
+                android:layout_gravity="center_vertical"
+                android:gravity="center_vertical"
+                android:lines="1"
+                android:text="移动数据："
+                android:textSize="18sp" />
+
+            <TextView
+                android:id="@+id/txt_data_sim"
+                android:layout_width="wrap_content"
+                android:layout_height="40sp"
+                android:layout_gravity="center_vertical"
+                android:gravity="center_vertical"
+                android:lines="1"
+                android:text="***********"
+                android:textSize="18sp" />
+        </TableRow>
+
+    </TableLayout>
+</LinearLayout>

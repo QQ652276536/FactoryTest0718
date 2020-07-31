@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <SurfaceView
+        android:id="@+id/sfv_camera"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
+
+    <com.zistone.factorytest0718.view.MyDrawView
+        android:id="@+id/myDrawView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_marginRight="5sp"
+            android:layout_marginBottom="75sp"
+            android:gravity="left"
+            android:orientation="vertical">
+
+            <TextClock
+                android:id="@+id/txtClock1_camera"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:format12Hour="hh:mm"
+                android:format24Hour="HH:mm"
+                android:textColor="@color/white"
+                android:textSize="25sp" />
+
+            <TextClock
+                android:id="@+id/txtClock2_camera"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:format12Hour="yyyy.MM.dd\nEE    a"
+                android:format24Hour="yyyy.MM.dd\nEE    a"
+                android:textColor="@color/white"
+                android:textSize="25sp" />
+
+            <TextView
+                android:id="@+id/txt_lat"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="正在查询..."
+                android:textColor="@color/white"
+                android:textSize="20sp" />
+
+            <TextView
+                android:id="@+id/txt_address"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="正在查询..."
+                android:textColor="@color/white"
+                android:textSize="20sp" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_marginBottom="10sp"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="TextVIew"
+                android:visibility="invisible" />
+
+            <ImageButton
+                android:id="@+id/btnBeforeAfter_camera"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/camera_before" />
+
+            <ImageButton
+                android:id="@+id/btnRest_camera"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/camera_reset"
+                android:visibility="gone" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="TextVIew"
+                android:visibility="invisible" />
+
+            <ImageButton
+                android:id="@+id/btnCamera_camera"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/camera_take" />
+
+
+            <ImageButton
+                android:id="@+id/btnOk_camera"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/camera_ok"
+                android:visibility="gone" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="TextVIew"
+                android:visibility="invisible" />
+
+        </LinearLayout>
+    </RelativeLayout>
+
+</FrameLayout>

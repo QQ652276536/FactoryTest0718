@@ -1,0 +1,145 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    package="com.zistone.factorytest0718">
+
+    <uses-permission android:name="android.permission.RECORD_AUDIO" /> <!-- 录音权限 -->
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" /> <!-- 写入权限 -->
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" /> <!-- 读取权限 -->
+    <uses-permission android:name="android.permission.READ_PHONE_NUMBERS" /> <!-- 手机卡权限 -->
+    <uses-permission android:name="android.permission.READ_PHONE_STATE" />
+    <uses-permission android:name="android.permission.READ_SMS" />
+    <uses-permission android:name="android.permission.BLUETOOTH_ADMIN" />
+    <uses-permission android:name="android.permission.INTERNET" /> <!-- 网络权限 -->
+    <uses-permission android:name="android.permission.BLUETOOTH_ADMIN" /> <!-- 蓝牙权限 -->
+    <uses-permission android:name="android.permission.BLUETOOTH" /> <!-- 蓝牙权限 -->
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" /> <!-- 这个权限用于进行网络定位 -->
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" /> <!-- 这个权限用于访问GPS定位 -->
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" /> <!-- 访问网络状态,主要用于监视网络连接 -->
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
+    <uses-permission android:name="android.permission.CHANGE_WIFI_STATE" /> <!-- Wifi状态权限 -->
+    <uses-permission android:name="android.permission.READ_PHONE_STATE" />
+    <uses-permission android:name="android.permission.WAKE_LOCK" /> <!-- 屏幕保持唤醒权限 -->
+    <uses-permission android:name="android.permission.NFC" /> <!-- NFC 相关权限 -->
+    <uses-feature
+        android:name="android.hardware.nfc"
+        android:required="true" /> <!-- 描述所需硬件特性 -->
+    <uses-permission android:name="android.permission.CAMERA" /> <!-- 开启摄像头时所需要的权限 -->
+    <uses-permission android:name="android.hardware.camera.autofocus" />
+
+    <uses-feature android:name="android.hardware.camera" />
+    <uses-feature
+        android:name="android.hardware.camera.autofocus"
+        android:required="true" />
+    <uses-feature
+        android:name="android.hardware.camera.front"
+        android:required="true" />
+    <uses-feature
+        android:name="android.hardware.camera.front.autofocus"
+        android:required="true" />
+
+    <uses-permission android:name="android.permission.REQUEST_INSTALL_PACKAGES" /> <!-- 安装第三方APK时所需要的权限 -->
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission
+        android:name="android.permission.INSTALL_PACKAGES"
+        tools:ignore="ProtectedPermissions" />
+
+    <!-- extractNativeLibs：安装应用时是否把so文件从apk中解压出来 -->
+    <application
+        android:name=".MyApplication"
+        android:allowBackup="false"
+        android:extractNativeLibs="true"
+        android:icon="@drawable/ic_launcher"
+        android:label="@string/app_name"
+        android:roundIcon="@mipmap/ic_launcher_round"
+        android:supportsRtl="true"
+        android:theme="@style/AppTheme">
+        <activity
+            android:name=".ComTestActivity"
+            android:label="串口通讯"
+            android:launchMode="singleTask" />
+        <activity
+            android:name=".SoundActivity"
+            android:label="音频输入输出"
+            android:launchMode="singleTask" />
+        <activity
+            android:name=".KeyDownActivity"
+            android:label="功能键"
+            android:launchMode="singleTask" />
+        <activity
+            android:name=".GpsActivity"
+            android:label="系统原生定位" />
+        <activity
+            android:name=".SimActivity"
+            android:label="SIM卡信息" />
+        <activity
+            android:name=".WifiActivity"
+            android:label="Wifi列表" />
+        <activity
+            android:name=".BluetoothActivity"
+            android:label="蓝牙列表" />
+        <activity
+            android:name=".SystemCameraActivity"
+            android:label="系统相机"
+            android:launchMode="singleTask" />
+        <activity
+            android:name=".ScreenActivity"
+            android:label="屏幕坏点"
+            android:launchMode="singleTask"
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar" /> <!-- 全屏不显示标题栏，仅限于继承AppCompatActivity的时候 -->
+        <activity
+            android:name=".ScanCodeActivity"
+            android:label="二维码/条形码扫描"
+            android:launchMode="singleTask" />
+        <activity
+            android:name=".TouchActivity"
+            android:configChanges="keyboardHidden|orientation"
+            android:launchMode="singleTask"
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar" /> <!-- 全屏不显示标题栏，仅限于继承AppCompatActivity的时候 -->
+        <activity
+            android:name=".BankCardActivity"
+            android:label="银行卡"
+            android:launchMode="singleTask" />
+        <activity
+            android:name=".IdCardActivity"
+            android:label="二代身份证读取"
+            android:launchMode="singleTask" />
+        <activity
+            android:name=".NfcActivity"
+            android:label="NFC"
+            android:launchMode="singleTask">
+            <intent-filter>
+                <action android:name="android.nfc.action.NDEF_DISCOVERED" /> <!-- 最高优先级的过滤规则 -->
+            </intent-filter>
+        </activity>
+        <activity
+            android:name=".WatermarkCameraActivity"
+            android:label="水印相机"
+            android:launchMode="singleTask" />
+        <activity android:name=".MainActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <!--
+           用于安装第三方APK
+           7.0之后禁止在应用外部公开file://URI，这里使用FileProvider类临时访授权
+        -->
+        <provider
+            android:name="androidx.core.content.FileProvider"
+            android:authorities="${applicationId}.fileprovider"
+            android:exported="false"
+            android:grantUriPermissions="true">
+            <meta-data
+                android:name="android.support.FILE_PROVIDER_PATHS"
+                android:resource="@xml/provider_paths" />
+        </provider> <!-- 百度地图AK鉴权 -->
+        <meta-data
+            android:name="com.baidu.lbsapi.API_KEY"
+            android:value="W7G8yfjXFqqynEKFs3dzghHoxvH2X9eN" />
+    </application>
+
+</manifest>

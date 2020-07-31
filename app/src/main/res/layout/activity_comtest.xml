@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:android_custom="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:layout_margin="5sp"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="40sp"
+        android:focusable="false"
+        android:focusableInTouchMode="true"
+        android:gravity="center_horizontal"
+        android:orientation="horizontal">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:text="串口："
+            android:textColor="@color/gray"
+            android:textSize="18sp" />
+
+        <EditText
+            android:id="@+id/edt_name_com"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:inputType="textEmailAddress"
+            android:textColor="@color/gray" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:text="波特率："
+            android:textColor="@color/gray"
+            android:textSize="18sp" />
+
+        <Spinner
+            android:id="@+id/spinner_rate_com"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:textColor="@color/gray" />
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/txt_message_com"
+        android:layout_width="match_parent"
+        android:layout_height="200sp"
+        android:fadeScrollbars="false"
+        android:scrollbars="vertical"
+        android:textSize="18sp" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="30sp"
+        android:layout_marginTop="10sp"
+        android:layout_marginBottom="10sp"
+        android:background="@color/darkgray"
+        android:gravity="right"
+        android:orientation="horizontal">
+
+        <ImageButton
+            android:id="@+id/btn_top_com"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_marginRight="40sp"
+            android:background="?android:attr/selectableItemBackgroundBorderless"
+            android:src="@drawable/com_test_top" />
+
+        <ImageButton
+            android:id="@+id/btn_bottom_com"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_marginRight="40sp"
+            android:background="?android:attr/selectableItemBackgroundBorderless"
+            android:src="@drawable/com_test_bottom" />
+
+        <ImageButton
+            android:id="@+id/btn_clear_com"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:background="?android:attr/selectableItemBackgroundBorderless"
+            android:src="@drawable/com_test_clear" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="40sp"
+        android:layout_marginBottom="10sp"
+        android:focusable="false"
+        android:focusableInTouchMode="true"
+        android:gravity="center_horizontal"
+        android:orientation="horizontal">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:text="Hex" />
+
+        <EditText
+            android:id="@+id/edt_data_com"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:inputType="textEmailAddress"
+            android:textColor="@color/gray" />
+    </LinearLayout>
+
+    <Button
+        android:id="@+id/btn_send_com"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:text="开始发送"
+        android:textColor="@color/gray"
+        android:textSize="16sp" />
+</LinearLayout>

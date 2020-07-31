@@ -1,0 +1,61 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="10sp"
+        android:gravity="center"
+        android:text="扬声器"
+        android:textSize="20sp" />
+
+    <ImageButton
+        android:id="@+id/btn_play_sound"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_margin="10sp"
+        android:background="@drawable/sound_play_start1"
+        android:gravity="center_horizontal" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="10sp"
+        android:gravity="center"
+        android:text="录音机"
+        android:textSize="20sp" />
+
+    <ImageButton
+        android:id="@+id/btn_record_sound"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_margin="10sp"
+        android:background="@drawable/sound_record_start1"
+        android:gravity="center_horizontal" />
+
+    <TextView
+        android:id="@+id/txt_record_countdown_sound"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="10sp"
+        android:gravity="center"
+        android:text="录音倒计时：10"
+        android:textSize="18sp" />
+
+    <TextView
+        android:id="@+id/txt_record_path_sound"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_margin="10sp"
+        android:background="@drawable/sound_record_txt_border1"
+        android:gravity="center"
+        android:text="点击可开始/停止播放录音"
+        android:textColor="@color/springGreen"
+        android:textSize="18sp" />
+</LinearLayout>

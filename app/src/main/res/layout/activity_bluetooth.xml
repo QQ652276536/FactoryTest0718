@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:text="搜索到信号强度≥-70的蓝牙可代表测试通过"
+        android:textColor="@color/sandyBrown"
+        android:textSize="20sp" />
+
+    <TextView
+        android:id="@+id/txt_bluetooth"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:text="扫描完毕"
+        android:textColor="@color/deepSkyBlue"
+        android:textSize="20sp" />
+
+    <pl.droidsonroids.gif.GifImageView
+        android:id="@+id/loading_bluetooth"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_gravity="center"
+        android:src="@drawable/bluetooth_loading_eagle" />
+
+    <com.cjj.MaterialRefreshLayout
+        android:id="@+id/refresh_bluetooth"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_margin="5sp">
+
+        <ListView
+            android:id="@+id/lv_bluetooth"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_gravity="center_vertical"
+            android:choiceMode="singleChoice" />
+    </com.cjj.MaterialRefreshLayout>
+</LinearLayout>
+
+
+
+
