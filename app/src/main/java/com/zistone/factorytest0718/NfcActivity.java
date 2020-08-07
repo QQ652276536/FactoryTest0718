@@ -9,6 +9,7 @@ import android.nfc.tech.Ndef;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Gravity;
+import android.view.KeyEvent;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -18,48 +19,13 @@ import com.zistone.factorytest0718.util.MyProgressDialogUtil;
 
 import java.util.Arrays;
 
-public class NfcActivity extends AppCompatActivity {
+public class NfcActivity extends BaseActivity {
+
     private static final String TAG = "NfcActivity";
+
     private NfcAdapter _nfcAdapter;
     private PendingIntent _pendingIntent;
     private TextView _txt1;
-
-    @Override
-    protected void onResume() {
-        super.onResume();
-        _nfcAdapter.enableForegroundDispatch(this, _pendingIntent, null, null);
-    }
-
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_nfc);
-        //初始化NfcAdapter
-        _nfcAdapter = NfcAdapter.getDefaultAdapter(this);
-        if (null != _nfcAdapter) {
-            //初始化PendingIntent，当有NFC设备连接上的时候，就交给当前Activity处理
-            _pendingIntent = PendingIntent.getActivity(this, 0, new Intent(this, getClass()), 0);
-        } else {
-            MyProgressDialogUtil.ShowWarning(this, "警告", "该设备不支持NFC，无法使用此功能！", new MyProgressDialogUtil.WarningListener() {
-                @Override
-                public void OnIKnow() {
-                    finish();
-                }
-            });
-        }
-        _txt1 = findViewById(R.id.txt1_nfc);
-        _txt1.setGravity(Gravity.CENTER);
-    }
-
-    @Override
-    protected void onNewIntent(Intent intent) {
-        super.onNewIntent(intent);
-        //当前app正在前端界面运行，这个时候有intent发送过来，那么系统就会调用onNewIntent将intent传过来，我们只需要在这里检验这
-        //个intent是否是NFC相关的intent，如果是就调用处理方法
-        if (NfcAdapter.ACTION_TAG_DISCOVERED.equals(intent.getAction())) {
-        }
-        GetIntent(intent);
-    }
 
     private void GetIntent(Intent intent) {
         //取出封装在intent中的TAG
@@ -134,6 +100,67 @@ public class NfcActivity extends AppCompatActivity {
             }
         }
         return null;
+    }
+
+    @Override
+    protected void onNewIntent(Intent intent) {
+        super.onNewIntent(intent);
+        //当前app正在前端界面运行，这个时候有intent发送过来，那么系统就会调用onNewIntent将intent传过来，我们只需要在这里检验这
+        //个intent是否是NFC相关的intent，如果是就调用处理方法
+        if (NfcAdapter.ACTION_TAG_DISCOVERED.equals(intent.getAction())) {
+        }
+        GetIntent(intent);
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        if (null != _nfcAdapter) {
+            _nfcAdapter.enableForegroundDispatch(this, _pendingIntent, null, null);
+        } else {
+            MyProgressDialogUtil.ShowWarning(this, "警告", "该设备不支持NFC，无法使用此功能！",false, () -> {
+                Intent intent = new Intent();
+                intent.putExtra(ARG_PARAM1, FAIL);
+                setResult(RESULT_OK, intent);
+                finish();
+            });
+        }
+    }
+
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        if (keyCode == KeyEvent.KEYCODE_BACK && event.getAction() == KeyEvent.ACTION_DOWN) {
+            Intent intent = new Intent();
+            intent.putExtra(ARG_PARAM1, FAIL);
+            setResult(RESULT_OK, intent);
+            finish();
+        }
+        return false;
+    }
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        //        setContentView(R.layout.activity_nfc);
+        SetBaseContentView(R.layout.activity_nfc);
+        //初始化NfcAdapter
+        _nfcAdapter = NfcAdapter.getDefaultAdapter(this);
+        //初始化PendingIntent，当有NFC设备连接上的时候，就交给当前Activity处理
+        _pendingIntent = PendingIntent.getActivity(this, 0, new Intent(this, getClass()), 0);
+        _txt1 = findViewById(R.id.txt1_nfc);
+        _txt1.setGravity(Gravity.CENTER);
+        _btnPass.setOnClickListener(v -> {
+            Intent intent = new Intent();
+            intent.putExtra(ARG_PARAM1, PASS);
+            setResult(RESULT_OK, intent);
+            finish();
+        });
+        _btnFail.setOnClickListener(v -> {
+            Intent intent = new Intent();
+            intent.putExtra(ARG_PARAM1, FAIL);
+            setResult(RESULT_OK, intent);
+            finish();
+        });
     }
 
 }

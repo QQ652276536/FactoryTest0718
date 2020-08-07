@@ -1,16 +1,15 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:layout_gravity="center_vertical"
+    android:layout_height="match_parent"
     android:gravity="center_vertical"
     android:orientation="vertical">
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:gravity="center_horizontal"
+        android:layout_gravity="center_horizontal"
+        android:layout_margin="10sp"
         android:text="功能键键码值"
         android:textSize="22sp" />
 
@@ -18,8 +17,9 @@
         android:id="@+id/txt_keydown"
         android:layout_width="133sp"
         android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:gravity="center_horizontal"
+        android:layout_gravity="center_horizontal"
+        android:layout_margin="10sp"
+        android:gravity="center"
         android:textColor="@color/gray"
         android:textSize="22sp"
         android:textStyle="bold" />
@@ -29,7 +29,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
-        android:gravity="center_horizontal"
+        android:layout_margin="10sp"
         android:src="@drawable/keydown_down"
         android:visibility="invisible" />
 </LinearLayout>

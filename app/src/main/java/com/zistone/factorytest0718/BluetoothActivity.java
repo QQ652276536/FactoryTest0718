@@ -16,6 +16,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -30,7 +31,7 @@ import java.util.Objects;
 
 import pl.droidsonroids.gif.GifImageView;
 
-public class BluetoothActivity extends AppCompatActivity {
+public class BluetoothActivity extends BaseActivity {
 
     private static final String TAG = "BluetoothActivity";
 
@@ -182,7 +183,7 @@ public class BluetoothActivity extends AppCompatActivity {
         //获取本地蓝牙适配器
         _bluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
         if (null == _bluetoothAdapter) {
-            MyProgressDialogUtil.ShowConfirm(this, "错误", "当前设备不支持蓝牙", null);
+            MyProgressDialogUtil.ShowConfirm(this, "错误", "当前设备不支持蓝牙", false, null);
             return;
         }
         //注册蓝牙广播
@@ -276,7 +277,9 @@ public class BluetoothActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_bluetooth);
+        //        setContentView(R.layout.activity_bluetooth);
+        //将该类的布局添加到基类
+        SetBaseContentView(R.layout.activity_bluetooth);
         _layoutInflater = LayoutInflater.from(this);
         _listView = findViewById(R.id.lv_bluetooth);
         _listView.setAdapter(_baseAdapter);
@@ -288,5 +291,17 @@ public class BluetoothActivity extends AppCompatActivity {
         InitListener();
         _materialRefreshLayout.setMaterialRefreshListener(_materialRefreshListener);
         //        _materialRefreshLayout.autoRefresh();
+        _btnPass.setOnClickListener(v -> {
+            Intent intent = new Intent();
+            intent.putExtra(ARG_PARAM1, PASS);
+            setResult(RESULT_OK, intent);
+            finish();
+        });
+        _btnFail.setOnClickListener(v -> {
+            Intent intent = new Intent();
+            intent.putExtra(ARG_PARAM1, FAIL);
+            setResult(RESULT_OK, intent);
+            finish();
+        });
     }
 }

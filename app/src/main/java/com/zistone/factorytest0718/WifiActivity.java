@@ -37,7 +37,7 @@ import java.util.Objects;
 
 import pl.droidsonroids.gif.GifImageView;
 
-public class WifiActivity extends AppCompatActivity {
+public class WifiActivity extends BaseActivity {
 
     private static final String TAG = "WifiActivity";
 
@@ -250,7 +250,8 @@ public class WifiActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_wifi);
+        //        setContentView(R.layout.activity_wifi);
+        SetBaseContentView(R.layout.activity_wifi);
         _layoutInflater = LayoutInflater.from(this);
         _listView = findViewById(R.id.lv_wifi);
         _listView.setAdapter(_baseAdapter);
@@ -262,5 +263,17 @@ public class WifiActivity extends AppCompatActivity {
         InitListener();
         _materialRefreshLayout.setMaterialRefreshListener(_materialRefreshListener);
         //        _materialRefreshLayout.autoRefresh();
+        _btnPass.setOnClickListener(v -> {
+            Intent intent = new Intent();
+            intent.putExtra(ARG_PARAM1, PASS);
+            setResult(RESULT_OK, intent);
+            finish();
+        });
+        _btnFail.setOnClickListener(v -> {
+            Intent intent = new Intent();
+            intent.putExtra(ARG_PARAM1, FAIL);
+            setResult(RESULT_OK, intent);
+            finish();
+        });
     }
 }

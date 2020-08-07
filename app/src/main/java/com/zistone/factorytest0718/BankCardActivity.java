@@ -2,6 +2,7 @@ package com.zistone.factorytest0718;
 
 import android.app.ActivityManager;
 import android.content.Context;
+import android.content.Intent;
 import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.text.method.ScrollingMovementMethod;
@@ -20,7 +21,7 @@ import com.zz.impl.cpucard.CPUCardDeviceImpl;
 import java.util.Arrays;
 import java.util.List;
 
-public class BankCardActivity extends AppCompatActivity {
+public class BankCardActivity extends BaseActivity {
 
     private static final String TAG = "BankCardActivity";
     private static final String PORT_NAME = "/dev/ttyHSL2";
@@ -212,7 +213,8 @@ public class BankCardActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_bankcard);
+        //        setContentView(R.layout.activity_bankcard);
+        SetBaseContentView(R.layout.activity_bankcard);
         _gpio.set_gpio(1, 66);
         _cpuCard = new CPUCardDeviceImpl();
         _txt1 = findViewById(R.id.txt_bankcard);
@@ -223,6 +225,18 @@ public class BankCardActivity extends AppCompatActivity {
             e.printStackTrace();
         }
         _sendThread.start();
+        _btnPass.setOnClickListener(v -> {
+            Intent intent = new Intent();
+            intent.putExtra(ARG_PARAM1, PASS);
+            setResult(RESULT_OK, intent);
+            finish();
+        });
+        _btnFail.setOnClickListener(v -> {
+            Intent intent = new Intent();
+            intent.putExtra(ARG_PARAM1, FAIL);
+            setResult(RESULT_OK, intent);
+            finish();
+        });
     }
 
 }

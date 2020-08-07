@@ -3,6 +3,7 @@ package com.zistone.factorytest0718;
 import android.annotation.SuppressLint;
 import android.app.ActivityManager;
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.media.Ringtone;
 import android.media.RingtoneManager;
@@ -33,7 +34,7 @@ import com.zz.impl.mifarecard.MifareCardDeviceImpl;
 import java.io.UnsupportedEncodingException;
 import java.util.List;
 
-public class IdCardActivity extends AppCompatActivity {
+public class IdCardActivity extends BaseActivity {
     private static final String TAG = "IdCardActivity";
     private static final String PORT_NAME = "/dev/ttyHSL2";
     private static final int BAUDRATE = 115200;
@@ -312,7 +313,8 @@ public class IdCardActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_idcard);
+        //        setContentView(R.layout.activity_idcard);
+        SetBaseContentView(R.layout.activity_idcard);
         _txt = findViewById(R.id.text_idcard);
         _imageView = findViewById(R.id.iv_idcard);
         _btnRead = findViewById(R.id.btn_read_idcard);
@@ -325,6 +327,18 @@ public class IdCardActivity extends AppCompatActivity {
         _idCardInterface = new IDCardDeviceImpl();
         InitHandlerMessage();
         _gpio.set_gpio(1, 66);
+        _btnPass.setOnClickListener(v -> {
+            Intent intent = new Intent();
+            intent.putExtra(ARG_PARAM1, PASS);
+            setResult(RESULT_OK, intent);
+            finish();
+        });
+        _btnFail.setOnClickListener(v -> {
+            Intent intent = new Intent();
+            intent.putExtra(ARG_PARAM1, FAIL);
+            setResult(RESULT_OK, intent);
+            finish();
+        });
     }
 
 }

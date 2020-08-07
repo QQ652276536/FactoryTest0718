@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.ActivityManager;
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -28,7 +29,8 @@ import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
 
-public class ComTestActivity extends AppCompatActivity implements View.OnClickListener {
+public class ComTestActivity extends BaseActivity implements View.OnClickListener {
+
     private static final String TAG = "ComTestActivity";
     private static final int TASKTIME = 1 * 1000;
 
@@ -143,8 +145,10 @@ public class ComTestActivity extends AppCompatActivity implements View.OnClickLi
         //记录当前已经进入后台
         _isAppOnForeground = IsAppOnForeground();
         if (!_isAppOnForeground) {
-            _timer.cancel();
-            _timerTask.cancel();
+            if (null != _timer)
+                _timer.cancel();
+            if (null != _timerTask)
+                _timerTask.cancel();
             MySerialPortManager.Close();
             UpdateBtn(_btnSend, "开始发送");
             UpdateText(_txtMessag, "\r\n程序进入后台，停止发送数据且串口关闭！", "Append");
@@ -184,7 +188,7 @@ public class ComTestActivity extends AppCompatActivity implements View.OnClickLi
                     } catch (Exception e) {
                         e.printStackTrace();
                         UpdateText(_txtMessag, "\r\n" + e.toString(), "Append");
-                        MyProgressDialogUtil.ShowWarning(ComTestActivity.this, "警告", "串口打开失败，请检查串口节点是否正确！", new MyProgressDialogUtil.WarningListener() {
+                        MyProgressDialogUtil.ShowWarning(ComTestActivity.this, "警告", "串口打开失败，请检查串口节点是否正确！", true, new MyProgressDialogUtil.WarningListener() {
                             @Override
                             public void OnIKnow() {
                             }
@@ -203,7 +207,8 @@ public class ComTestActivity extends AppCompatActivity implements View.OnClickLi
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_comtest);
+        //        setContentView(R.layout.activity_comtest);
+        SetBaseContentView(R.layout.activity_comtest);
         String str = MySharedPreferences.GetSerialPortNameAndBaudrate(this);
         String[] strArray = str.split(",");
         _portName = strArray[0];
@@ -280,6 +285,18 @@ public class ComTestActivity extends AppCompatActivity implements View.OnClickLi
         _imgBtnClear.setOnClickListener(this::onClick);
         _btnSend = findViewById(R.id.btn_send_com);
         _btnSend.setOnClickListener(this::onClick);
+        _btnPass.setOnClickListener(v -> {
+            Intent intent = new Intent();
+            intent.putExtra(ARG_PARAM1, PASS);
+            setResult(RESULT_OK, intent);
+            finish();
+        });
+        _btnFail.setOnClickListener(v -> {
+            Intent intent = new Intent();
+            intent.putExtra(ARG_PARAM1, FAIL);
+            setResult(RESULT_OK, intent);
+            finish();
+        });
     }
 
 }

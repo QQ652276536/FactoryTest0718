@@ -1,6 +1,7 @@
 package com.zistone.factorytest0718;
 
 import android.Manifest;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Color;
 import android.os.Bundle;
@@ -15,7 +16,8 @@ import androidx.core.app.ActivityCompat;
 
 import com.zistone.factorytest0718.R;
 
-public class SimActivity extends AppCompatActivity {
+public class SimActivity extends BaseActivity {
+
     private static final String TAG = "SimActivity";
 
     private TextView _txtSim, _txtCountryCode, _txtUserId, _txtDeviceId, _txtPhone, _txtLocation, _txtMcc, _txtNetWorkCode, _txtServiceProvider, _txtSequence, _txtDataState;
@@ -125,7 +127,8 @@ public class SimActivity extends AppCompatActivity {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_sim);
+        //        setContentView(R.layout.activity_sim);
+        SetBaseContentView(R.layout.activity_sim);
         _txtSim = findViewById(R.id.txt_state_sim);
         _txtCountryCode = findViewById(R.id.txt_countrycode_sim);
         _txtUserId = findViewById(R.id.txt_userid_sim);
@@ -138,6 +141,18 @@ public class SimActivity extends AppCompatActivity {
         _txtSequence = findViewById(R.id.txt_sequence_sim);
         _txtDataState = findViewById(R.id.txt_data_sim);
         GetSimInfoAndSetTextView();
+        _btnPass.setOnClickListener(v -> {
+            Intent intent = new Intent();
+            intent.putExtra(ARG_PARAM1, PASS);
+            setResult(RESULT_OK, intent);
+            finish();
+        });
+        _btnFail.setOnClickListener(v -> {
+            Intent intent = new Intent();
+            intent.putExtra(ARG_PARAM1, FAIL);
+            setResult(RESULT_OK, intent);
+            finish();
+        });
     }
 
 }

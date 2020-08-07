@@ -1,5 +1,6 @@
 package com.zistone.factorytest0718;
 
+import android.content.Intent;
 import android.graphics.Color;
 import android.location.Address;
 import android.location.Geocoder;
@@ -8,14 +9,12 @@ import android.os.Bundle;
 import android.util.Log;
 import android.widget.TextView;
 
-import androidx.appcompat.app.AppCompatActivity;
-
 import com.zistone.factorytest0718.util.MyLocationUtil;
 
 import java.util.List;
 import java.util.Locale;
 
-public class GpsActivity extends AppCompatActivity {
+public class GpsActivity extends BaseActivity {
 
     private static final String TAG = "GpsActivity";
 
@@ -35,7 +34,8 @@ public class GpsActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_gps);
+        //        setContentView(R.layout.activity_gps);
+        SetBaseContentView(R.layout.activity_gps);
         _txtState = findViewById(R.id.txt_state_gps);
         _txtProvider = findViewById(R.id.txt_provider_gps);
         _txtLot = findViewById(R.id.txt_lot_gps);
@@ -83,6 +83,18 @@ public class GpsActivity extends AppCompatActivity {
             }
         });
         MyLocationUtil.Start(false);
+        _btnPass.setOnClickListener(v -> {
+            Intent intent = new Intent();
+            intent.putExtra(ARG_PARAM1, PASS);
+            setResult(RESULT_OK, intent);
+            finish();
+        });
+        _btnFail.setOnClickListener(v -> {
+            Intent intent = new Intent();
+            intent.putExtra(ARG_PARAM1, FAIL);
+            setResult(RESULT_OK, intent);
+            finish();
+        });
     }
 
 }

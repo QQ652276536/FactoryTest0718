@@ -2,6 +2,7 @@ package com.zistone.factorytest0718;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.Bitmap.Config;
 import android.graphics.BitmapFactory;
@@ -9,18 +10,22 @@ import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.PowerManager;
+import android.view.KeyEvent;
 import android.view.MotionEvent;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.LinearLayout;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.zistone.factorytest0718.util.MyActivityManager;
 import com.zistone.factorytest0718.util.MyProgressDialogUtil;
 
 import java.io.InputStream;
 
-public class ScreenActivity extends AppCompatActivity {
+public class ScreenActivity extends BaseActivity {
+
     private static final String TAG = "ScreenActivity";
 
     private Context _context;
@@ -37,6 +42,17 @@ public class ScreenActivity extends AppCompatActivity {
     private float[] _brightness = new float[3];
 
     @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        if (keyCode == KeyEvent.KEYCODE_BACK && event.getAction() == KeyEvent.ACTION_DOWN) {
+            Intent intent = new Intent();
+            intent.putExtra(ARG_PARAM1, FAIL);
+            setResult(RESULT_OK, intent);
+            finish();
+        }
+        return false;
+    }
+
+    @Override
     public void finish() {
         super.finish();
     }
@@ -46,8 +62,6 @@ public class ScreenActivity extends AppCompatActivity {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         _context = this;
-        requestWindowFeature(Window.FEATURE_NO_TITLE);
-        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setContentView(R.layout.activity_screen);
         _layoutParams = getWindow().getAttributes();
         _layoutParams.screenBrightness = 1;
@@ -58,7 +72,7 @@ public class ScreenActivity extends AppCompatActivity {
         _linearLayout = findViewById(R.id.ll_screen);
         _powerManager = (PowerManager) getSystemService(Context.POWER_SERVICE);
         _WakeLock = _powerManager.newWakeLock(PowerManager.PARTIAL_WAKE_LOCK, "BackLight");
-        MyProgressDialogUtil.ShowWarning(this, "提示", "点击屏幕切换不同颜色，并观察屏幕是否有坏点", null);
+        MyProgressDialogUtil.ShowWarning(this, "提示", "点击屏幕切换不同颜色，并观察屏幕是否有坏点", true, null);
     }
 
     private Runnable _runnable = new Runnable() {
@@ -85,14 +99,21 @@ public class ScreenActivity extends AppCompatActivity {
             _imgSeq++;
             _handler.postDelayed(_runnable, 0);
             if (_imgSeq >= _testImg.length) {
-                MyProgressDialogUtil.ShowConfirm(this, "提示", "点击屏幕切换不同颜色，并观察屏幕是否有坏点", new MyProgressDialogUtil.ConfirmListener() {
+                _imgSeq = 0;
+                MyProgressDialogUtil.ShowConfirm(this, "提示", "点击屏幕切换不同颜色，并观察屏幕是否有坏点", false, new MyProgressDialogUtil.ConfirmListener() {
                     @Override
                     public void OnConfirm() {
+                        Intent intent = new Intent();
+                        intent.putExtra(ARG_PARAM1, PASS);
+                        setResult(RESULT_OK, intent);
                         finish();
                     }
 
                     @Override
                     public void OnCancel() {
+                        Intent intent = new Intent();
+                        intent.putExtra(ARG_PARAM1, FAIL);
+                        setResult(RESULT_OK, intent);
                         finish();
                     }
                 });

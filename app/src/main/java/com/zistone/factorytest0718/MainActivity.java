@@ -18,12 +18,27 @@ import com.zistone.factorytest0718.util.MyActivityManager;
 
 import java.util.ArrayList;
 
-public class MainActivity extends AppCompatActivity implements View.OnClickListener {
+public class MainActivity extends BaseActivity implements View.OnClickListener {
+
     private static final String TAG = "MainActivity";
+    private static final int BLUETOOTH_ACTIVITY_CODE = 101;
+    private static final int WIFI_ACTIVITY_CODE = 102;
+    private static final int GPS_ACTIVITY_CODE = 103;
+    private static final int KEYDOWN_ACTIVITY_CODE = 104;
+    private static final int SIM_ACTIVITY_CODE = 105;
+    private static final int SCREEN_ACTIVITY_CODE = 106;
+    private static final int SOUND_ACTIVITY_CODE = 107;
+    private static final int COMTEST_ACTIVITY_CODE = 108;
+    private static final int TOUCH_ACTIVITY_CODE = 109;
+    private static final int IDCARD_ACTIVITY_CODE = 110;
+    private static final int WATERMARKCAMERA_ACTIVITY_CODE = 111;
+    private static final int SYSTEMCAMERA_ACTIVITY_CODE = 112;
+    private static final int NFCACTIVITY_CODE = 113;
+    private static final int SCANCODE_ACTIVITY_CODE = 114;
+    private static final int BANKCARD_ACTIVITY_CODE = 115;
 
     private boolean _isPermissionRequested = false;
-    private Button _btnBluetooth, _btnWifi, _btnGPS, _btnKeyDown, _btnSIM, _btnScreen, _btnSound, _btnCOM, _btnTouch, _btnIdCard, _btnWaterCamera, _btnSystemCamera, _btnNFC, _btnScanCode, _btnBankCard, _btnFaceIdCompare;
-    //记录点击返回键的时间
+    private Button _btnBluetooth, _btnWifi, _btnGPS, _btnKeyDown, _btnSIM, _btnScreen, _btnSound, _btnCOM, _btnTouch, _btnIdCard, _btnWaterCamera, _btnSystemCamera, _btnNFC, _btnScanCode, _btnBankCard, _btnFaceIdCompare, _btnTestTest;
     private long _exitTime = 0;
 
     /**
@@ -52,6 +67,13 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         }
     }
 
+    private void SetPassBackgroundColor(Button btn, String result) {
+        if (PASS.equals(result))
+            btn.setBackground(getDrawable(R.drawable.main_btn_background4));
+        else
+            btn.setBackground(getDrawable(R.drawable.main_btn_background5));
+    }
+
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
         if (keyCode == KeyEvent.KEYCODE_BACK && event.getAction() == KeyEvent.ACTION_DOWN) {
@@ -66,58 +88,120 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     }
 
     @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (null == data) {
+            return;
+        }
+        if (resultCode == RESULT_OK) {
+            String str = data.getStringExtra(ARG_PARAM1);
+            Log.i(TAG, "返回时携带的数据：" + str);
+            switch (requestCode) {
+                case BLUETOOTH_ACTIVITY_CODE:
+                    SetPassBackgroundColor(_btnBluetooth, str);
+                    break;
+                case WIFI_ACTIVITY_CODE:
+                    SetPassBackgroundColor(_btnWifi, str);
+                    break;
+                case GPS_ACTIVITY_CODE:
+                    SetPassBackgroundColor(_btnGPS, str);
+                    break;
+                case KEYDOWN_ACTIVITY_CODE:
+                    SetPassBackgroundColor(_btnKeyDown, str);
+                    break;
+                case SIM_ACTIVITY_CODE:
+                    SetPassBackgroundColor(_btnSIM, str);
+                    break;
+                case SCREEN_ACTIVITY_CODE:
+                    SetPassBackgroundColor(_btnScreen, str);
+                    break;
+                case SOUND_ACTIVITY_CODE:
+                    SetPassBackgroundColor(_btnSound, str);
+                    break;
+                case COMTEST_ACTIVITY_CODE:
+                    SetPassBackgroundColor(_btnCOM, str);
+                    break;
+                case TOUCH_ACTIVITY_CODE:
+                    SetPassBackgroundColor(_btnTouch, str);
+                    break;
+                case IDCARD_ACTIVITY_CODE:
+                    SetPassBackgroundColor(_btnIdCard, str);
+                    break;
+                case WATERMARKCAMERA_ACTIVITY_CODE:
+                    SetPassBackgroundColor(_btnWaterCamera, str);
+                    break;
+                case SYSTEMCAMERA_ACTIVITY_CODE:
+                    SetPassBackgroundColor(_btnSystemCamera, str);
+                    break;
+                case NFCACTIVITY_CODE:
+                    SetPassBackgroundColor(_btnNFC, str);
+                    break;
+                case SCANCODE_ACTIVITY_CODE:
+                    SetPassBackgroundColor(_btnScanCode, str);
+                    break;
+                case BANKCARD_ACTIVITY_CODE:
+                    SetPassBackgroundColor(_btnBankCard, str);
+                    break;
+            }
+        }
+    }
+
+    @Override
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.btn_bluetooth:
-                startActivity(new Intent(this, BluetoothActivity.class));
+                startActivityForResult(new Intent(this, BluetoothActivity.class), BLUETOOTH_ACTIVITY_CODE);
                 break;
             case R.id.btn_wifi:
-                startActivity(new Intent(this, WifiActivity.class));
+                startActivityForResult(new Intent(this, WifiActivity.class), WIFI_ACTIVITY_CODE);
                 break;
             case R.id.btn_gps:
-                startActivity(new Intent(this, GpsActivity.class));
+                startActivityForResult(new Intent(this, GpsActivity.class), GPS_ACTIVITY_CODE);
                 break;
             case R.id.btn_keydown:
-                startActivity(new Intent(this, KeyDownActivity.class));
+                startActivityForResult(new Intent(this, KeyDownActivity.class), KEYDOWN_ACTIVITY_CODE);
                 break;
             case R.id.btn_sim:
-                startActivity(new Intent(this, SimActivity.class));
+                startActivityForResult(new Intent(this, SimActivity.class), SIM_ACTIVITY_CODE);
                 break;
             case R.id.btn_screen:
-                startActivity(new Intent(this, ScreenActivity.class));
+                startActivityForResult(new Intent(this, ScreenActivity.class), SCREEN_ACTIVITY_CODE);
                 break;
             case R.id.btn_sound:
-                startActivity(new Intent(this, SoundActivity.class));
+                startActivityForResult(new Intent(this, SoundActivity.class), SOUND_ACTIVITY_CODE);
                 break;
             case R.id.btn_com:
-                startActivity(new Intent(this, ComTestActivity.class));
+                startActivityForResult(new Intent(this, ComTestActivity.class), COMTEST_ACTIVITY_CODE);
                 break;
             case R.id.btn_touch:
-                startActivity(new Intent(this, TouchActivity.class));
+                startActivityForResult(new Intent(this, TouchActivity.class), TOUCH_ACTIVITY_CODE);
                 break;
             case R.id.btn_idcard:
-                startActivity(new Intent(this, IdCardActivity.class));
+                startActivityForResult(new Intent(this, IdCardActivity.class), IDCARD_ACTIVITY_CODE);
                 break;
             case R.id.btn_gpscamera:
-                startActivity(new Intent(this, WatermarkCameraActivity.class));
+                startActivityForResult(new Intent(this, WatermarkCameraActivity.class), WATERMARKCAMERA_ACTIVITY_CODE);
                 break;
             case R.id.btn_systemcamera:
-                startActivity(new Intent(this, SystemCameraActivity.class));
+                startActivityForResult(new Intent(this, SystemCameraActivity.class), SYSTEMCAMERA_ACTIVITY_CODE);
                 break;
             case R.id.btn_nfc:
-                startActivity(new Intent(this, NfcActivity.class));
+                startActivityForResult(new Intent(this, NfcActivity.class), NFCACTIVITY_CODE);
                 break;
             case R.id.btn_scancode:
                 Intent intent = new Intent(this, ScanCodeActivity.class);
                 Bundle bundle = new Bundle();
                 bundle.putString("key", "");
                 intent.putExtras(bundle);
-                startActivity(intent);
+                startActivityForResult(intent, SCANCODE_ACTIVITY_CODE);
                 break;
             case R.id.btn_bankcard:
-                startActivity(new Intent(this, BankCardActivity.class));
+                startActivityForResult(new Intent(this, BankCardActivity.class), BANKCARD_ACTIVITY_CODE);
                 break;
             case R.id.btn_faceidcompare:
+                break;
+            case R.id.btn_test_test:
+                startActivity(new Intent(this, TestTestActivity.class));
                 break;
         }
     }
@@ -155,6 +239,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         _btnScanCode = findViewById(R.id.btn_scancode);
         _btnBankCard = findViewById(R.id.btn_bankcard);
         _btnFaceIdCompare = findViewById(R.id.btn_faceidcompare);
+        _btnTestTest = findViewById(R.id.btn_test_test);
         _btnBluetooth.setOnClickListener(this::onClick);
         _btnWifi.setOnClickListener(this::onClick);
         _btnGPS.setOnClickListener(this::onClick);
@@ -171,6 +256,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         _btnScanCode.setOnClickListener(this::onClick);
         _btnBankCard.setOnClickListener(this::onClick);
         _btnFaceIdCompare.setOnClickListener(this::onClick);
+        _btnTestTest.setOnClickListener(this::onClick);
     }
 
 }

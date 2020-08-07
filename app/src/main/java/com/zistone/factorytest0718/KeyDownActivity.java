@@ -2,6 +2,7 @@ package com.zistone.factorytest0718;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.util.Log;
@@ -14,8 +15,10 @@ import android.widget.Toast;
 
 import com.zistone.factorytest0718.util.MyActivityManager;
 
-public class KeyDownActivity extends AppCompatActivity {
+public class KeyDownActivity extends BaseActivity {
+
     private static final String TAG = "KeyDownActivity";
+
     private TextView _txt;
     private ImageView _iv;
 
@@ -43,8 +46,21 @@ public class KeyDownActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_keydown);
+        //        setContentView(R.layout.activity_keydown);
+        SetBaseContentView(R.layout.activity_keydown);
         _txt = findViewById(R.id.txt_keydown);
         _iv = findViewById(R.id.iv_keydown);
+        _btnPass.setOnClickListener(v -> {
+            Intent intent = new Intent();
+            intent.putExtra(ARG_PARAM1, PASS);
+            setResult(RESULT_OK, intent);
+            finish();
+        });
+        _btnFail.setOnClickListener(v -> {
+            Intent intent = new Intent();
+            intent.putExtra(ARG_PARAM1, FAIL);
+            setResult(RESULT_OK, intent);
+            finish();
+        });
     }
 }

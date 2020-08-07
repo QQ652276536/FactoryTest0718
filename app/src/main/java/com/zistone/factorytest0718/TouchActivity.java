@@ -1,6 +1,7 @@
 package com.zistone.factorytest0718;
 
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
@@ -20,7 +21,8 @@ import android.view.WindowManager;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-public class TouchActivity extends AppCompatActivity {
+public class TouchActivity extends BaseActivity {
+
     private static final String TAG = "TouchActivity";
 
     /**
@@ -390,6 +392,9 @@ public class TouchActivity extends AppCompatActivity {
                 @Override
                 public void run() {
                     Log.i(TAG, "所有格子已触摸完毕");
+                    Intent intent = new Intent();
+                    intent.putExtra(ARG_PARAM1, PASS);
+                    setResult(RESULT_OK, intent);
                     finish();
                 }
             });
@@ -441,18 +446,28 @@ public class TouchActivity extends AppCompatActivity {
 
     private MyTouchView _myTouchView = null;
 
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        //全屏不显示标题栏
-        this.requestWindowFeature(Window.FEATURE_NO_TITLE);
-        this.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
-        _myTouchView = new MyTouchView(this);
-        setContentView(_myTouchView);
-    }
-
     @Override
     public void onBackPressed() {
         super.onBackPressed();
+    }
+
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        if (keyCode == KeyEvent.KEYCODE_BACK && event.getAction() == KeyEvent.ACTION_DOWN) {
+            Intent intent = new Intent();
+            intent.putExtra(ARG_PARAM1, FAIL);
+            setResult(RESULT_OK, intent);
+            finish();
+        }
+        return false;
+    }
+
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        _myTouchView = new MyTouchView(this);
+        //全屏
+        this.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
+        setContentView(_myTouchView);
     }
 
 }

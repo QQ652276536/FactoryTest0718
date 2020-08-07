@@ -23,6 +23,7 @@ import android.os.Environment;
 import android.os.Handler;
 import android.util.DisplayMetrics;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.MotionEvent;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
@@ -59,8 +60,9 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 
-public class WatermarkCameraActivity extends AppCompatActivity implements SurfaceHolder.Callback, SensorEventListener,
+public class WatermarkCameraActivity extends BaseActivity implements SurfaceHolder.Callback, SensorEventListener,
         OnGetGeoCoderResultListener, View.OnClickListener {
+
     private static final String TAG = "WatermarkCameraActivity";
     private static final int STATUS_NONE = 0;
     private static final int STATUS_STATIC = 1;
@@ -489,159 +491,6 @@ public class WatermarkCameraActivity extends AppCompatActivity implements Surfac
         }
     }
 
-    @Override
-    protected void onResume() {
-        super.onResume();
-    }
-
-    @Override
-    protected void onStop() {
-        super.onStop();
-        _canFocus = false;
-    }
-
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-        _sensorManager.unregisterListener(this, _sensor);
-        //销毁定位
-        _locationClient.stop();
-    }
-
-    @SuppressLint("ClickableViewAccessibility")
-    @Override
-    protected void onCreate(@Nullable Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        requestWindowFeature(Window.FEATURE_NO_TITLE);
-        setContentView(R.layout.activity_watermark_camera);
-        _surfaceView = findViewById(R.id.sfv_camera);
-        _surfaceView.setOnTouchListener((v, event) -> {
-            FocusOnTouch(event);
-            return false;
-        });
-        _myDrawView = findViewById(R.id.myDrawView);
-        _btnCamera = findViewById(R.id.btnCamera_camera);
-        _btnOk = findViewById(R.id.btnOk_camera);
-        _btnBeforeAfter = findViewById(R.id.btnBeforeAfter_camera);
-        _btnReset = findViewById(R.id.btnRest_camera);
-        _surfaceHolder = _surfaceView.getHolder();
-        _surfaceHolder.addCallback(this);
-        //判断内存卡是否存在的
-        CheckSoftStage();
-        //切换摄像头
-        _btnBeforeAfter.setOnClickListener(this);
-        _btnCamera.setOnClickListener(this);
-        _btnReset.setOnClickListener(this);
-        //保存
-        _btnOk.setOnClickListener(this);
-        _txtLat = findViewById(R.id.txt_lat);
-        _txtAddress = findViewById(R.id.txt_address);
-        _txtClock1 = findViewById(R.id.txtClock1_camera);
-        _txtClock2 = findViewById(R.id.txtClock2_camera);
-        //初始化地理编码模块
-        _geoCoder = GeoCoder.newInstance();
-        _geoCoder.setOnGetGeoCodeResultListener(this);
-        //获取传感器服务
-        _sensorManager = (SensorManager) getSystemService(SENSOR_SERVICE);
-        _sensor = _sensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
-        _sensorManager.registerListener(this, _sensor, _sensorManager.SENSOR_DELAY_NORMAL);
-        //定位初始化
-        _locationClient = new LocationClient(this);
-        _locationClient.registerLocationListener(_myLocationListener);
-        LocationClientOption option = new LocationClientOption();
-        //设置定位模式为高精度定位模式，这种模式下会同时使用GPS和网络
-        option.setLocationMode(LocationClientOption.LocationMode.Hight_Accuracy);
-        //打开gps
-        option.setOpenGps(true);
-        //设置坐标类型
-        option.setCoorType("bd09ll");
-        //发起定位请求的间隔时间
-        option.setScanSpan(10 * 1000);
-        _locationClient.setLocOption(option);
-        _locationClient.start();
-        //预览摄像头
-        _camera = GetCamera();
-        if (_surfaceHolder != null && _camera != null) {
-            SetStartPreview(_camera, _surfaceHolder);
-        } else {
-            new AlertDialog.Builder(this).setMessage("没有到检测摄像头！").setPositiveButton("确定", (dialog, which) -> finish()).show();
-        }
-        _state = STATUS_NONE;
-        _canFocusIn = false;
-        _x = 0;
-        _y = 0;
-        _z = 0;
-        _canFocus = true;
-        _cameraFocusListener = () -> {
-            if (_camera != null) {
-                DisplayMetrics displayMetrics = getApplicationContext().getResources().getDisplayMetrics();
-                int screenWidth = _surfaceView.getWidth();
-                int screenHeight = _surfaceView.getHeight();
-                Log.i(TAG, "screenWidth的值为" + screenWidth + "，screenHeight的值为" + screenHeight);
-                if (_canFocus && !_isFocusing) {
-                    _isFocusing = true;
-                    Rect focusRect = new Rect(screenWidth / 2 - 100, screenHeight / 2 - 100, screenWidth / 2 + 100, screenHeight / 2 + 100);
-                    _myDrawView.ClearDraw();
-                    _myDrawView.DrawTouchFocusRect(focusRect, _paint);
-                    //如果超出了(-1000,1000)到(1000, 1000)的范围，则会导致相机崩溃
-                    Rect meterRect = new Rect(-1000, -1000, 1000, 1000);
-                    Camera.Area area = new Camera.Area(meterRect, 1000);
-                    //获取当前相机的参数配置对象
-                    Camera.Parameters parameters = _camera.getParameters();
-                    List<Camera.Area> focusAreaList = new ArrayList<>();
-                    List<Camera.Area> meteringAreaList = new ArrayList<>();
-                    //获取支持对焦、测光区域的个数
-                    int meterArea = parameters.getMaxNumMeteringAreas();
-                    Log.i(TAG, "支持对焦区域的个数：" + parameters.getMaxNumFocusAreas() + "，支持测光区域的个数：" + meterArea);
-                    if (meterArea > 0) {
-                        focusAreaList.add(area);
-                        meteringAreaList.add(area);
-                    }
-                    //设置对焦模式、对焦区域、测光区域
-                    parameters.setFocusMode(Camera.Parameters.FOCUS_MODE_AUTO);
-                    parameters.setFocusAreas(focusAreaList);
-                    parameters.setMeteringAreas(meteringAreaList);
-                    try {
-                        //对焦前先取消上一次的对焦，不管上一次对焦有没有完成
-                        _camera.cancelAutoFocus();
-                        //一定要记得把相应参数设置给相机
-                        _camera.setParameters(parameters);
-                        //开启对焦
-                        _camera.autoFocus(_autoFocusCallback);
-                    } catch (Exception e) {
-                        e.printStackTrace();
-                        Log.e(TAG, e.toString());
-                    }
-                }
-            }
-        };
-        _autoFocusCallback = (success, camera) -> {
-            if (success) {
-                Log.i(TAG, "对焦成功");
-                //                _myDrawView.ClearDraw();
-                //一秒之后才能再次对焦
-                new Handler().postDelayed(new Runnable() {
-                    @Override
-                    public void run() {
-                        _isFocusing = false;
-                    }
-                }, 1000);
-            } else {
-                Log.i(TAG, "对焦失败");
-            }
-        };
-        _paint = new Paint();
-        _paint.setAntiAlias(true);
-        _paint.setColor(Color.GREEN);
-        _paint.setStyle(Paint.Style.STROKE);
-    }
-
-    @Override
-    protected void onPause() {
-        super.onPause();
-    }
-
-
     /**
      * 画面显示时
      *
@@ -779,4 +628,162 @@ public class WatermarkCameraActivity extends AppCompatActivity implements Surfac
         }
         _txtAddress.setText(reverseGeoCodeResult.getAddress());
     }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        _canFocus = false;
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        _sensorManager.unregisterListener(this, _sensor);
+        //销毁定位
+        _locationClient.stop();
+    }
+
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        if (keyCode == KeyEvent.KEYCODE_BACK && event.getAction() == KeyEvent.ACTION_DOWN) {
+            Intent intent = new Intent();
+            intent.putExtra(ARG_PARAM1, FAIL);
+            setResult(RESULT_OK, intent);
+            finish();
+        }
+        return false;
+    }
+
+    @SuppressLint("ClickableViewAccessibility")
+    @Override
+    protected void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_watermark_camera);
+        _surfaceView = findViewById(R.id.sfv_camera);
+        _surfaceView.setOnTouchListener((v, event) -> {
+            FocusOnTouch(event);
+            return false;
+        });
+        _myDrawView = findViewById(R.id.myDrawView);
+        _btnCamera = findViewById(R.id.btnCamera_camera);
+        _btnOk = findViewById(R.id.btnOk_camera);
+        _btnBeforeAfter = findViewById(R.id.btnBeforeAfter_camera);
+        _btnReset = findViewById(R.id.btnRest_camera);
+        _surfaceHolder = _surfaceView.getHolder();
+        _surfaceHolder.addCallback(this);
+        //判断内存卡是否存在的
+        CheckSoftStage();
+        //切换摄像头
+        _btnBeforeAfter.setOnClickListener(this);
+        _btnCamera.setOnClickListener(this);
+        _btnReset.setOnClickListener(this);
+        //保存
+        _btnOk.setOnClickListener(this);
+        _txtLat = findViewById(R.id.txt_lat);
+        _txtAddress = findViewById(R.id.txt_address);
+        _txtClock1 = findViewById(R.id.txtClock1_camera);
+        _txtClock2 = findViewById(R.id.txtClock2_camera);
+        //初始化地理编码模块
+        _geoCoder = GeoCoder.newInstance();
+        _geoCoder.setOnGetGeoCodeResultListener(this);
+        //获取传感器服务
+        _sensorManager = (SensorManager) getSystemService(SENSOR_SERVICE);
+        _sensor = _sensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
+        _sensorManager.registerListener(this, _sensor, _sensorManager.SENSOR_DELAY_NORMAL);
+        //定位初始化
+        _locationClient = new LocationClient(this);
+        _locationClient.registerLocationListener(_myLocationListener);
+        LocationClientOption option = new LocationClientOption();
+        //设置定位模式为高精度定位模式，这种模式下会同时使用GPS和网络
+        option.setLocationMode(LocationClientOption.LocationMode.Hight_Accuracy);
+        //打开gps
+        option.setOpenGps(true);
+        //设置坐标类型
+        option.setCoorType("bd09ll");
+        //发起定位请求的间隔时间
+        option.setScanSpan(10 * 1000);
+        _locationClient.setLocOption(option);
+        _locationClient.start();
+        //预览摄像头
+        _camera = GetCamera();
+        if (_surfaceHolder != null && _camera != null) {
+            SetStartPreview(_camera, _surfaceHolder);
+        } else {
+            new AlertDialog.Builder(this).setMessage("没有到检测摄像头！").setPositiveButton("确定", (dialog, which) -> finish()).show();
+        }
+        _state = STATUS_NONE;
+        _canFocusIn = false;
+        _x = 0;
+        _y = 0;
+        _z = 0;
+        _canFocus = true;
+        _cameraFocusListener = () -> {
+            if (_camera != null) {
+                DisplayMetrics displayMetrics = getApplicationContext().getResources().getDisplayMetrics();
+                int screenWidth = _surfaceView.getWidth();
+                int screenHeight = _surfaceView.getHeight();
+                Log.i(TAG, "screenWidth的值为" + screenWidth + "，screenHeight的值为" + screenHeight);
+                if (_canFocus && !_isFocusing) {
+                    _isFocusing = true;
+                    Rect focusRect = new Rect(screenWidth / 2 - 100, screenHeight / 2 - 100, screenWidth / 2 + 100, screenHeight / 2 + 100);
+                    _myDrawView.ClearDraw();
+                    _myDrawView.DrawTouchFocusRect(focusRect, _paint);
+                    //如果超出了(-1000,1000)到(1000, 1000)的范围，则会导致相机崩溃
+                    Rect meterRect = new Rect(-1000, -1000, 1000, 1000);
+                    Camera.Area area = new Camera.Area(meterRect, 1000);
+                    //获取当前相机的参数配置对象
+                    Camera.Parameters parameters = _camera.getParameters();
+                    List<Camera.Area> focusAreaList = new ArrayList<>();
+                    List<Camera.Area> meteringAreaList = new ArrayList<>();
+                    //获取支持对焦、测光区域的个数
+                    int meterArea = parameters.getMaxNumMeteringAreas();
+                    Log.i(TAG, "支持对焦区域的个数：" + parameters.getMaxNumFocusAreas() + "，支持测光区域的个数：" + meterArea);
+                    if (meterArea > 0) {
+                        focusAreaList.add(area);
+                        meteringAreaList.add(area);
+                    }
+                    //设置对焦模式、对焦区域、测光区域
+                    parameters.setFocusMode(Camera.Parameters.FOCUS_MODE_AUTO);
+                    parameters.setFocusAreas(focusAreaList);
+                    parameters.setMeteringAreas(meteringAreaList);
+                    try {
+                        //对焦前先取消上一次的对焦，不管上一次对焦有没有完成
+                        _camera.cancelAutoFocus();
+                        //一定要记得把相应参数设置给相机
+                        _camera.setParameters(parameters);
+                        //开启对焦
+                        _camera.autoFocus(_autoFocusCallback);
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                        Log.e(TAG, e.toString());
+                    }
+                }
+            }
+        };
+        _autoFocusCallback = (success, camera) -> {
+            if (success) {
+                Log.i(TAG, "对焦成功");
+                //                _myDrawView.ClearDraw();
+                //一秒之后才能再次对焦
+                new Handler().postDelayed(() -> _isFocusing = false, 1000);
+            } else {
+                Log.i(TAG, "对焦失败");
+            }
+        };
+        _paint = new Paint();
+        _paint.setAntiAlias(true);
+        _paint.setColor(Color.GREEN);
+        _paint.setStyle(Paint.Style.STROKE);
+    }
+
 }

@@ -1,5 +1,6 @@
 package com.zistone.factorytest0718;
 
+import android.content.Intent;
 import android.graphics.Color;
 import android.media.MediaPlayer;
 import android.media.MediaRecorder;
@@ -23,7 +24,8 @@ import java.io.File;
 import java.util.Calendar;
 import java.util.Locale;
 
-public class SoundActivity extends AppCompatActivity implements View.OnClickListener, View.OnTouchListener {
+public class SoundActivity extends BaseActivity implements View.OnClickListener, View.OnTouchListener {
+
     private static final String TAG = "SoundActivity";
     //录音文件所在目录
     private static final String FILE_DIR = "/sdcard/Factory0718/SoundTest/";
@@ -272,7 +274,8 @@ public class SoundActivity extends AppCompatActivity implements View.OnClickList
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_sound);
+        //        setContentView(R.layout.activity_sound);
+        SetBaseContentView(R.layout.activity_sound);
         _ringtone = RingtoneManager.getRingtone(this, URI_NOTIFICATION);
         _mediaRecorder = new MediaRecorder();
         _mediaRecorder.setOnInfoListener(new MediaRecorder.OnInfoListener() {
@@ -314,6 +317,18 @@ public class SoundActivity extends AppCompatActivity implements View.OnClickList
         _txtRecordPath = findViewById(R.id.txt_record_path_sound);
         _txtRecordPath.setOnClickListener(this::onClick);
         _txtRecordPath.setVisibility(View.INVISIBLE);
+        _btnPass.setOnClickListener(v -> {
+            Intent intent = new Intent();
+            intent.putExtra(ARG_PARAM1, PASS);
+            setResult(RESULT_OK, intent);
+            finish();
+        });
+        _btnFail.setOnClickListener(v -> {
+            Intent intent = new Intent();
+            intent.putExtra(ARG_PARAM1, FAIL);
+            setResult(RESULT_OK, intent);
+            finish();
+        });
     }
 
 }

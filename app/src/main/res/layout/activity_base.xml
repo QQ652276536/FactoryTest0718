@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:id="@+id/ll_base"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:orientation="horizontal">
+
+        <Button
+            android:id="@+id/btn_pass_base"
+            android:layout_width="130sp"
+            android:layout_height="50sp"
+            android:layout_gravity="center_vertical"
+            android:background="@drawable/btn_pass_background"
+            android:text="通过"
+            android:textColor="@color/white" />
+
+        <Button
+            android:layout_width="50sp"
+            android:layout_height="50sp"
+            android:layout_gravity="center_vertical"
+            android:enabled="false"
+            android:visibility="invisible" />
+
+        <Button
+            android:id="@+id/btn_fail_base"
+            android:layout_width="130sp"
+            android:layout_height="50sp"
+            android:layout_gravity="center_vertical"
+            android:background="@drawable/btn_fail_background"
+            android:text="失败"
+            android:textColor="@color/white" />
+    </LinearLayout>
+</LinearLayout>
+
+
+
+

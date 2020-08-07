@@ -56,6 +56,10 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
+            android:name=".TestTestActivity"
+            android:label="该Activity仅用于测试代码，无任何作用"
+            android:launchMode="singleTask" />
+        <activity
             android:name=".ComTestActivity"
             android:label="串口通讯"
             android:launchMode="singleTask" />
@@ -116,6 +120,10 @@
         <activity
             android:name=".WatermarkCameraActivity"
             android:label="水印相机"
+            android:launchMode="singleTask" />
+        <activity
+            android:name=".BaseActivity"
+            android:label="相同布局的基类"
             android:launchMode="singleTask" />
         <activity android:name=".MainActivity">
             <intent-filter>

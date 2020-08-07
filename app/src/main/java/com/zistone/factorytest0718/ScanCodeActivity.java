@@ -3,6 +3,7 @@ package com.zistone.factorytest0718;
 import android.annotation.SuppressLint;
 import android.app.ActivityManager;
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -23,8 +24,7 @@ import com.zistone.factorytest0718.util.MySoundPlayUtil;
 import java.io.File;
 import java.util.List;
 
-public class ScanCodeActivity extends AppCompatActivity implements View.OnClickListener,
-        MyScanCodeManager.ScanCodeListener {
+public class ScanCodeActivity extends BaseActivity implements View.OnClickListener, MyScanCodeManager.ScanCodeListener {
 
     private static final String TAG = "ScanCodeActivity";
 
@@ -137,10 +137,13 @@ public class ScanCodeActivity extends AppCompatActivity implements View.OnClickL
 
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
-        if (keyCode == KeyEvent.KEYCODE_BACK) {
-            this.finish();
+        if (keyCode == KeyEvent.KEYCODE_BACK && event.getAction() == KeyEvent.ACTION_DOWN) {
+            Intent intent = new Intent();
+            intent.putExtra(ARG_PARAM1, FAIL);
+            setResult(RESULT_OK, intent);
+            finish();
         }
-        return super.onKeyDown(keyCode, event);
+        return false;
     }
 
     @Override
@@ -186,7 +189,8 @@ public class ScanCodeActivity extends AppCompatActivity implements View.OnClickL
     protected void onCreate(Bundle savedInstanceState) {
         Log.i(TAG, "onCreate");
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_scancode);
+        //        setContentView(R.layout.activity_scancode);
+        SetBaseContentView(R.layout.activity_scancode);
         _txt = findViewById(R.id.txt_scancode);
         _txt.setMovementMethod(ScrollingMovementMethod.getInstance());
         _btnTop = findViewById(R.id.btn_top_scancode);
@@ -202,8 +206,25 @@ public class ScanCodeActivity extends AppCompatActivity implements View.OnClickL
             MyScanCodeManager.OpenSerialPort(new File("/dev/ttyHSL1"), 9600, 0);
             UpdateText(_txt, "串口已打开\r\n", "Append");
         } catch (Exception e) {
-            MyProgressDialogUtil.ShowWarning(this, "警告", "该设备不支持扫码，无法使用此功能！", () -> finish());
+            MyProgressDialogUtil.ShowWarning(this, "警告", "该设备不支持扫码，无法使用此功能！", false, () -> {
+                Intent intent = new Intent();
+                intent.putExtra(ARG_PARAM1, FAIL);
+                setResult(RESULT_OK, intent);
+                finish();
+            });
         }
+        _btnPass.setOnClickListener(v -> {
+            Intent intent = new Intent();
+            intent.putExtra(ARG_PARAM1, PASS);
+            setResult(RESULT_OK, intent);
+            finish();
+        });
+        _btnFail.setOnClickListener(v -> {
+            Intent intent = new Intent();
+            intent.putExtra(ARG_PARAM1, FAIL);
+            setResult(RESULT_OK, intent);
+            finish();
+        });
     }
 
 }

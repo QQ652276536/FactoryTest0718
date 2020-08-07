@@ -108,7 +108,7 @@
                 android:layout_gravity="center_vertical"
                 android:gravity="center_vertical"
                 android:lines="1"
-                android:text="地位位置："
+                android:text="地理位置："
                 android:textSize="18sp" />
 
             <TextView

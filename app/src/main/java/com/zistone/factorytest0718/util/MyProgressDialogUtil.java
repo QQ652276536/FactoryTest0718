@@ -29,7 +29,7 @@ public final class MyProgressDialogUtil {
     private MyProgressDialogUtil() {
     }
 
-    public static void ShowConfirm(Context context, String title, String content, ConfirmListener listener) {
+    public static void ShowConfirm(Context context, String title, String content, boolean touchOut, ConfirmListener listener) {
         //确保创建Dialog的Activity没有finish才显示
         if (context instanceof Activity && !((Activity) context).isFinishing()) {
             AlertDialog.Builder builder = new AlertDialog.Builder(context);
@@ -43,11 +43,12 @@ public final class MyProgressDialogUtil {
                 if (null != listener)
                     listener.OnCancel();
             });
+            builder.setCancelable(touchOut);
             builder.show();
         }
     }
 
-    public static void ShowWarning(Context context, String title, String content, WarningListener listener) {
+    public static void ShowWarning(Context context, String title, String content, boolean touchOut, WarningListener listener) {
         //确保创建Dialog的Activity没有finish才显示
         if (context instanceof Activity && !((Activity) context).isFinishing()) {
             AlertDialog.Builder builder = new AlertDialog.Builder(context);
@@ -57,6 +58,7 @@ public final class MyProgressDialogUtil {
                 if (null != listener)
                     listener.OnIKnow();
             });
+            builder.setCancelable(touchOut);
             builder.show();
         }
     }
