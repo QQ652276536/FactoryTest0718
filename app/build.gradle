@@ -33,48 +33,49 @@ android {
 }
 
 dependencies {
-    implementation fileTree(dir: 'libs', include: ['*.jar'])
+    implementation fileTree(include: ['*.jar'], dir: 'libs')
     /**
-     * 要么全部使用AndroidX中的库，要么全部使用Android Support Library中的库
+     *  要么全部使用AndroidX中的库，要么全部使用Android Support Library中的库
      */
     implementation 'androidx.appcompat:appcompat:1.1.0'
     implementation 'androidx.constraintlayout:constraintlayout:1.1.3'
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'androidx.test.ext:junit:1.1.1'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0'
-
     /**
-     * 百度人脸离线识别库所需要的奥比中光的模型资源，该文件将会参与编译和打包
+     *  百度人脸离线识别库所需要的奥比中光的模型资源，该文件将会参与编译和打包
      */
     api files('libs/orbbec_module-debug.aar')
-
     /**
-     * 百度人脸离线识别库所需要的深度视觉资源，该文件将会参与编译和打包
+     *  百度人脸离线识别库所需要的深度视觉资源，该文件将会参与编译和打包
      */
     api files('libs/picozensesdk-release.aar')
-
     /**
-     * 百度人脸离线识别库
+     *  百度人脸离线识别库
      */
     implementation project(':facelibrary')
-
     /**
-     * GIF控件，还可以让GIF图片作为文本和按钮的背景显示
+     *  GIF控件，还可以让GIF图片作为文本和按钮的背景显示
      */
     implementation 'pl.droidsonroids.gif:android-gif-drawable:1.2.6'
-
     /**
-     * 下拉刷新的控件
+     *  下拉刷新的控件
      */
     implementation 'com.cjj.materialrefeshlayout:library:1.3.0'
-
     /**
-     * 百度地图API
+     *  百度地图API
      */
     implementation files('libs/BaiduLBS_Android.jar')
-
     /**
-     * 浙江中正读取身份证的非接模块API
+     *  浙江中正读取身份证的非接模块API
      */
     implementation files('libs/MxNonContactCardReader.jar')
+    /**
+     *  虹软人脸识别API，人脸相关
+     */
+    implementation files('libs/arcsoft_face.jar')
+    /**
+     *  虹软人脸识别API，图像库相关
+     */
+    implementation files('libs/arcsoft_image_util.jar')
 }

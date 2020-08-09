@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_gravity="center_horizontal"
+    android:layout_margin="5sp"
+    android:gravity="center"
+    android:orientation="vertical">
+
+    <RadioGroup
+        android:id="@+id/radio_group_ft_orient"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:background="@android:color/white">
+
+        <RadioButton
+            android:id="@+id/rb_orient_0"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="5sp"
+            android:text="视频模式仅检测0度" />
+
+        <RadioButton
+            android:id="@+id/rb_orient_90"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="5sp"
+            android:text="视频模式仅检测90度" />
+
+        <RadioButton
+            android:id="@+id/rb_orient_180"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="5sp"
+            android:text="视频模式仅检测180度" />
+
+        <RadioButton
+            android:id="@+id/rb_orient_270"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="5sp"
+            android:text="视频模式仅检测270度" />
+
+        <RadioButton
+            android:id="@+id/rb_orient_all"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="5sp"
+            android:text="视频模式全方向人脸检测" />
+    </RadioGroup>
+
+    <Button
+        android:id="@+id/btn_close_face_setting_menu"
+        android:layout_width="30sp"
+        android:layout_height="30sp"
+        android:layout_margin="5sp"
+        android:background="@drawable/close" />
+</LinearLayout>

@@ -36,9 +36,11 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
     private static final int NFCACTIVITY_CODE = 113;
     private static final int SCANCODE_ACTIVITY_CODE = 114;
     private static final int BANKCARD_ACTIVITY_CODE = 115;
+    private static final int BANKCARD_FACE_CODE = 116;
 
     private boolean _isPermissionRequested = false;
-    private Button _btnBluetooth, _btnWifi, _btnGPS, _btnKeyDown, _btnSIM, _btnScreen, _btnSound, _btnCOM, _btnTouch, _btnIdCard, _btnWaterCamera, _btnSystemCamera, _btnNFC, _btnScanCode, _btnBankCard, _btnFaceIdCompare, _btnTestTest;
+    private Button _btnBluetooth, _btnWifi, _btnGPS, _btnKeyDown, _btnSIM, _btnScreen, _btnSound, _btnCOM, _btnTouch, _btnIdCard,
+            _btnWaterCamera, _btnSystemCamera, _btnNFC, _btnScanCode, _btnBankCard, _btnFaceIdCompare, _btnTestTest,_btnFace;
     private long _exitTime = 0;
 
     /**
@@ -49,14 +51,14 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
             _isPermissionRequested = true;
             ArrayList<String> permissionsList = new ArrayList<>();
             String[] permissions = {Manifest.permission.WRITE_SETTINGS, Manifest.permission.BLUETOOTH_ADMIN,
-                                    Manifest.permission.BLUETOOTH, Manifest.permission.ACCESS_COARSE_LOCATION,
-                                    Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.READ_EXTERNAL_STORAGE,
-                                    Manifest.permission.INTERNET, Manifest.permission.ACCESS_NETWORK_STATE,
-                                    Manifest.permission.MODIFY_AUDIO_SETTINGS, Manifest.permission.WAKE_LOCK,
-                                    Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.ACCESS_WIFI_STATE,
-                                    Manifest.permission.CHANGE_WIFI_STATE, Manifest.permission.CAMERA,
-                                    Manifest.permission.READ_PHONE_NUMBERS, Manifest.permission.READ_PHONE_STATE,
-                                    Manifest.permission.READ_SMS, Manifest.permission.RECORD_AUDIO};
+                    Manifest.permission.BLUETOOTH, Manifest.permission.ACCESS_COARSE_LOCATION,
+                    Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.READ_EXTERNAL_STORAGE,
+                    Manifest.permission.INTERNET, Manifest.permission.ACCESS_NETWORK_STATE,
+                    Manifest.permission.MODIFY_AUDIO_SETTINGS, Manifest.permission.WAKE_LOCK,
+                    Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.ACCESS_WIFI_STATE,
+                    Manifest.permission.CHANGE_WIFI_STATE, Manifest.permission.CAMERA,
+                    Manifest.permission.READ_PHONE_NUMBERS, Manifest.permission.READ_PHONE_STATE,
+                    Manifest.permission.READ_SMS, Manifest.permission.RECORD_AUDIO};
             for (String perm : permissions) {
                 //进入到这里代表没有权限
                 if (PackageManager.PERMISSION_GRANTED != checkSelfPermission(perm))
@@ -142,6 +144,9 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
                 case BANKCARD_ACTIVITY_CODE:
                     SetPassBackgroundColor(_btnBankCard, str);
                     break;
+                case BANKCARD_FACE_CODE:
+                    SetPassBackgroundColor(_btnFace, str);
+                    break;
             }
         }
     }
@@ -198,6 +203,9 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
             case R.id.btn_bankcard:
                 startActivityForResult(new Intent(this, BankCardActivity.class), BANKCARD_ACTIVITY_CODE);
                 break;
+            case R.id.btn_face:
+                startActivityForResult(new Intent(this, FaceAttributeMenuActivity.class), BANKCARD_FACE_CODE);
+                break;
             case R.id.btn_faceidcompare:
                 break;
             case R.id.btn_test_test:
@@ -240,6 +248,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
         _btnBankCard = findViewById(R.id.btn_bankcard);
         _btnFaceIdCompare = findViewById(R.id.btn_faceidcompare);
         _btnTestTest = findViewById(R.id.btn_test_test);
+        _btnFace = findViewById(R.id.btn_face);
         _btnBluetooth.setOnClickListener(this::onClick);
         _btnWifi.setOnClickListener(this::onClick);
         _btnGPS.setOnClickListener(this::onClick);
@@ -257,6 +266,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
         _btnBankCard.setOnClickListener(this::onClick);
         _btnFaceIdCompare.setOnClickListener(this::onClick);
         _btnTestTest.setOnClickListener(this::onClick);
+        _btnFace.setOnClickListener(this::onClick);
     }
 
 }

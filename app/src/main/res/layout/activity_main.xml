@@ -203,22 +203,23 @@
                 android:textColor="@color/white" />
 
             <Button
-                android:id="@+id/btn_test_test"
-                android:layout_width="wrap_content"
-                android:layout_height="60sp"
-                android:layout_margin="5sp"
-                android:layout_weight="1"
-                android:text="继承"
-                android:background="@drawable/btn_style_main_2"
-                android:textColor="@color/white" />
-
-            <Button
-                android:enabled="false"
+                android:id="@+id/btn_face"
                 android:layout_width="wrap_content"
                 android:layout_height="60sp"
                 android:layout_margin="5sp"
                 android:layout_weight="1"
                 android:background="@drawable/btn_style_main_1"
+                android:text="人脸属性"
+                android:textColor="@color/white" />
+
+            <Button
+                android:id="@+id/btn_test_test"
+                android:layout_width="wrap_content"
+                android:layout_height="60sp"
+                android:layout_margin="5sp"
+                android:layout_weight="1"
+                android:background="@drawable/btn_style_main_1"
+                android:text="继承"
                 android:textColor="@color/white" />
         </TableRow>
     </TableLayout>
