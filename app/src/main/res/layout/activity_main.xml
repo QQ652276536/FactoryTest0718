@@ -184,7 +184,7 @@
                 android:layout_margin="5sp"
                 android:layout_weight="1"
                 android:background="@drawable/btn_style_main_2"
-                android:text="银行卡测试"
+                android:text="银行卡读取"
                 android:textColor="@color/white" />
         </TableRow>
 

@@ -52,7 +52,7 @@ public class IdCardActivity extends BaseActivity {
     private boolean _isAppOnForeground = true;
     private TextView _txt;
     private ImageView _imageView;
-    private Button _btnRead, _btnVersion, _btnExit;
+    private Button _btnRead, _btnVersion;
     private Handler _handler;
     private byte[] _message = new byte[100];
     private IDCardInterface _idCardInterface;
@@ -240,11 +240,6 @@ public class IdCardActivity extends BaseActivity {
         }
     }
 
-    public void OnClickExit(View view) {
-        _gpio.set_gpio(0, 66);
-        this.finish();
-    }
-
     String getErrorDesc(int errCode, byte[] errBuf) {
         String errMsg = new String(errBuf).trim();
         switch (errCode) {
@@ -319,7 +314,6 @@ public class IdCardActivity extends BaseActivity {
         _imageView = findViewById(R.id.iv_idcard);
         _btnRead = findViewById(R.id.btn_read_idcard);
         _btnVersion = findViewById(R.id.btn_readversion_idcard);
-        _btnExit = findViewById(R.id.btn_exit_idcard);
         _btnRead.setFocusable(true);
         _btnRead.setFocusableInTouchMode(true);
         _btnRead.requestFocus();
@@ -328,12 +322,14 @@ public class IdCardActivity extends BaseActivity {
         InitHandlerMessage();
         _gpio.set_gpio(1, 66);
         _btnPass.setOnClickListener(v -> {
+            _gpio.set_gpio(0, 66);
             Intent intent = new Intent();
             intent.putExtra(ARG_PARAM1, PASS);
             setResult(RESULT_OK, intent);
             finish();
         });
         _btnFail.setOnClickListener(v -> {
+            _gpio.set_gpio(0, 66);
             Intent intent = new Intent();
             intent.putExtra(ARG_PARAM1, FAIL);
             setResult(RESULT_OK, intent);

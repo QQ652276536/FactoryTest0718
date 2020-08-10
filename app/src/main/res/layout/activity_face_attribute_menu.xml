@@ -13,7 +13,7 @@
         android:layout_margin="10sp"
         android:background="@drawable/btn_style_1"
         android:text="激活引擎（首次激活需要联网）"
-        android:textColor="@color/white" />
+        android:textColor="@color/deepSkyBlue" />
 
     <Button
         android:id="@+id/btn_setting_face_attribute_menu"
@@ -23,7 +23,7 @@
         android:layout_margin="10sp"
         android:background="@drawable/btn_style_1"
         android:text="视频检测角度"
-        android:textColor="@color/white" />
+        android:textColor="@color/deepSkyBlue" />
 
     <Button
         android:id="@+id/btn_face_attribute_image_menu"
@@ -33,7 +33,7 @@
         android:layout_margin="10sp"
         android:background="@drawable/btn_style_1"
         android:text="人脸属性检测（图片）"
-        android:textColor="@color/white" />
+        android:textColor="@color/deepSkyBlue" />
 
     <Button
         android:id="@+id/btn_face_attribute_video_menu"
@@ -43,7 +43,7 @@
         android:layout_margin="10sp"
         android:background="@drawable/btn_style_1"
         android:text="人脸属性检测（视频）"
-        android:textColor="@color/white" />
+        android:textColor="@color/deepSkyBlue" />
 
     <TextView
         android:id="@+id/txt_face_attribute_menu"

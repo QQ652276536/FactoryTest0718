@@ -48,15 +48,6 @@
                 android:onClick="OnClickReadIDCard"
                 android:text="读取身份证"
                 tools:ignore="OnClick" />
-
-            <Button
-                android:id="@+id/btn_exit_idcard"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:gravity="center"
-                android:onClick="OnClickExit"
-                android:text="退出"
-                tools:ignore="OnClick" />
         </LinearLayout>
     </LinearLayout>
 </LinearLayout>
