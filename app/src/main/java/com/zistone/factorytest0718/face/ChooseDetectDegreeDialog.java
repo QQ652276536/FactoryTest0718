@@ -16,6 +16,7 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.DialogFragment;
 
 import com.zistone.factorytest0718.R;
+import com.zistone.factorytest0718.face.util.ConfigUtil;
 
 import static com.arcsoft.face.enums.DetectFaceOrientPriority.ASF_OP_0_ONLY;
 import static com.arcsoft.face.enums.DetectFaceOrientPriority.ASF_OP_180_ONLY;
@@ -43,7 +44,7 @@ public class ChooseDetectDegreeDialog extends DialogFragment implements View.OnC
         RadioButton rbOrientAll = dialogView.findViewById(R.id.rb_orient_all);
         Button btnClose = dialogView.findViewById(R.id.btn_close_face_setting_menu);
         btnClose.setOnClickListener(v -> dismiss());
-        switch (ConfigUtil.getFtOrient(getActivity())) {
+        switch (ConfigUtil.GetDetectionAngle(getActivity())) {
             case ASF_OP_90_ONLY:
                 rbOrient90.setChecked(true);
                 break;
@@ -64,20 +65,20 @@ public class ChooseDetectDegreeDialog extends DialogFragment implements View.OnC
         radioGroupFtOrient.setOnCheckedChangeListener((group, checkedId) -> {
             switch (checkedId) {
                 case R.id.rb_orient_90:
-                    ConfigUtil.setFtOrient(getActivity(), ASF_OP_90_ONLY);
+                    ConfigUtil.SetDetectionAngle(getActivity(), ASF_OP_90_ONLY);
                     break;
                 case R.id.rb_orient_180:
-                    ConfigUtil.setFtOrient(getActivity(), ASF_OP_180_ONLY);
+                    ConfigUtil.SetDetectionAngle(getActivity(), ASF_OP_180_ONLY);
                     break;
                 case R.id.rb_orient_270:
-                    ConfigUtil.setFtOrient(getActivity(), ASF_OP_270_ONLY);
+                    ConfigUtil.SetDetectionAngle(getActivity(), ASF_OP_270_ONLY);
                     break;
                 case R.id.rb_orient_all:
-                    ConfigUtil.setFtOrient(getActivity(), ASF_OP_ALL_OUT);
+                    ConfigUtil.SetDetectionAngle(getActivity(), ASF_OP_ALL_OUT);
                     break;
                 case R.id.rb_orient_0:
                 default:
-                    ConfigUtil.setFtOrient(getActivity(), ASF_OP_0_ONLY);
+                    ConfigUtil.SetDetectionAngle(getActivity(), ASF_OP_0_ONLY);
                     break;
             }
             dismiss();

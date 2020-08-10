@@ -1,6 +1,5 @@
 package com.zistone.factorytest0718.face;
 
-import android.Manifest;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -8,7 +7,6 @@ import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Typeface;
-import android.os.Build;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.text.ParcelableSpan;
@@ -22,12 +20,10 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.app.ActivityCompat;
 
 import com.arcsoft.face.AgeInfo;
 import com.arcsoft.face.ErrorInfo;
@@ -46,12 +42,10 @@ import com.arcsoft.imageutil.ArcSoftImageFormat;
 import com.arcsoft.imageutil.ArcSoftImageUtil;
 import com.arcsoft.imageutil.ArcSoftImageUtilError;
 import com.bumptech.glide.Glide;
-import com.zistone.factorytest0718.BaseActivity;
 import com.zistone.factorytest0718.R;
 
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 import io.reactivex.Observable;
@@ -62,9 +56,12 @@ import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.Disposable;
 import io.reactivex.schedulers.Schedulers;
 
-public class SingleImageActivity extends AppCompatActivity implements View.OnClickListener {
+/**
+ * 人脸属性检测（图片）
+ */
+public class FaceAttributeDetectionImageActivity extends AppCompatActivity implements View.OnClickListener {
 
-    private static final String TAG = "SingleImageActivity";
+    private static final String TAG = "FaceAttributeDetectionImageActivity";
     private static final int ACTION_CHOOSE_IMAGE = 0x201;
 
     private AlertDialog progressDialog;

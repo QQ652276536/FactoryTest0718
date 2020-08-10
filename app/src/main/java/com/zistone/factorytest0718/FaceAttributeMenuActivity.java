@@ -9,18 +9,17 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.core.app.ActivityCompat;
 
 import com.arcsoft.face.ActiveFileInfo;
 import com.arcsoft.face.ErrorInfo;
 import com.arcsoft.face.FaceEngine;
-import com.arcsoft.face.VersionInfo;
 import com.arcsoft.face.enums.RuntimeABI;
 import com.zistone.factorytest0718.face.ChooseDetectDegreeDialog;
 import com.zistone.factorytest0718.face.Constants;
-import com.zistone.factorytest0718.face.SingleImageActivity;
+import com.zistone.factorytest0718.face.FaceAttributeDetectionVideoActivity;
+import com.zistone.factorytest0718.face.FaceAttributeDetectionImageActivity;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -139,10 +138,11 @@ public class FaceAttributeMenuActivity extends BaseActivity implements View.OnCl
                 break;
             //显示图片中所有人脸的信息，并且逐一比对相似度
             case R.id.btn_face_attribute_image_menu:
-                startActivity(new Intent(this, SingleImageActivity.class));
+                startActivity(new Intent(this, FaceAttributeDetectionImageActivity.class));
                 break;
             //显示视频中所有人脸信息
             case R.id.btn_face_attribute_video_menu:
+                startActivity(new Intent(this, FaceAttributeDetectionVideoActivity.class));
                 break;
         }
     }
