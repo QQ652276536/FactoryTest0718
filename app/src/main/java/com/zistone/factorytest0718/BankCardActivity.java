@@ -13,6 +13,7 @@ import android.widget.TextView;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.zistone.factorytest0718.util.MyConvertUtil;
+import com.zistone.factorytest0718.util.MyProgressDialogUtil;
 import com.zistone.factorytest0718.util.MySoundPlayUtil;
 import com.zistone.gpio.Gpio;
 import com.zz.api.CardDriverAPI;
@@ -28,7 +29,7 @@ public class BankCardActivity extends BaseActivity {
     private static final int BAUDRATE = 115200;
 
     private TextView _txt1;
-    private boolean _threadFlag = false, _isAppOnForeground = true;
+    private boolean _threadFlag = false, _isAppOnForeground = true, _isSupport = true;
     private CPUCardDeviceImpl _cpuCard;
     private Gpio _gpio = Gpio.getInstance();
 
@@ -42,6 +43,22 @@ public class BankCardActivity extends BaseActivity {
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }
+            }
+            if (!_isSupport) {
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        MyProgressDialogUtil.ShowWarning(BankCardActivity.this, "警告", "串口打开失败，请检查串口节点是否正确！", false, new MyProgressDialogUtil.WarningListener() {
+                            @Override
+                            public void OnIKnow() {
+                                Intent intent = new Intent();
+                                intent.putExtra(ARG_PARAM1, FAIL);
+                                setResult(RESULT_OK, intent);
+                                finish();
+                            }
+                        });
+                    }
+                });
             }
         }
     });
@@ -160,6 +177,8 @@ public class BankCardActivity extends BaseActivity {
             OnClickExecApduCmd();
         } else {
             Log.e(TAG, "CPU卡上电失败，" + GetErrorDesc(ret, new byte[100]));
+            _isSupport = false;
+            _threadFlag = true;
         }
     }
 
