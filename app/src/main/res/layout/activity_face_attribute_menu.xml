@@ -6,16 +6,6 @@
     android:orientation="vertical">
 
     <Button
-        android:id="@+id/btn_setting_face_attribute_menu"
-        android:layout_width="220sp"
-        android:layout_height="50sp"
-        android:layout_gravity="center_horizontal"
-        android:layout_margin="10sp"
-        android:background="@drawable/btn_style_1"
-        android:text="视频检测角度"
-        android:textColor="@color/white" />
-
-    <Button
         android:id="@+id/btn_active_face_attribute_menu"
         android:layout_width="220sp"
         android:layout_height="50sp"
@@ -23,6 +13,16 @@
         android:layout_margin="10sp"
         android:background="@drawable/btn_style_1"
         android:text="激活引擎（首次激活需要联网）"
+        android:textColor="@color/white" />
+
+    <Button
+        android:id="@+id/btn_setting_face_attribute_menu"
+        android:layout_width="220sp"
+        android:layout_height="50sp"
+        android:layout_gravity="center_horizontal"
+        android:layout_margin="10sp"
+        android:background="@drawable/btn_style_1"
+        android:text="视频检测角度"
         android:textColor="@color/white" />
 
     <Button
@@ -46,14 +46,13 @@
         android:textColor="@color/white" />
 
     <TextView
-        android:id="@+id/txt_msg_face_attribute_menu"
+        android:id="@+id/txt_face_attribute_menu"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
         android:layout_margin="10sp"
         android:fadeScrollbars="false"
         android:scrollbars="vertical"
-        android:text="......"
         android:textColor="@color/read"
-        android:textSize="22sp" />
+        android:textSize="18sp" />
 </LinearLayout>

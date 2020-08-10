@@ -56,6 +56,10 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
+            android:name=".face.SingleImageActivity"
+            android:label="人脸识别-人脸属性检测"
+            android:launchMode="singleTask" />
+        <activity
             android:name=".FaceAttributeMenuActivity"
             android:label="人脸识别"
             android:launchMode="singleTask" />
