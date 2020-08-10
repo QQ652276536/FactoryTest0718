@@ -78,4 +78,9 @@ dependencies {
      *  虹软人脸识别API，图像库相关
      */
     implementation files('libs/arcsoft_image_util.jar')
+    /**
+     * 可观测的异步事件处理
+     */
+    implementation 'io.reactivex.rxjava2:rxjava:2.2.6'
+    implementation 'io.reactivex.rxjava2:rxandroid:2.1.0'
 }

@@ -1,8 +1,10 @@
 package com.zistone.factorytest0718;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.ContextCompat;
 
 import android.content.Context;
+import android.content.pm.PackageManager;
 import android.graphics.Point;
 import android.graphics.Rect;
 import android.os.Bundle;
@@ -28,6 +30,23 @@ public class BaseActivity extends AppCompatActivity implements View.OnClickListe
     public int _screenHeight, _screenWidth;
     //基类布局
     public LinearLayout _baseLinearLayout;
+
+    /**
+     * 权限检查
+     *
+     * @param neededPermissions 需要的权限
+     * @return 全部被允许
+     */
+    public boolean CheckPermissions(String[] neededPermissions) {
+        if (neededPermissions == null || neededPermissions.length == 0) {
+            return true;
+        }
+        boolean allGranted = true;
+        for (String neededPermission : neededPermissions) {
+            allGranted &= ContextCompat.checkSelfPermission(this, neededPermission) == PackageManager.PERMISSION_GRANTED;
+        }
+        return allGranted;
+    }
 
     /**
      * 将继承自BaseActivity的layout加进来
