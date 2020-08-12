@@ -4,24 +4,24 @@
     android:layout_height="match_parent">
 
     <TextureView
-        android:id="@+id/texture_preview_face_detection"
+        android:id="@+id/texture_preview_attribute_detection_video"
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
 
     <com.zistone.factorytest0718.face.widget.FaceRectView
-        android:id="@+id/face_rect_view_face_detection"
+        android:id="@+id/rect_view_attribute_detection_video"
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
 
     <Button
-        android:id="@+id/btn_switch_face_detection"
+        android:id="@+id/btn_switch_attribute_detection_video"
         android:layout_width="100sp"
         android:layout_height="wrap_content"
         android:layout_gravity="bottom|end"
         android:text="切换摄像头" />
 
     <Button
-        android:id="@+id/btn_return_face_detection"
+        android:id="@+id/btn_return_attribute_detection_video"
         android:layout_width="100sp"
         android:layout_height="wrap_content"
         android:layout_gravity="bottom|left"

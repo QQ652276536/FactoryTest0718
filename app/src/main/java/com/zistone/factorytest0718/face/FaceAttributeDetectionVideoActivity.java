@@ -178,7 +178,7 @@ public class FaceAttributeDetectionVideoActivity extends AppCompatActivity imple
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
-            case R.id.btn_return_face_detection:
+            case R.id.btn_return_attribute_detection_video:
                 if (_cameraHelper != null) {
                     _cameraHelper.release();
                     _cameraHelper = null;
@@ -186,7 +186,7 @@ public class FaceAttributeDetectionVideoActivity extends AppCompatActivity imple
                 UnInitEngine();
                 finish();
                 break;
-            case R.id.btn_switch_face_detection:
+            case R.id.btn_switch_attribute_detection_video:
                 SwitchCamera();
                 break;
         }
@@ -195,7 +195,7 @@ public class FaceAttributeDetectionVideoActivity extends AppCompatActivity imple
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_face_attribute_detection);
+        setContentView(R.layout.activity_face_attribute_detection_video);
         getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
             WindowManager.LayoutParams attributes = getWindow().getAttributes();
@@ -204,11 +204,11 @@ public class FaceAttributeDetectionVideoActivity extends AppCompatActivity imple
         }
         //Activity启动后就锁定为启动时的方向
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LOCKED);
-        _previewView = findViewById(R.id.texture_preview_face_detection);
-        _faceRectView = findViewById(R.id.face_rect_view_face_detection);
-        _btnReturn = findViewById(R.id.btn_return_face_detection);
+        _previewView = findViewById(R.id.texture_preview_attribute_detection_video);
+        _faceRectView = findViewById(R.id.rect_view_attribute_detection_video);
+        _btnReturn = findViewById(R.id.btn_return_attribute_detection_video);
         _btnReturn.setOnClickListener(this::onClick);
-        _btnSwitch = findViewById(R.id.btn_switch_face_detection);
+        _btnSwitch = findViewById(R.id.btn_switch_attribute_detection_video);
         _btnSwitch.setOnClickListener(this::onClick);
         //在布局结束后才做初始化操作
         _previewView.getViewTreeObserver().addOnGlobalLayoutListener(this);

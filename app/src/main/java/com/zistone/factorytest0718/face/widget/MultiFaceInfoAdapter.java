@@ -22,43 +22,43 @@ import java.util.List;
 public class MultiFaceInfoAdapter extends RecyclerView.Adapter<MultiFaceInfoAdapter.ShowInfoHolder> {
 
     class ShowInfoHolder extends RecyclerView.ViewHolder {
-        ImageView ivHeadImage;
-        TextView tvNotification;
+        ImageView _image;
+        TextView _txt;
 
         ShowInfoHolder(@NonNull View itemView) {
             super(itemView);
         }
     }
 
-    private List<ItemShowInfo> showInfoList;
-    private LayoutInflater inflater;
+    private List<ItemShowInfo> _list;
+    private LayoutInflater _layoutInflater;
 
-    public MultiFaceInfoAdapter(List<ItemShowInfo> showInfoList, Context context) {
-        this.showInfoList = showInfoList;
-        this.inflater = LayoutInflater.from(context);
+    public MultiFaceInfoAdapter(List<ItemShowInfo> _list, Context context) {
+        this._list = _list;
+        this._layoutInflater = LayoutInflater.from(context);
     }
 
     @NonNull
     @Override
     public ShowInfoHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
-        View itemView = inflater.inflate(R.layout.activity_face_attribute_detection, viewGroup, false);
-        ImageView ivHeadImage = itemView.findViewById(R.id.img_face_compare_item_multi_face_info);
-        TextView tvNotification = itemView.findViewById(R.id.txt_face_compare_item_multi_face_info);
+        View itemView = _layoutInflater.inflate(R.layout.activity_face_compare_item_multi_face_info, viewGroup, false);
+        ImageView image = itemView.findViewById(R.id.img_face_compare_item_multi_face_info);
+        TextView txt = itemView.findViewById(R.id.txt_face_compare_item_multi_face_info);
         ShowInfoHolder holder = new ShowInfoHolder(itemView);
-        holder.ivHeadImage = ivHeadImage;
-        holder.tvNotification = tvNotification;
+        holder._image = image;
+        holder._txt = txt;
         return holder;
     }
 
     @Override
     public void onBindViewHolder(@NonNull ShowInfoHolder showInfoHolder, int i) {
-        showInfoHolder.tvNotification.setText(showInfoList.get(i).toString());
-        Glide.with(showInfoHolder.ivHeadImage.getContext()).load(showInfoList.get(i).getBitmap()).into(showInfoHolder.ivHeadImage);
+        showInfoHolder._txt.setText(_list.get(i).toString());
+        Glide.with(showInfoHolder._image.getContext()).load(_list.get(i).getBitmap()).into(showInfoHolder._image);
     }
 
     @Override
     public int getItemCount() {
-        return showInfoList == null ? 0 : showInfoList.size();
+        return _list == null ? 0 : _list.size();
     }
 
 }

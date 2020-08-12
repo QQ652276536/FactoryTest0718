@@ -20,6 +20,7 @@ import com.zistone.factorytest0718.face.ChooseDetectDegreeDialog;
 import com.zistone.factorytest0718.face.Constants;
 import com.zistone.factorytest0718.face.FaceAttributeDetectionVideoActivity;
 import com.zistone.factorytest0718.face.FaceAttributeDetectionImageActivity;
+import com.zistone.factorytest0718.face.FaceCompareImage;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -48,7 +49,7 @@ public class FaceAttributeMenuActivity extends BaseActivity implements View.OnCl
             "libarcsoft_image_util.so",};
 
     private TextView _txt;
-    private Button _btnSetting, _btnActive, _btnFaceAttributeForImage, _btnFaceAttributeForVideo;
+    private Button _btnSetting, _btnActive, _btnFaceAttributeForImage, _btnFaceAttributeForVideo, _btnFaceCompareImage;
     private ChooseDetectDegreeDialog _chooseDetectDegreeDialog;
 
     /**
@@ -144,6 +145,9 @@ public class FaceAttributeMenuActivity extends BaseActivity implements View.OnCl
             case R.id.btn_face_attribute_video_menu:
                 startActivity(new Intent(this, FaceAttributeDetectionVideoActivity.class));
                 break;
+            case R.id.btn_face_compare_img_menu:
+                startActivity(new Intent(this, FaceCompareImage.class));
+                break;
         }
     }
 
@@ -186,6 +190,8 @@ public class FaceAttributeMenuActivity extends BaseActivity implements View.OnCl
         _btnFaceAttributeForImage.setOnClickListener(this::onClick);
         _btnFaceAttributeForVideo = findViewById(R.id.btn_face_attribute_video_menu);
         _btnFaceAttributeForVideo.setOnClickListener(this::onClick);
+        _btnFaceCompareImage = findViewById(R.id.btn_face_compare_img_menu);
+        _btnFaceCompareImage.setOnClickListener(this::onClick);
         _btnPass.setOnClickListener(v -> {
             Intent intent = new Intent();
             intent.putExtra(ARG_PARAM1, PASS);

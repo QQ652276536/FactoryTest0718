@@ -45,7 +45,6 @@
         android:name="android.permission.INSTALL_PACKAGES"
         tools:ignore="ProtectedPermissions" />
 
-    <!-- extractNativeLibs：安装应用时是否把so文件从apk中解压出来 -->
     <application
         android:name=".MyApplication"
         android:allowBackup="false"
@@ -55,6 +54,10 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+        <activity
+            android:name=".face.FaceCompareImage"
+            android:label="人脸识别-人脸比对1：N"
+            android:launchMode="singleTask" />
         <activity
             android:name=".face.FaceAttributeDetectionVideoActivity"
             android:label="人脸识别-人脸属性检测"
@@ -145,8 +148,8 @@
             </intent-filter>
         </activity>
         <!--
-           用于安装第三方APK
-           7.0之后禁止在应用外部公开file://URI，这里使用FileProvider类临时访授权
+            用于安装第三方APK或者是在7.0以上通过FileProvider获取URI而不需要文件权限
+            7.0之后禁止在应用外部公开file://URI，这里使用FileProvider类临时访授权
         -->
         <provider
             android:name="androidx.core.content.FileProvider"
@@ -156,7 +159,10 @@
             <meta-data
                 android:name="android.support.FILE_PROVIDER_PATHS"
                 android:resource="@xml/provider_paths" />
-        </provider> <!-- 百度地图AK鉴权 -->
+        </provider>
+        <!--
+            百度地图AK鉴权
+        -->
         <meta-data
             android:name="com.baidu.lbsapi.API_KEY"
             android:value="W7G8yfjXFqqynEKFs3dzghHoxvH2X9eN" />

@@ -81,7 +81,6 @@ public class FaceAttributeDetectionImageActivity extends AppCompatActivity imple
         Log.i(TAG, "初始化引擎：" + faceEngineCode);
         if (faceEngineCode != ErrorInfo.MOK) {
             _txt.setText("初始化引擎失败：" + faceEngineCode);
-            _txt.setTextColor(Color.RED);
         }
     }
 
@@ -140,7 +139,8 @@ public class FaceAttributeDetectionImageActivity extends AppCompatActivity imple
             return;
         }
         Log.i(TAG, "bitmap转bgr24数据所耗时间：" + (System.currentTimeMillis() - start));
-        CreateNotificationInfo(notificationSpannableStringBuilder, new StyleSpan(Typeface.BOLD), "检测图片，宽：", String.valueOf(width), "，高：", String.valueOf(height), "\n");
+        CreateNotificationInfo(notificationSpannableStringBuilder, new StyleSpan(Typeface.BOLD), "检测到图片，宽：",
+                String.valueOf(width), "，高：", String.valueOf(height), "\n");
         List<FaceInfo> faceInfoList = new ArrayList<>();
         /**
          * 2.成功获取到了BGR24数据，开始人脸检测
@@ -157,12 +157,13 @@ public class FaceAttributeDetectionImageActivity extends AppCompatActivity imple
         Bitmap bitmapForDraw = bitmap.copy(Bitmap.Config.RGB_565, true);
         Canvas canvas = new Canvas(bitmapForDraw);
         Paint paint = new Paint();
-        CreateNotificationInfo(notificationSpannableStringBuilder, null, "检测结果：\n错误代码：", String.valueOf(detectCode), "人脸数：", String.valueOf(faceInfoList.size()), "\n");
+        CreateNotificationInfo(notificationSpannableStringBuilder, null, "检测结果：\n错误代码：", String.valueOf(detectCode),
+                "，人脸数：", String.valueOf(faceInfoList.size()), "\n");
         /**
          * 3.若检测结果人脸数量大于0，则在bitmap上绘制人脸框并且重新显示到ImageView，若人脸数量为0，则无法进行下一步操作，操作结束
          */
         if (faceInfoList.size() > 0) {
-            CreateNotificationInfo(notificationSpannableStringBuilder, null, "人脸列表：\n");
+            CreateNotificationInfo(notificationSpannableStringBuilder, new StyleSpan(Typeface.BOLD), "\n人脸区域：\n");
             paint.setAntiAlias(true);
             paint.setStrokeWidth(5);
             paint.setColor(Color.YELLOW);
@@ -225,7 +226,7 @@ public class FaceAttributeDetectionImageActivity extends AppCompatActivity imple
          */
         //年龄数据
         if (ageInfoList.size() > 0) {
-            CreateNotificationInfo(notificationSpannableStringBuilder, new StyleSpan(Typeface.BOLD), "人脸对应的年龄：\n");
+            CreateNotificationInfo(notificationSpannableStringBuilder, new StyleSpan(Typeface.BOLD), "年龄：\n");
         }
         for (int i = 0; i < ageInfoList.size(); i++) {
             CreateNotificationInfo(notificationSpannableStringBuilder, null, "人脸[", String.valueOf(i), "]:", String.valueOf(ageInfoList.get(i).getAge()), "\n");
@@ -234,7 +235,7 @@ public class FaceAttributeDetectionImageActivity extends AppCompatActivity imple
 
         //性别数据
         if (genderInfoList.size() > 0) {
-            CreateNotificationInfo(notificationSpannableStringBuilder, new StyleSpan(Typeface.BOLD), "人脸对应的性别：\n");
+            CreateNotificationInfo(notificationSpannableStringBuilder, new StyleSpan(Typeface.BOLD), "性别：\n");
         }
         for (int i = 0; i < genderInfoList.size(); i++) {
             CreateNotificationInfo(notificationSpannableStringBuilder, null, "人脸[", String.valueOf(i), "]:", genderInfoList.get(i).getGender() == GenderInfo.MALE ? "男性" : (genderInfoList.get(i).getGender() == GenderInfo.FEMALE ? "女性" : "未知"), "\n");
@@ -242,7 +243,7 @@ public class FaceAttributeDetectionImageActivity extends AppCompatActivity imple
         CreateNotificationInfo(notificationSpannableStringBuilder, null, "\n");
         //人脸三维角度数据
         if (face3DAngleList.size() > 0) {
-            CreateNotificationInfo(notificationSpannableStringBuilder, new StyleSpan(Typeface.BOLD), "人脸对应的三维角度：\n");
+            CreateNotificationInfo(notificationSpannableStringBuilder, new StyleSpan(Typeface.BOLD), "三维角度：\n");
             for (int i = 0; i < face3DAngleList.size(); i++) {
                 CreateNotificationInfo(notificationSpannableStringBuilder, null, "人脸[", String.valueOf(i), "]:", face3DAngleList.get(i).toString(), "\n");
             }
@@ -250,7 +251,7 @@ public class FaceAttributeDetectionImageActivity extends AppCompatActivity imple
         CreateNotificationInfo(notificationSpannableStringBuilder, null, "\n");
         //活体检测数据
         if (livenessInfoList.size() > 0) {
-            CreateNotificationInfo(notificationSpannableStringBuilder, new StyleSpan(Typeface.BOLD), "人脸对应的活体检测：\n");
+            CreateNotificationInfo(notificationSpannableStringBuilder, new StyleSpan(Typeface.BOLD), "活体检测：\n");
             for (int i = 0; i < livenessInfoList.size(); i++) {
                 String liveness = null;
                 switch (livenessInfoList.get(i).getLiveness()) {
@@ -281,8 +282,7 @@ public class FaceAttributeDetectionImageActivity extends AppCompatActivity imple
         if (faceInfoList.size() > 0) {
             FaceFeature[] faceFeatures = new FaceFeature[faceInfoList.size()];
             int[] extractFaceFeatureCodes = new int[faceInfoList.size()];
-
-            CreateNotificationInfo(notificationSpannableStringBuilder, new StyleSpan(Typeface.BOLD), "人脸特征提取：\n");
+            CreateNotificationInfo(notificationSpannableStringBuilder, new StyleSpan(Typeface.BOLD), "特征提取：\n");
             for (int i = 0; i < faceInfoList.size(); i++) {
                 faceFeatures[i] = new FaceFeature();
                 //从图片解析出人脸特征数据
@@ -297,10 +297,9 @@ public class FaceAttributeDetectionImageActivity extends AppCompatActivity imple
                 }
             }
             CreateNotificationInfo(notificationSpannableStringBuilder, null, "\n");
-
             //人脸特征的数量大于2，将所有特征进行比较
             if (faceFeatures.length >= 2) {
-                CreateNotificationInfo(notificationSpannableStringBuilder, new StyleSpan(Typeface.BOLD), "所有人脸相似度：\n");
+                CreateNotificationInfo(notificationSpannableStringBuilder, new StyleSpan(Typeface.BOLD), "相似度：\n");
                 for (int i = 0; i < faceFeatures.length; i++) {
                     for (int j = i + 1; j < faceFeatures.length; j++) {
                         CreateNotificationInfo(notificationSpannableStringBuilder, new StyleSpan(Typeface.BOLD_ITALIC), "比较人脸[", String.valueOf(i), "]和人脸[", String.valueOf(j), "]：\n");
@@ -330,7 +329,6 @@ public class FaceAttributeDetectionImageActivity extends AppCompatActivity imple
             @Override
             public void run() {
                 _txt.setText(notificationSpannableStringBuilder);
-                _txt.setTextColor(Color.parseColor("#3CB371"));
                 if (progressDialog != null && progressDialog.isShowing()) {
                     progressDialog.dismiss();
                 }
@@ -365,7 +363,6 @@ public class FaceAttributeDetectionImageActivity extends AppCompatActivity imple
         if (requestCode == ACTION_CHOOSE_IMAGE) {
             if (data == null || data.getData() == null) {
                 _txt.setText("图片获取失败！");
-                _txt.setTextColor(Color.RED);
                 return;
             }
             try {
@@ -376,7 +373,6 @@ public class FaceAttributeDetectionImageActivity extends AppCompatActivity imple
             }
             if (mBitmap == null) {
                 _txt.setText("图片获取失败！");
-                _txt.setTextColor(Color.RED);
                 return;
             }
             Glide.with(_img.getContext()).load(mBitmap).into(_img);
@@ -401,12 +397,12 @@ public class FaceAttributeDetectionImageActivity extends AppCompatActivity imple
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
-            case R.id.btn_local_face_compare_img:
+            case R.id.btn_local_attribute_detection_img:
                 Intent intent = new Intent(Intent.ACTION_PICK);
                 intent.setDataAndType(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, "image/*");
                 startActivityForResult(intent, ACTION_CHOOSE_IMAGE);
                 break;
-            case R.id.btn_start_face_compare_img:
+            case R.id.btn_start_compare_attribute_detection_img:
                 _btnStart.setClickable(false);
                 if (progressDialog == null || progressDialog.isShowing()) {
                     return;
@@ -432,7 +428,6 @@ public class FaceAttributeDetectionImageActivity extends AppCompatActivity imple
                     public void onError(Throwable e) {
                         e.printStackTrace();
                         _txt.setText(e.getMessage());
-                        _txt.setTextColor(Color.RED);
                     }
 
                     @Override
@@ -447,14 +442,14 @@ public class FaceAttributeDetectionImageActivity extends AppCompatActivity imple
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_face_compare_image);
-        _img = findViewById(R.id.img_face_compare_img);
+        setContentView(R.layout.activity_face_attribute_detection_image);
+        _img = findViewById(R.id.img_attribute_detection_img);
         _img.setImageResource(R.drawable.face_faces);
-        _btnLocal = findViewById(R.id.btn_local_face_compare_img);
+        _btnLocal = findViewById(R.id.btn_local_attribute_detection_img);
         _btnLocal.setOnClickListener(this::onClick);
-        _btnStart = findViewById(R.id.btn_start_face_compare_img);
+        _btnStart = findViewById(R.id.btn_start_compare_attribute_detection_img);
         _btnStart.setOnClickListener(this::onClick);
-        _txt = findViewById(R.id.txt_face_compare_img);
+        _txt = findViewById(R.id.txt_face_attribute_detection_img);
         progressDialog = new AlertDialog.Builder(this).setTitle("正在进行比对").setView(new ProgressBar(this)).create();
         InitEngine();
     }
