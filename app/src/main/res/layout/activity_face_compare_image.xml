@@ -20,8 +20,10 @@
                 android:id="@+id/btn_choose_face_compare_img"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:background="@drawable/btn_style_2"
                 android:onClick="ChooseMainImage"
-                android:text="选择主图" />
+                android:text="选择主图"
+                android:textColor="@color/white" />
 
             <ImageView
                 android:id="@+id/img_main_face_compare_img"
@@ -53,8 +55,10 @@
                 android:id="@+id/btn_add_face_compare_img"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:background="@drawable/btn_style_2"
                 android:onClick="AddItemFace"
-                android:text="添加比对图" />
+                android:text="添加比对图"
+                android:textColor="@color/white" />
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/recycler_add_face_compare_img"

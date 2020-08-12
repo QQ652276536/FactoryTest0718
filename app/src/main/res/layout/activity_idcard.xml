@@ -35,18 +35,24 @@
                 android:id="@+id/btn_readversion_idcard"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_margin="5sp"
+                android:background="@drawable/btn_style_2"
                 android:gravity="center"
                 android:onClick="OnClickReadVersion"
                 android:text="SAM版本"
+                android:textColor="@color/white"
                 tools:ignore="OnClick" />
 
             <Button
                 android:id="@+id/btn_read_idcard"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_margin="5sp"
+                android:background="@drawable/btn_style_2"
                 android:gravity="center"
                 android:onClick="OnClickReadIDCard"
                 android:text="读取身份证"
+                android:textColor="@color/white"
                 tools:ignore="OnClick" />
         </LinearLayout>
     </LinearLayout>

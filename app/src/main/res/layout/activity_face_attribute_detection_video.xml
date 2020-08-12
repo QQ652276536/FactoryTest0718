@@ -18,13 +18,17 @@
         android:layout_width="100sp"
         android:layout_height="wrap_content"
         android:layout_gravity="bottom|end"
-        android:text="切换摄像头" />
+        android:background="@drawable/btn_style_2"
+        android:text="切换摄像头"
+        android:textColor="@color/white" />
 
     <Button
         android:id="@+id/btn_return_attribute_detection_video"
         android:layout_width="100sp"
         android:layout_height="wrap_content"
         android:layout_gravity="bottom|left"
-        android:text="返回" />
+        android:background="@drawable/btn_style_2"
+        android:text="返回"
+        android:textColor="@color/white" />
 
 </FrameLayout>

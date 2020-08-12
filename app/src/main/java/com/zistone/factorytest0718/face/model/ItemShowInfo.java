@@ -56,7 +56,7 @@ public class ItemShowInfo {
 
     @Override
     public String toString() {
-        return " age=" + age + ", gender=" + (gender == GenderInfo.MALE ? "男性" : (gender == GenderInfo.FEMALE ?
-                "女性" : "未知")) + ", similar=" + similar;
+        return "年龄：" + age + "，性别：" + (gender == GenderInfo.MALE ? "男性" : (gender == GenderInfo.FEMALE ?
+                "女性" : "未知")) + "，相似度：" + similar;
     }
 }
