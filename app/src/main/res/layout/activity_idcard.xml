@@ -15,7 +15,7 @@
         android:textSize="18sp" />
 
     <LinearLayout
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="5sp"
         android:orientation="horizontal">
@@ -35,7 +35,7 @@
                 android:id="@+id/btn_readversion_idcard"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_margin="5sp"
+                android:layout_margin="10sp"
                 android:background="@drawable/btn_style_2"
                 android:gravity="center"
                 android:onClick="OnClickReadVersion"
@@ -47,13 +47,46 @@
                 android:id="@+id/btn_read_idcard"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_margin="5sp"
+                android:layout_margin="10sp"
                 android:background="@drawable/btn_style_2"
                 android:gravity="center"
                 android:onClick="OnClickReadIDCard"
                 android:text="读取身份证"
                 android:textColor="@color/white"
                 tools:ignore="OnClick" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <ImageButton
+                android:id="@+id/btn_top_idcard"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="right"
+                android:layout_margin="10sp"
+                android:background="?android:attr/selectableItemBackgroundBorderless"
+                android:src="@drawable/com_test_top" />
+
+            <ImageButton
+                android:id="@+id/btn_bottom_idcard"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="right"
+                android:layout_margin="10sp"
+                android:background="?android:attr/selectableItemBackgroundBorderless"
+                android:src="@drawable/com_test_bottom" />
+
+            <ImageButton
+                android:id="@+id/btn_clear_idcard"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="right"
+                android:layout_margin="10sp"
+                android:background="?android:attr/selectableItemBackgroundBorderless"
+                android:src="@drawable/com_test_clear" />
         </LinearLayout>
     </LinearLayout>
 </LinearLayout>
