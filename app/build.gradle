@@ -17,8 +17,11 @@ android {
             abiFilters 'armeabi-v7a'
         }
     }
+    /**
+     * Google在Jetpack中推出的一款数据绑定的支持库（暂时没用上）
+     */
     dataBinding {
-        enabled = true
+        enabled = false
     }
 
     buildTypes {
