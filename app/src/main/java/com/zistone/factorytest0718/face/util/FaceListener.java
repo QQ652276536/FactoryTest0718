@@ -1,4 +1,4 @@
-package com.zistone.factorytest0718.face.util.face;
+package com.zistone.factorytest0718.face.util;
 
 import androidx.annotation.Nullable;
 

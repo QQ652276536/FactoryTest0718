@@ -17,7 +17,8 @@ import com.arcsoft.face.ErrorInfo;
 import com.arcsoft.face.FaceEngine;
 import com.arcsoft.face.enums.RuntimeABI;
 import com.zistone.factorytest0718.face.ChooseDetectDegreeDialog;
-import com.zistone.factorytest0718.face.Constants;
+import com.zistone.factorytest0718.face.FaceIdCompareVerifyActivity;
+import com.zistone.factorytest0718.face.constants.Constants;
 import com.zistone.factorytest0718.face.FaceAttributeDetectionVideoActivity;
 import com.zistone.factorytest0718.face.FaceAttributeDetectionImageActivity;
 import com.zistone.factorytest0718.face.FaceCompareImage;
@@ -49,7 +50,7 @@ public class FaceAttributeMenuActivity extends BaseActivity implements View.OnCl
             "libarcsoft_image_util.so",};
 
     private TextView _txt;
-    private Button _btnSetting, _btnActive, _btnFaceAttributeForImage, _btnFaceAttributeForVideo, _btnFaceCompareImage;
+    private Button _btnSetting, _btnActive, _btnFaceAttributeForImage, _btnFaceAttributeForVideo, _btnFaceCompareImage, _btnFaceCompareVideo, _btnFaceIdCompare;
     private ChooseDetectDegreeDialog _chooseDetectDegreeDialog;
 
     /**
@@ -145,8 +146,16 @@ public class FaceAttributeMenuActivity extends BaseActivity implements View.OnCl
             case R.id.btn_face_attribute_video_menu:
                 startActivity(new Intent(this, FaceAttributeDetectionVideoActivity.class));
                 break;
+                //人脸比对1：N（图片VS图片）
             case R.id.btn_face_compare_img_menu:
                 startActivity(new Intent(this, FaceCompareImage.class));
+                break;
+                //人脸比对1：N（视频VS人脸库，RGB活体）
+            case R.id.btn_face_compare_video_menu:
+                break;
+                //人证核验
+            case R.id.btn_faceid_compare_menu:
+                startActivity(new Intent(this, FaceIdCompareVerifyActivity.class));
                 break;
         }
     }
@@ -192,6 +201,10 @@ public class FaceAttributeMenuActivity extends BaseActivity implements View.OnCl
         _btnFaceAttributeForVideo.setOnClickListener(this::onClick);
         _btnFaceCompareImage = findViewById(R.id.btn_face_compare_img_menu);
         _btnFaceCompareImage.setOnClickListener(this::onClick);
+        _btnFaceCompareVideo = findViewById(R.id.btn_face_compare_video_menu);
+        _btnFaceCompareVideo.setOnClickListener(this::onClick);
+        _btnFaceIdCompare = findViewById(R.id.btn_faceid_compare_menu);
+        _btnFaceIdCompare.setOnClickListener(this::onClick);
         _btnPass.setOnClickListener(v -> {
             Intent intent = new Intent();
             intent.putExtra(ARG_PARAM1, PASS);

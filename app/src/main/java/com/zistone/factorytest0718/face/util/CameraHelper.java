@@ -1,4 +1,4 @@
-package com.zistone.factorytest0718.face.util.camera;
+package com.zistone.factorytest0718.face.util;
 
 import android.graphics.ImageFormat;
 import android.graphics.Point;
@@ -12,24 +12,16 @@ import android.view.TextureView;
 import android.view.View;
 
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Comparator;
 import java.util.List;
 
 /**
- * 打开两个相机的辅助类，和{@link CameraListener}共同使用，获取nv21数据等操作
- *
- * 由于IR摄像头和RGB摄像头的默认分辨率可能不同，为了让两者相同，该类做了以下操作：
- * 1. 获取两者支持的分辨率列表到到静态变量{@link DualCameraHelper#rgbSupportedPreviewSizes}及{@link DualCameraHelper#irSupportedPreviewSizes}中，
- * 2. 使用{@link DualCameraHelper#getCommonSupportedPreviewSize()}方法取分辨率的交集，
- * 3. 使用{@link DualCameraHelper#getBestSupportedSize(List, Point)}取最佳分辨率使两个摄像头分辨率尽可能相同
+ * 相机辅助类，和{@link CameraListener}共同使用，获取nv21数据等操作
  */
-public class DualCameraHelper implements Camera.PreviewCallback {
+public class CameraHelper implements Camera.PreviewCallback {
 
-    private static List<Camera.Size> rgbSupportedPreviewSizes;
-    private static List<Camera.Size> irSupportedPreviewSizes;
-    private static final String TAG = "DualCameraHelper";
+    private static final String TAG = "CameraHelper";
 
     private Camera mCamera;
     private int mCameraId;
@@ -45,7 +37,7 @@ public class DualCameraHelper implements Camera.PreviewCallback {
     private Integer specificCameraId = null;
     private CameraListener cameraListener;
 
-    private DualCameraHelper(DualCameraHelper.Builder builder) {
+    private CameraHelper(CameraHelper.Builder builder) {
         previewDisplayView = builder.previewDisplayView;
         specificCameraId = builder.specificCameraId;
         cameraListener = builder.cameraListener;
@@ -72,38 +64,11 @@ public class DualCameraHelper implements Camera.PreviewCallback {
         }
     }
 
-    private List<Camera.Size> getCommonSupportedPreviewSize() {
-        /**
-         * irSupportedPreviewSizes 和 rgbSupportedPreviewSizes 为null才去获取，
-         * 不为null就没必要获取了，而且此时有可能该camera已处于打开状态，无法打开camera
-         */
-        if (irSupportedPreviewSizes == null) {
-            Camera irCamera = Camera.open(Camera.CameraInfo.CAMERA_FACING_FRONT);
-            irSupportedPreviewSizes = irCamera.getParameters().getSupportedPreviewSizes();
-            irCamera.release();
-        }
-        if (rgbSupportedPreviewSizes == null) {
-            Camera rgbCamera = Camera.open(Camera.CameraInfo.CAMERA_FACING_BACK);
-            rgbSupportedPreviewSizes = rgbCamera.getParameters().getSupportedPreviewSizes();
-            rgbCamera.release();
-        }
-        List<Camera.Size> commonPreviewSizes = new ArrayList<>();
-        for (Camera.Size rgbPreviewSize : rgbSupportedPreviewSizes) {
-            for (Camera.Size irPreviewSize : irSupportedPreviewSizes) {
-                if (irPreviewSize.width == rgbPreviewSize.width && irPreviewSize.height == rgbPreviewSize.height) {
-                    commonPreviewSizes.add(rgbPreviewSize);
-                }
-            }
-        }
-        return commonPreviewSizes;
-    }
-
     public void start() {
         synchronized (this) {
             if (mCamera != null) {
                 return;
             }
-            List<Camera.Size> supportedPreviewSize = getCommonSupportedPreviewSize();
             //相机数量为2则打开1,1则打开0,相机ID 1为前置，0为后置
             mCameraId = Camera.getNumberOfCameras() - 1;
             //若指定了相机ID且该相机存在，则打开指定的相机
@@ -121,6 +86,7 @@ public class DualCameraHelper implements Camera.PreviewCallback {
             if (mCamera == null) {
                 mCamera = Camera.open(mCameraId);
             }
+
             displayOrientation = getCameraOri(rotation);
             mCamera.setDisplayOrientation(displayOrientation);
             try {
@@ -129,8 +95,9 @@ public class DualCameraHelper implements Camera.PreviewCallback {
 
                 //预览大小设置
                 previewSize = parameters.getPreviewSize();
-                if (supportedPreviewSize != null && supportedPreviewSize.size() > 0) {
-                    previewSize = getBestSupportedSize(supportedPreviewSize, previewViewSize);
+                List<Camera.Size> supportedPreviewSizes = parameters.getSupportedPreviewSizes();
+                if (supportedPreviewSizes != null && supportedPreviewSizes.size() > 0) {
+                    previewSize = getBestSupportedSize(supportedPreviewSizes, previewViewSize);
                 }
                 parameters.setPreviewSize(previewSize.width, previewSize.height);
 
@@ -197,9 +164,6 @@ public class DualCameraHelper implements Camera.PreviewCallback {
         return result;
     }
 
-    /**
-     * 停止预览
-     */
     public void stop() {
         synchronized (this) {
             if (mCamera == null) {
@@ -221,9 +185,6 @@ public class DualCameraHelper implements Camera.PreviewCallback {
         }
     }
 
-    /**
-     * 释放操作
-     */
     public void release() {
         synchronized (this) {
             stop();
@@ -236,12 +197,6 @@ public class DualCameraHelper implements Camera.PreviewCallback {
         }
     }
 
-    /**
-     * 获取候选分辨率列表中最接近预览view大小的分辨率
-     * @param sizes 支持的分辨率
-     * @param previewViewSize   预览view的大小
-     * @return  最接近预览view大小的分辨率
-     */
     private Camera.Size getBestSupportedSize(List<Camera.Size> sizes, Point previewViewSize) {
         if (sizes == null || sizes.size() == 0) {
             return mCamera.getParameters().getPreviewSize();
@@ -275,9 +230,6 @@ public class DualCameraHelper implements Camera.PreviewCallback {
         boolean isNormalRotate = (additionalRotation % 180 == 0);
 
         for (Camera.Size s : sizes) {
-            if (s.width < 720 || s.height < 720) {
-                continue;
-            }
             if (specificPreviewSize != null && specificPreviewSize.x == s.width && specificPreviewSize.y == s.height) {
                 return s;
             }
@@ -379,6 +331,16 @@ public class DualCameraHelper implements Camera.PreviewCallback {
             }
         }
     }
+    public boolean switchCamera() {
+        if (Camera.getNumberOfCameras() < 2) {
+            return false;
+        }
+        // cameraId ,0为后置，1为前置
+        specificCameraId = 1 - mCameraId;
+        stop();
+        start();
+        return true;
+    }
 
     public static final class Builder {
 
@@ -466,7 +428,7 @@ public class DualCameraHelper implements Camera.PreviewCallback {
             return this;
         }
 
-        public DualCameraHelper build() {
+        public CameraHelper build() {
             if (previewViewSize == null) {
                 Log.e(TAG, "previewViewSize is null, now use default previewSize");
             }
@@ -476,7 +438,7 @@ public class DualCameraHelper implements Camera.PreviewCallback {
             if (previewDisplayView == null) {
                 throw new RuntimeException("you must preview on a textureView or a surfaceView");
             }
-            return new DualCameraHelper(this);
+            return new CameraHelper(this);
         }
     }
 

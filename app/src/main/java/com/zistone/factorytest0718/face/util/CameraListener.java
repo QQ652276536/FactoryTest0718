@@ -1,4 +1,4 @@
-package com.zistone.factorytest0718.face.util.camera;
+package com.zistone.factorytest0718.face.util;
 
 import android.hardware.Camera;
 

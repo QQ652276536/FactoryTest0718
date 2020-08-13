@@ -130,7 +130,6 @@ public class FaceAttributeDetectionImageActivity extends AppCompatActivity imple
             }
         });
         //bitmap转bgr24
-        long start = System.currentTimeMillis();
         byte[] bgr24 = ArcSoftImageUtil.createImageData(bitmap.getWidth(), bitmap.getHeight(), ArcSoftImageFormat.BGR24);
         int transformCode = ArcSoftImageUtil.bitmapToImageData(bitmap, bgr24, ArcSoftImageFormat.BGR24);
         if (transformCode != ArcSoftImageUtilError.CODE_SUCCESS) {
@@ -138,20 +137,18 @@ public class FaceAttributeDetectionImageActivity extends AppCompatActivity imple
             CreateNotificationInfo(notificationSpannableStringBuilder, new StyleSpan(Typeface.BOLD), "转换bitmap到图片数据失败", "错误代码：", String.valueOf(transformCode), "\n");
             return;
         }
-        Log.i(TAG, "bitmap转bgr24数据所耗时间：" + (System.currentTimeMillis() - start));
         CreateNotificationInfo(notificationSpannableStringBuilder, new StyleSpan(Typeface.BOLD), "检测到图片，宽：",
                 String.valueOf(width), "，高：", String.valueOf(height), "\n");
         List<FaceInfo> faceInfoList = new ArrayList<>();
         /**
          * 2.成功获取到了BGR24数据，开始人脸检测
          */
-        long fdStartTime = System.currentTimeMillis();
         //        ArcSoftImageInfo arcSoftImageInfo = new ArcSoftImageInfo(width,height,FaceEngine.CP_PAF_BGR24,new byte[][]{bgr24},new int[]{width * 3});
         //        Log.i(TAG, "processImage: " + arcSoftImageInfo.getPlanes()[0].length);
         //        int detectCode = faceEngine.detectFaces(arcSoftImageInfo, faceInfoList);
         int detectCode = faceEngine.detectFaces(bgr24, width, height, FaceEngine.CP_PAF_BGR24, DetectModel.RGB, faceInfoList);
         if (detectCode == ErrorInfo.MOK) {
-            Log.i(TAG, "检测到人脸数据所耗时间：" + (System.currentTimeMillis() - fdStartTime));
+            Log.i(TAG, "检测到人脸数据");
         }
         //绘制bitmap
         Bitmap bitmapForDraw = bitmap.copy(Bitmap.Config.RGB_565, true);
@@ -238,7 +235,7 @@ public class FaceAttributeDetectionImageActivity extends AppCompatActivity imple
             CreateNotificationInfo(notificationSpannableStringBuilder, new StyleSpan(Typeface.BOLD), "性别：\n");
         }
         for (int i = 0; i < genderInfoList.size(); i++) {
-            CreateNotificationInfo(notificationSpannableStringBuilder, null, "人脸[", String.valueOf(i), "]:", genderInfoList.get(i).getGender() == GenderInfo.MALE ? "男性" : (genderInfoList.get(i).getGender() == GenderInfo.FEMALE ? "女性" : "未知"), "\n");
+            CreateNotificationInfo(notificationSpannableStringBuilder, null, "人脸[", String.valueOf(i), "]:", genderInfoList.get(i).getGender() == GenderInfo.MALE ? "男" : (genderInfoList.get(i).getGender() == GenderInfo.FEMALE ? "女" : "未知"), "\n");
         }
         CreateNotificationInfo(notificationSpannableStringBuilder, null, "\n");
         //人脸三维角度数据
@@ -275,7 +272,6 @@ public class FaceAttributeDetectionImageActivity extends AppCompatActivity imple
             }
         }
         CreateNotificationInfo(notificationSpannableStringBuilder, null, "\n");
-
         /**
          * 6.最后将图片内的所有人脸进行逐一比对并添加到提示文字中
          */
@@ -286,13 +282,10 @@ public class FaceAttributeDetectionImageActivity extends AppCompatActivity imple
             for (int i = 0; i < faceInfoList.size(); i++) {
                 faceFeatures[i] = new FaceFeature();
                 //从图片解析出人脸特征数据
-                long frStartTime = System.currentTimeMillis();
                 extractFaceFeatureCodes[i] = faceEngine.extractFaceFeature(bgr24, width, height, FaceEngine.CP_PAF_BGR24, faceInfoList.get(i), faceFeatures[i]);
-
                 if (extractFaceFeatureCodes[i] != ErrorInfo.MOK) {
                     CreateNotificationInfo(notificationSpannableStringBuilder, null, "人脸[", String.valueOf(i), "]特征：", "提取失败，错误代码：", String.valueOf(extractFaceFeatureCodes[i]), "\n");
                 } else {
-                    Log.i(TAG, "人脸进行逐一比对所耗时间：" + (System.currentTimeMillis() - frStartTime));
                     CreateNotificationInfo(notificationSpannableStringBuilder, null, "人脸[", String.valueOf(i), "]特征：", "提取成功\n");
                 }
             }

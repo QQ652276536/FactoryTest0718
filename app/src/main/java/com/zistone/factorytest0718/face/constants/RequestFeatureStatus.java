@@ -1,4 +1,4 @@
-package com.zistone.factorytest0718.face.util.face;
+package com.zistone.factorytest0718.face.constants;
 
 public class RequestFeatureStatus {
     public static final int SEARCHING = 0;

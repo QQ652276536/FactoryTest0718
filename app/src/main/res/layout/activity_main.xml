@@ -209,7 +209,7 @@
                 android:layout_margin="5sp"
                 android:layout_weight="1"
                 android:background="@drawable/btn_style_main_1"
-                android:text="人脸属性"
+                android:text="人脸识别"
                 android:textColor="@color/white" />
 
             <Button

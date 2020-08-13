@@ -1,4 +1,4 @@
-package com.zistone.factorytest0718.face;
+package com.zistone.factorytest0718.face.constants;
 
 public class Constants {
 

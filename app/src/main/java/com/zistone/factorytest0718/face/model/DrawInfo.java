@@ -9,7 +9,7 @@ public class DrawInfo {
     private int age;
     private int liveness;
     private int color;
-    private String name = null;
+    private String name;
 
     public DrawInfo(Rect rect, int sex, int age, int liveness, int color, String name) {
         this.rect = rect;

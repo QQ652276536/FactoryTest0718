@@ -1,4 +1,4 @@
-package com.zistone.factorytest0718.face.util.face;
+package com.zistone.factorytest0718.face.constants;
 
 import android.graphics.Color;
 

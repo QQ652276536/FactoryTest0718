@@ -1,4 +1,4 @@
-package com.zistone.factorytest0718.face.util.face;
+package com.zistone.factorytest0718.face.util;
 
 import android.hardware.Camera;
 import android.util.Log;
@@ -8,8 +8,8 @@ import com.arcsoft.face.FaceEngine;
 import com.arcsoft.face.FaceFeature;
 import com.arcsoft.face.FaceInfo;
 import com.arcsoft.face.LivenessInfo;
+import com.zistone.factorytest0718.face.constants.LivenessType;
 import com.zistone.factorytest0718.face.model.FacePreviewInfo;
-import com.zistone.factorytest0718.face.util.TrackUtil;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -27,22 +27,59 @@ import java.util.concurrent.TimeUnit;
 public class FaceHelper {
 
     public static final class Builder {
-        public FaceEngine _ftEngine;
-        public FaceEngine _frEngine;
-        public FaceEngine _flEngine;
-        public Camera.Size _size;
-        public FaceListener _faceListener;
-        public int frQueueSize;
-        public int flQueueSize;
-        public int _trackedFaceCount;
-
-        public Builder() {
-        }
+        private FaceEngine _ftEngine;
+        private FaceEngine _frEngine;
+        private FaceEngine _flEngine;
+        private Camera.Size _previewSize;
+        private FaceListener _faceListener;
+        private int _frQueueSize;
+        private int _flQueueSize;
+        private int _trackedFaceCount;
 
         public FaceHelper build() {
             return new FaceHelper(this);
         }
+        public Builder ftEngine(FaceEngine val) {
+            _ftEngine = val;
+            return this;
+        }
 
+        public Builder frEngine(FaceEngine val) {
+            _frEngine = val;
+            return this;
+        }
+
+        public Builder flEngine(FaceEngine val) {
+            _flEngine = val;
+            return this;
+        }
+
+
+        public Builder previewSize(Camera.Size val) {
+            _previewSize = val;
+            return this;
+        }
+
+
+        public Builder faceListener(FaceListener val) {
+            _faceListener = val;
+            return this;
+        }
+
+        public Builder frQueueSize(int val) {
+            _frQueueSize = val;
+            return this;
+        }
+
+        public Builder flQueueSize(int val) {
+            _flQueueSize = val;
+            return this;
+        }
+
+        public Builder trackedFaceCount(int val) {
+            _trackedFaceCount = val;
+            return this;
+        }
     }
 
     /**
@@ -194,13 +231,13 @@ public class FaceHelper {
         _ftEngine = builder._ftEngine;
         _faceListener = builder._faceListener;
         _trackedFaceCount = builder._trackedFaceCount;
-        _size = builder._size;
+        _size = builder._previewSize;
         _frEngine = builder._frEngine;
         _flEngine = builder._flEngine;
         //特征提取线程队列大小
         int frQueueSize = 5;
-        if (builder.frQueueSize > 0) {
-            frQueueSize = builder.frQueueSize;
+        if (builder._frQueueSize > 0) {
+            frQueueSize = builder._frQueueSize;
         } else {
             Log.e(TAG, "线程数必须大于0，现在使用默认值：" + frQueueSize);
         }
@@ -208,8 +245,8 @@ public class FaceHelper {
         _frExecutor = new ThreadPoolExecutor(1, frQueueSize, 0, TimeUnit.MILLISECONDS, _frThreadQueue);
         //活体检测线程队列大小
         int flQueueSize = 5;
-        if (builder.flQueueSize > 0) {
-            flQueueSize = builder.flQueueSize;
+        if (builder._flQueueSize > 0) {
+            flQueueSize = builder._flQueueSize;
         } else {
             Log.e(TAG, "线程数必须大于0，现在使用默认值：" + flQueueSize);
         }
@@ -302,12 +339,10 @@ public class FaceHelper {
         if (_faceListener != null) {
             if (_ftEngine != null) {
                 _faceInfoList.clear();
-                long ftStartTime = System.currentTimeMillis();
                 int code = _ftEngine.detectFaces(nv21, _size.width, _size.height, FaceEngine.CP_PAF_NV21, _faceInfoList);
                 if (code != ErrorInfo.MOK) {
                     _faceListener.onFail(new Exception("处理帧数据失败，错误代码：" + code));
                 } else {
-                    Log.i(TAG, "处理帧数据耗时：" + (System.currentTimeMillis() - ftStartTime) + "ms");
                 }
                 //若需要多人脸搜索，删除此行代码
                 TrackUtil.KeepMaxFace(_faceInfoList);

@@ -172,7 +172,7 @@ public class FaceCompareImage extends AppCompatActivity {
                         stringBuilder.append("人脸信息：\n\n");
                     }
                     for (int i = 0; i < faceInfoList.size(); i++) {
-                        stringBuilder.append("人脸[").append(i).append("]:\n").append(faceInfoList.get(i)).append("\n" + "年龄：").append(ageInfoList.get(i).getAge()).append("\n性别：").append(genderInfoList.get(i).getGender() == GenderInfo.MALE ? "男性" : (genderInfoList.get(i).getGender() == GenderInfo.FEMALE ? "女性" : "未知")).append("\n人脸三维角度：").append(face3DAngleList.get(i)).append("\n\n");
+                        stringBuilder.append("人脸[").append(i).append("]:\n").append(faceInfoList.get(i)).append("\n" + "年龄：").append(ageInfoList.get(i).getAge()).append("\n性别：").append(genderInfoList.get(i).getGender() == GenderInfo.MALE ? "男" : (genderInfoList.get(i).getGender() == GenderInfo.FEMALE ? "女" : "未知")).append("\n人脸三维角度：").append(face3DAngleList.get(i)).append("\n\n");
                     }
                     _txtMainImageInfo.setText(stringBuilder);
                 } else if (type == TYPE_ITEM) {

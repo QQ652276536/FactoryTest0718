@@ -13,6 +13,8 @@ public class MyApplication extends Application {
 
     private static final String TAG = "MyApplication";
 
+    private static Application _application;
+
     /**
      * 监听Activity的生命周期
      */
@@ -55,9 +57,14 @@ public class MyApplication extends Application {
         }
     };
 
+    public static Application GetApplication() {
+        return _application;
+    }
+
     @Override
     public void onCreate() {
         super.onCreate();
+        _application = this;
         //在使用SDK各组间之前初始化context信息,传入ApplicationContext
         registerActivityLifecycleCallbacks(_activityLifecycleCallbacks);
         //默认本地个性化地图初始化方法

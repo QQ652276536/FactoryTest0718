@@ -27,9 +27,9 @@ import com.zistone.factorytest0718.R;
 import com.zistone.factorytest0718.face.model.DrawInfo;
 import com.zistone.factorytest0718.face.util.ConfigUtil;
 import com.zistone.factorytest0718.face.util.DrawHelper;
-import com.zistone.factorytest0718.face.util.camera.CameraHelper;
-import com.zistone.factorytest0718.face.util.camera.CameraListener;
-import com.zistone.factorytest0718.face.util.face.RecognizeColor;
+import com.zistone.factorytest0718.face.util.CameraHelper;
+import com.zistone.factorytest0718.face.util.CameraListener;
+import com.zistone.factorytest0718.face.constants.RecognizeColor;
 import com.zistone.factorytest0718.face.widget.FaceRectView;
 
 import java.util.ArrayList;
@@ -75,7 +75,7 @@ public class FaceAttributeDetectionVideoActivity extends AppCompatActivity imple
         CameraListener cameraListener = new CameraListener() {
             @Override
             public void onCameraOpened(Camera camera, int cameraId, int displayOrientation, boolean isMirror) {
-                Log.i(TAG, "onCameraOpened: " + cameraId + "  " + displayOrientation + " " + isMirror);
+                Log.i(TAG, "摄像头打开：" + cameraId + "  " + displayOrientation + " " + isMirror);
                 _size = camera.getParameters().getPreviewSize();
                 _drawHelper = new DrawHelper(_size.width, _size.height, _previewView.getWidth(), _previewView.getHeight(), displayOrientation, cameraId, isMirror, false, false);
             }

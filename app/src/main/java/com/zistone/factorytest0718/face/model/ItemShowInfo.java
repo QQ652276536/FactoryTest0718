@@ -11,9 +11,6 @@ public class ItemShowInfo {
     private int gender;
     private float similar;
 
-    public ItemShowInfo() {
-    }
-
     public ItemShowInfo(Bitmap bitmap, int age, int gender, float similar) {
         this.bitmap = bitmap;
         this.age = age;
@@ -56,7 +53,8 @@ public class ItemShowInfo {
 
     @Override
     public String toString() {
-        return "年龄：" + age + "，性别：" + (gender == GenderInfo.MALE ? "男性" : (gender == GenderInfo.FEMALE ?
-                "女性" : "未知")) + "，相似度：" + similar;
+        return "年龄：" + age + "，性别：" + (gender == GenderInfo.MALE ? "男" : (gender == GenderInfo.FEMALE ?
+                "女" : "未知")) + "，相似度：" + similar;
     }
+
 }

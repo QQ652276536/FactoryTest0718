@@ -92,8 +92,8 @@ public class BDFaceSDKCommon {
 
     // 性别
     public enum BDFaceGender {
-        BDFACE_GENDER_FEMALE, // 女性
-        BDFACE_GENDER_MALE,   // 男性
+        BDFACE_GENDER_FEMALE, // 女
+        BDFACE_GENDER_MALE,   // 男
     }
 
     // 凝视方向
