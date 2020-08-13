@@ -4,6 +4,9 @@ import android.graphics.Bitmap;
 
 import com.arcsoft.face.GenderInfo;
 
+/**
+ * 人脸比对1：N（图片VS图片）用到的数据项
+ */
 public class ItemShowInfo {
 
     private Bitmap bitmap;

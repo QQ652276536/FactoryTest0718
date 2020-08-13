@@ -1,9 +1,10 @@
-package com.zistone.factorytest0718.face.faceserver;
+package com.zistone.factorytest0718.face.constants;
 
 /**
  * 比对结果
  */
 public class CompareResult {
+
     private String userName;
     private float similar;
     private int trackId;

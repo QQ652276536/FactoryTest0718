@@ -4,6 +4,7 @@ package com.zistone.factorytest0718.face.constants;
  * 活体检测类型
  */
 public enum LivenessType {
+
     /**
      * RGB活体检测
      */
@@ -12,4 +13,5 @@ public enum LivenessType {
      * 红外活体检测
      */
     IR
+
 }

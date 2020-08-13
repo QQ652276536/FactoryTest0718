@@ -6,6 +6,7 @@ import android.graphics.Color;
  * 识别过程中人脸框的颜色
  */
 public class RecognizeColor {
+
     /**
      * 未知情况的颜色
      */

@@ -2,6 +2,9 @@ package com.zistone.factorytest0718.face.model;
 
 import com.arcsoft.face.FaceInfo;
 
+/**
+ * 人脸预览
+ */
 public class FacePreviewInfo {
 
     private FaceInfo faceInfo;

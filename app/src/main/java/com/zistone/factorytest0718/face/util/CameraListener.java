@@ -3,6 +3,7 @@ package com.zistone.factorytest0718.face.util;
 import android.hardware.Camera;
 
 public interface CameraListener {
+
     /**
      * 当打开时执行
      * @param camera 相机实例

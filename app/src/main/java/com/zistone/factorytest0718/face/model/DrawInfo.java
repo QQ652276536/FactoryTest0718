@@ -2,6 +2,9 @@ package com.zistone.factorytest0718.face.model;
 
 import android.graphics.Rect;
 
+/**
+ * 绘制内容
+ */
 public class DrawInfo {
 
     private Rect rect;
@@ -11,6 +14,14 @@ public class DrawInfo {
     private int color;
     private String name;
 
+    /**
+     * @param rect     要绘制的区域
+     * @param sex      性别
+     * @param age      年龄
+     * @param liveness 活体
+     * @param color    矩形框的颜色
+     * @param name     姓名，人脸库比对时用的字段
+     */
     public DrawInfo(Rect rect, int sex, int age, int liveness, int color, String name) {
         this.rect = rect;
         this.sex = sex;

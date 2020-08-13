@@ -1,6 +1,5 @@
 package com.zistone.factorytest0718.face;
 
-import android.Manifest;
 import android.content.pm.ActivityInfo;
 import android.graphics.Point;
 import android.hardware.Camera;
@@ -16,9 +15,6 @@ import android.widget.Switch;
 import android.widget.Toast;
 
 import androidx.annotation.Nullable;
-import androidx.recyclerview.widget.DefaultItemAnimator;
-import androidx.recyclerview.widget.GridLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 
 import com.arcsoft.face.AgeInfo;
 import com.arcsoft.face.ErrorInfo;
@@ -34,8 +30,8 @@ import com.zistone.factorytest0718.face.constants.LivenessType;
 import com.zistone.factorytest0718.face.constants.RecognizeColor;
 import com.zistone.factorytest0718.face.constants.RequestFeatureStatus;
 import com.zistone.factorytest0718.face.constants.RequestLivenessStatus;
-import com.zistone.factorytest0718.face.faceserver.CompareResult;
-import com.zistone.factorytest0718.face.faceserver.FaceServer;
+import com.zistone.factorytest0718.face.constants.CompareResult;
+import com.zistone.factorytest0718.face.util.FaceServer;
 import com.zistone.factorytest0718.face.model.DrawInfo;
 import com.zistone.factorytest0718.face.model.FacePreviewInfo;
 import com.zistone.factorytest0718.face.util.CameraHelper;

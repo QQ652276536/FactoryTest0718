@@ -1,4 +1,4 @@
-package com.zistone.factorytest0718.face.faceserver;
+package com.zistone.factorytest0718.face.util;
 
 import android.content.Context;
 import android.graphics.Bitmap;
@@ -16,6 +16,7 @@ import com.arcsoft.imageutil.ArcSoftImageFormat;
 import com.arcsoft.imageutil.ArcSoftImageUtil;
 import com.arcsoft.imageutil.ArcSoftImageUtilError;
 import com.arcsoft.imageutil.ArcSoftRotateDegree;
+import com.zistone.factorytest0718.face.constants.CompareResult;
 import com.zistone.factorytest0718.face.model.FaceRegisterInfo;
 
 import java.io.File;

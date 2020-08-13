@@ -1,5 +1,8 @@
 package com.zistone.factorytest0718.face.model;
 
+/**
+ * 人脸注册
+ */
 public class FaceRegisterInfo {
 
     private byte[] featureData;
