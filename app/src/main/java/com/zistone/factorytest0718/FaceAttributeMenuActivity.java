@@ -17,11 +17,12 @@ import com.arcsoft.face.ErrorInfo;
 import com.arcsoft.face.FaceEngine;
 import com.arcsoft.face.enums.RuntimeABI;
 import com.zistone.factorytest0718.face.ChooseDetectDegreeDialog;
+import com.zistone.factorytest0718.face.FaceIdCompareMenuActivity;
 import com.zistone.factorytest0718.face.FaceIdCompareVerifyActivity;
 import com.zistone.factorytest0718.face.constants.Constants;
 import com.zistone.factorytest0718.face.FaceAttributeDetectionVideoActivity;
 import com.zistone.factorytest0718.face.FaceAttributeDetectionImageActivity;
-import com.zistone.factorytest0718.face.FaceCompareImage;
+import com.zistone.factorytest0718.face.FaceCompareImageActivity;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -148,14 +149,14 @@ public class FaceAttributeMenuActivity extends BaseActivity implements View.OnCl
                 break;
                 //人脸比对1：N（图片VS图片）
             case R.id.btn_face_compare_img_menu:
-                startActivity(new Intent(this, FaceCompareImage.class));
+                startActivity(new Intent(this, FaceCompareImageActivity.class));
                 break;
                 //人脸比对1：N（视频VS人脸库，RGB活体）
             case R.id.btn_face_compare_video_menu:
                 break;
                 //人证核验
             case R.id.btn_faceid_compare_menu:
-                startActivity(new Intent(this, FaceIdCompareVerifyActivity.class));
+                startActivity(new Intent(this, FaceIdCompareMenuActivity.class));
                 break;
         }
     }

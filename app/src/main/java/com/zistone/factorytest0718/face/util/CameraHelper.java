@@ -48,7 +48,7 @@ public class CameraHelper implements Camera.PreviewCallback {
         if (builder.previewDisplayView instanceof TextureView) {
             isMirror = builder.isMirror;
         } else if (isMirror) {
-            throw new RuntimeException("mirror is effective only when the preview is on a textureView");
+            throw new RuntimeException("只有在TextureView上进行预览时，镜像才有效");
         }
     }
 
@@ -271,7 +271,7 @@ public class CameraHelper implements Camera.PreviewCallback {
     private TextureView.SurfaceTextureListener textureListener = new TextureView.SurfaceTextureListener() {
         @Override
         public void onSurfaceTextureAvailable(SurfaceTexture surfaceTexture, int width, int height) {
-//            start();
+            //            start();
             if (mCamera != null) {
                 try {
                     mCamera.setPreviewTexture(surfaceTexture);
@@ -300,7 +300,7 @@ public class CameraHelper implements Camera.PreviewCallback {
     private SurfaceHolder.Callback surfaceCallback = new SurfaceHolder.Callback() {
         @Override
         public void surfaceCreated(SurfaceHolder holder) {
-//            start();
+            //            start();
             if (mCamera != null) {
                 try {
                     mCamera.setPreviewDisplay(holder);
@@ -331,6 +331,7 @@ public class CameraHelper implements Camera.PreviewCallback {
             }
         }
     }
+
     public boolean switchCamera() {
         if (Camera.getNumberOfCameras() < 2) {
             return false;

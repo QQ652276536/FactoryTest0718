@@ -1,6 +1,7 @@
 package com.zistone.factorytest0718.face.util;
 
 import android.graphics.Canvas;
+import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Path;
 import android.graphics.Rect;
@@ -40,6 +41,7 @@ public class DrawHelper {
 
     /**
      * 人对核验的时候绘制人脸框
+     *
      * @param canvas
      * @param rect
      * @param color
@@ -69,8 +71,7 @@ public class DrawHelper {
         canvas.drawPath(mPath, paint);
     }
 
-    public static Rect AdjustRect(Rect rect, int previewWidth, int previewHeight, int canvasWidth, int canvasHeight,
-                            int cameraOri, int mCameraId) {
+    public static Rect AdjustRect(Rect rect, int previewWidth, int previewHeight, int canvasWidth, int canvasHeight, int cameraOri, int mCameraId) {
         if (rect == null) {
             return null;
         }
@@ -82,12 +83,12 @@ public class DrawHelper {
         float widthRatio = (float) canvasWidth / (float) previewWidth;
         float heightRatio = (float) canvasHeight / (float) previewHeight;
 
-        if (cameraOri == 0 || cameraOri == 180 ){
+        if (cameraOri == 0 || cameraOri == 180) {
             rect.left *= widthRatio;
             rect.right *= widthRatio;
             rect.top *= heightRatio;
             rect.bottom *= heightRatio;
-        }else {
+        } else {
             rect.left *= heightRatio;
             rect.right *= heightRatio;
             rect.top *= widthRatio;
@@ -290,7 +291,9 @@ public class DrawHelper {
     }
 
     /**
-     * 绘制数据信息到View上，若 {@link DrawInfo#getName()} 不为null则绘制 {@link DrawInfo#getName()}
+     * 绘制数据信息到View上
+     * 若 {@link DrawInfo#getName()} 不为null则绘制 {@link DrawInfo#getName()}的内容
+     * 若 {@link DrawInfo#getName()} 为null则绘制 {@link DrawInfo}的内容
      *
      * @param canvas            需要被绘制的view的canvas
      * @param drawInfo          绘制信息
@@ -329,7 +332,6 @@ public class DrawHelper {
         if (drawInfo.getName() == null) {
             paint.setStyle(Paint.Style.FILL_AND_STROKE);
             paint.setTextSize(rect.width() / 8);
-
             String str = (drawInfo.getSex() == GenderInfo.MALE ? "男" : (drawInfo.getSex() == GenderInfo.FEMALE ? "女" : "未知")) + "," + (drawInfo.getAge() == AgeInfo.UNKNOWN_AGE ? "未知" : drawInfo.getAge()) + "," + (drawInfo.getLiveness() == LivenessInfo.ALIVE ? "活体" : (drawInfo.getLiveness() == LivenessInfo.NOT_ALIVE ? "非活体" : "未知"));
             canvas.drawText(str, rect.left, rect.top - 10, paint);
         } else {

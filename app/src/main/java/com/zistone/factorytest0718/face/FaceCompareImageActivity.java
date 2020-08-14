@@ -45,9 +45,9 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-public class FaceCompareImage extends AppCompatActivity {
+public class FaceCompareImageActivity extends AppCompatActivity {
 
-    private static final String TAG = "FaceCompareImage";
+    private static final String TAG = "FaceCompareImageActivity";
     private static final int ACTION_CHOOSE_MAIN_IMAGE = 0x201;
     private static final int ACTION_ADD_RECYCLER_ITEM_IMAGE = 0x202;
     private static final int TYPE_MAIN = 0;

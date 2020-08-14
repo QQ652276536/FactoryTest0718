@@ -390,8 +390,8 @@ public class FaceHelper {
     /**
      * 新增搜索成功的人脸
      *
-     * @param trackId 指定的trackId
-     * @param name    trackId对应的人脸
+     * @param trackId
+     * @param name
      */
     public void SetName(int trackId, String name) {
         if (_nameMap != null) {

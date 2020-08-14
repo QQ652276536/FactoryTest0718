@@ -46,7 +46,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:background="@drawable/btn_style_2"
-            android:onClick="switchCamera"
+            android:onClick="SwitchCamera"
             android:text="切换相机"
             android:textColor="@color/white" />
     </LinearLayout>
