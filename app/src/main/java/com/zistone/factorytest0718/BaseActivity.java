@@ -4,12 +4,14 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
 
 import android.content.Context;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Point;
 import android.graphics.Rect;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Display;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -57,11 +59,22 @@ public class BaseActivity extends AppCompatActivity implements View.OnClickListe
         _baseLinearLayout = findViewById(R.id.ll_base);
         //根据屏幕尺寸设置控件大小，不然基类的控件可能看不到
         ViewGroup.LayoutParams layoutParams = _baseLinearLayout.getLayoutParams();
-        layoutParams.height = _screenHeight - 300;
+        layoutParams.height = _screenHeight - 400;
         //将继承自该Activity的布局加进来
         LayoutInflater layoutInflater = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         View view = layoutInflater.inflate(layoutId, null);
         _baseLinearLayout.addView(view);
+    }
+
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        if (keyCode == KeyEvent.KEYCODE_BACK && event.getAction() == KeyEvent.ACTION_DOWN) {
+            Intent intent = new Intent();
+            intent.putExtra(ARG_PARAM1, FAIL);
+            setResult(RESULT_OK, intent);
+            finish();
+        }
+        return false;
     }
 
     @Override

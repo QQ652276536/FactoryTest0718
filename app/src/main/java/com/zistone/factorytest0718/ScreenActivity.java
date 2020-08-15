@@ -42,17 +42,6 @@ public class ScreenActivity extends BaseActivity {
     private float[] _brightness = new float[3];
 
     @Override
-    public boolean onKeyDown(int keyCode, KeyEvent event) {
-        if (keyCode == KeyEvent.KEYCODE_BACK && event.getAction() == KeyEvent.ACTION_DOWN) {
-            Intent intent = new Intent();
-            intent.putExtra(ARG_PARAM1, FAIL);
-            setResult(RESULT_OK, intent);
-            finish();
-        }
-        return false;
-    }
-
-    @Override
     public void finish() {
         super.finish();
     }

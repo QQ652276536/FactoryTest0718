@@ -428,11 +428,6 @@ public class TouchActivity extends BaseActivity {
         }
 
         @Override
-        public boolean onKeyDown(int keyCode, KeyEvent event) {
-            return true;
-        }
-
-        @Override
         public boolean onKeyUp(int keyCode, KeyEvent event) {
             return false;
         }
@@ -449,17 +444,6 @@ public class TouchActivity extends BaseActivity {
     @Override
     public void onBackPressed() {
         super.onBackPressed();
-    }
-
-    @Override
-    public boolean onKeyDown(int keyCode, KeyEvent event) {
-        if (keyCode == KeyEvent.KEYCODE_BACK && event.getAction() == KeyEvent.ACTION_DOWN) {
-            Intent intent = new Intent();
-            intent.putExtra(ARG_PARAM1, FAIL);
-            setResult(RESULT_OK, intent);
-            finish();
-        }
-        return false;
     }
 
     protected void onCreate(Bundle savedInstanceState) {

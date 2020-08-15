@@ -96,13 +96,13 @@
                 android:textColor="@color/white" />
 
             <Button
-                android:id="@+id/btn_com"
+                android:id="@+id/btn_systemcamera"
                 android:layout_width="wrap_content"
                 android:layout_height="60sp"
                 android:layout_margin="5sp"
                 android:layout_weight="1"
-                android:background="@drawable/btn_style_main_2"
-                android:text="串口测试"
+                android:background="@drawable/btn_style_main_1"
+                android:text="系统相机"
                 android:textColor="@color/white" />
 
             <Button
@@ -122,16 +122,6 @@
             android:layout_height="match_parent">
 
             <Button
-                android:id="@+id/btn_idcard"
-                android:layout_width="wrap_content"
-                android:layout_height="60sp"
-                android:layout_margin="5sp"
-                android:layout_weight="1"
-                android:background="@drawable/btn_style_main_2"
-                android:text="身份证测试"
-                android:textColor="@color/white" />
-
-            <Button
                 android:id="@+id/btn_gpscamera"
                 android:layout_width="wrap_content"
                 android:layout_height="60sp"
@@ -142,13 +132,23 @@
                 android:textColor="@color/white" />
 
             <Button
-                android:id="@+id/btn_systemcamera"
+                android:id="@+id/btn_face"
                 android:layout_width="wrap_content"
                 android:layout_height="60sp"
                 android:layout_margin="5sp"
                 android:layout_weight="1"
                 android:background="@drawable/btn_style_main_1"
-                android:text="系统相机"
+                android:text="人脸识别"
+                android:textColor="@color/white" />
+
+            <Button
+                android:id="@+id/btn_test_test"
+                android:layout_width="wrap_content"
+                android:layout_height="60sp"
+                android:layout_margin="5sp"
+                android:layout_weight="1"
+                android:background="@drawable/btn_style_main_1"
+                android:text="★★★"
                 android:textColor="@color/white" />
 
         </TableRow>
@@ -193,33 +193,33 @@
             android:layout_height="match_parent">
 
             <Button
-                android:id="@+id/btn_face"
+                android:id="@+id/btn_com"
                 android:layout_width="wrap_content"
                 android:layout_height="60sp"
                 android:layout_margin="5sp"
                 android:layout_weight="1"
-                android:background="@drawable/btn_style_main_1"
-                android:text="人脸识别"
+                android:background="@drawable/btn_style_main_2"
+                android:text="串口测试"
                 android:textColor="@color/white" />
 
             <Button
-                android:id="@+id/btn_xxx_test"
+                android:id="@+id/btn_idcard"
                 android:layout_width="wrap_content"
                 android:layout_height="60sp"
                 android:layout_margin="5sp"
                 android:layout_weight="1"
-                android:background="@drawable/btn_style_main_1"
-                android:text=""
+                android:background="@drawable/btn_style_main_2"
+                android:text="身份证测试"
                 android:textColor="@color/white" />
 
             <Button
-                android:id="@+id/btn_test_test"
+                android:id="@+id/btn_tfcard"
                 android:layout_width="wrap_content"
                 android:layout_height="60sp"
                 android:layout_margin="5sp"
                 android:layout_weight="1"
-                android:background="@drawable/btn_style_main_1"
-                android:text="继承"
+                android:background="@drawable/btn_style_main_2"
+                android:text="TF卡测试"
                 android:textColor="@color/white" />
         </TableRow>
     </TableLayout>
