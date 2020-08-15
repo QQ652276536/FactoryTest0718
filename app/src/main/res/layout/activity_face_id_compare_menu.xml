@@ -36,7 +36,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10sp"
                 android:background="@drawable/btn_style_2"
-                android:onClick="ChooseMainImage"
+                android:onClick="ReaderImage"
                 android:text="读卡器读取"
                 android:textColor="@color/white" />
 
@@ -46,8 +46,8 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10sp"
                 android:background="@drawable/btn_style_2"
-                android:onClick="ChooseMainImage"
-                android:text="上传图片"
+                android:onClick="ChooseLocalImage"
+                android:text="本地上传"
                 android:textColor="@color/white" />
 
             <Button
@@ -56,8 +56,8 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="20sp"
                 android:background="@drawable/btn_style_2"
-                android:onClick="ChooseMainImage"
-                android:text="开始比对"
+                android:onClick="RealTimeCollection"
+                android:text="实时采集"
                 android:textColor="@color/white" />
         </LinearLayout>
     </LinearLayout>

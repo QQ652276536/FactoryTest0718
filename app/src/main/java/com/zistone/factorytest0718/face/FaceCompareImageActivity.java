@@ -182,7 +182,6 @@ public class FaceCompareImageActivity extends AppCompatActivity {
                         FaceSimilar faceSimilar = new FaceSimilar();
                         int compareResult = _faceEngine.compareFaceFeature(_mainFeature, faceFeature, faceSimilar);
                         if (compareResult == ErrorInfo.MOK) {
-
                             ItemShowInfo showInfo = new ItemShowInfo(bitmap, ageInfoList.get(0).getAge(), genderInfoList.get(0).getGender(), faceSimilar.getScore());
                             _showInfoList.add(showInfo);
                             _multiFaceInfoAdapter.notifyItemInserted(_showInfoList.size() - 1);
@@ -274,6 +273,7 @@ public class FaceCompareImageActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        //保持亮屏
         getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
         setContentView(R.layout.activity_face_compare_image);
         _mainImage = findViewById(R.id.img_main_face_compare_img);

@@ -79,7 +79,7 @@ public class CameraHelper implements Camera.PreviewCallback {
             //没有相机
             if (mCameraId == -1) {
                 if (cameraListener != null) {
-                    cameraListener.onCameraError(new Exception("camera not found"));
+                    cameraListener.onCameraError(new Exception("没有找到相机！"));
                 }
                 return;
             }

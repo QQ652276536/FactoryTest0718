@@ -104,8 +104,7 @@ public class FaceAttributeDetectionVideoActivity extends AppCompatActivity imple
                 int genderCode = _faceEngine.getGender(genderInfoList);
                 int face3DAngleCode = _faceEngine.getFace3DAngle(face3DAngleList);
                 int livenessCode = _faceEngine.getLiveness(faceLivenessInfoList);
-
-                // 有其中一个的错误码不为ErrorInfo.MOK，return
+                //有其中一个的错误码不为ErrorInfo.MOK，return
                 if ((ageCode | genderCode | face3DAngleCode | livenessCode) != ErrorInfo.MOK) {
                     return;
                 }
@@ -196,6 +195,7 @@ public class FaceAttributeDetectionVideoActivity extends AppCompatActivity imple
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_face_attribute_detection_video);
+        //保持亮屏
         getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
             WindowManager.LayoutParams attributes = getWindow().getAttributes();

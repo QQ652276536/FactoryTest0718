@@ -20,8 +20,10 @@ import com.arcsoft.face.AgeInfo;
 import com.arcsoft.face.ErrorInfo;
 import com.arcsoft.face.FaceEngine;
 import com.arcsoft.face.FaceFeature;
+import com.arcsoft.face.FaceSimilar;
 import com.arcsoft.face.GenderInfo;
 import com.arcsoft.face.LivenessInfo;
+import com.arcsoft.face.enums.CompareModel;
 import com.arcsoft.face.enums.DetectFaceOrientPriority;
 import com.arcsoft.face.enums.DetectMode;
 import com.zistone.factorytest0718.BaseActivity;
@@ -332,15 +334,17 @@ public class FaceIdCompareVerifyActivity extends BaseActivity implements ViewTre
             if (recognizeStatus != null) {
                 if (recognizeStatus == RequestFeatureStatus.FAILED) {
                     color = RecognizeColor.COLOR_FAILED;
+                    drawInfoList.add(new DrawInfo(_drawHelper.AdjustRect(facePreviewInfoList.get(i).getFaceInfo().getRect()), -1, 0, -1, color, "未通过"));
                 }
                 if (recognizeStatus == RequestFeatureStatus.SUCCEED) {
                     color = RecognizeColor.COLOR_SUCCESS;
+                    drawInfoList.add(new DrawInfo(_drawHelper.AdjustRect(facePreviewInfoList.get(i).getFaceInfo().getRect()), -1, 0, -1, color, "通过"));
                 }
             }
             if (liveness != null && liveness == LivenessInfo.NOT_ALIVE) {
                 color = RecognizeColor.COLOR_FAILED;
+                drawInfoList.add(new DrawInfo(_drawHelper.AdjustRect(facePreviewInfoList.get(i).getFaceInfo().getRect()), -1, 0, -1, color, "未通过"));
             }
-            drawInfoList.add(new DrawInfo(_drawHelper.AdjustRect(facePreviewInfoList.get(i).getFaceInfo().getRect()), -1, 0, -1, color, "未通过"));
         }
         _drawHelper.Draw(_faceRectView, drawInfoList);
     }
@@ -390,6 +394,7 @@ public class FaceIdCompareVerifyActivity extends BaseActivity implements ViewTre
         Observable.create(new ObservableOnSubscribe<CompareResult>() {
             @Override
             public void subscribe(ObservableEmitter<CompareResult> emitter) {
+                Log.i(TAG, "人脸库中的人脸数：" + FaceServer.getInstance().GetFaceNumber(FaceIdCompareVerifyActivity.this));
                 CompareResult compareResult = FaceServer.getInstance().GetTopOfFaceLib(frFace);
                 emitter.onNext(compareResult);
             }
@@ -404,12 +409,14 @@ public class FaceIdCompareVerifyActivity extends BaseActivity implements ViewTre
                     _featureStateMap.put(requestId, RequestFeatureStatus.FAILED);
                     return;
                 }
+                Log.i(TAG, "与人脸库中的相似度：" + compareResult.getSimilar());
                 if (compareResult.getSimilar() > SIMILAR_THRESHOLD) {
                     //添加显示人员时，保存其trackId
                     compareResult.setTrackId(requestId);
                     _featureStateMap.put(requestId, RequestFeatureStatus.SUCCEED);
                     _faceHelper.SetName(requestId, "通过");
                 } else {
+                    _featureStateMap.put(requestId, RequestFeatureStatus.FAILED);
                     _faceHelper.SetName(requestId, "未通过");
                     RetryRecognizeDelayed(requestId);
                 }

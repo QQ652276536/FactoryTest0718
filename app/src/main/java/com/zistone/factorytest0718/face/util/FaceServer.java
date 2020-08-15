@@ -34,9 +34,9 @@ public class FaceServer {
     public static final String TAG = "FaceServer";
     public static final String IMG_SUFFIX = ".jpg";
     //存放注册图的目录
-    public static final String SAVE_IMG_DIR = "register" + File.separator + "imgs";
+    private static final String SAVE_IMG_DIR = "/sdcard/Factory0718/FaceIdCompare/imgs";
     //存放特征的目录
-    public static final String SAVE_FEATURE_DIR = "register" + File.separator + "features";
+    private static final String SAVE_FEATURE_DIR = "/sdcard/Factory0718/FaceIdCompare/features";
 
     public static FaceEngine _faceEngine = null;
     public static FaceServer _faceServer = null;
@@ -215,7 +215,7 @@ public class FaceServer {
             //特征存储的文件夹
             File featureDir = new File(_rootPath + File.separator + SAVE_FEATURE_DIR);
             if (!featureDir.exists() && !featureDir.mkdirs()) {
-                Log.e(TAG, "RegisterNv21：创建用于存储人脸特征的失败！");
+                Log.e(TAG, "RegisterNv21：创建用于存储人脸特征的文件失败！");
                 return false;
             }
             //图片存储的文件夹
@@ -283,7 +283,6 @@ public class FaceServer {
                 Log.e(TAG, "RegisterBgr24：参数无效！");
                 return false;
             }
-
             if (_rootPath == null) {
                 _rootPath = context.getFilesDir().getAbsolutePath();
             }
@@ -346,7 +345,7 @@ public class FaceServer {
                     return false;
                 }
             } else {
-                Log.e(TAG, "RegisterBgr24：没有检测人脸，错误代码：" + code);
+                Log.e(TAG, "RegisterBgr24：没有检测到人脸，错误代码：" + code);
                 return false;
             }
         }
