@@ -193,16 +193,6 @@
             android:layout_height="match_parent">
 
             <Button
-                android:id="@+id/btn_faceidcompare"
-                android:layout_width="wrap_content"
-                android:layout_height="60sp"
-                android:layout_margin="5sp"
-                android:layout_weight="1"
-                android:background="@drawable/btn_style_main_1"
-                android:text="人证核验"
-                android:textColor="@color/white" />
-
-            <Button
                 android:id="@+id/btn_face"
                 android:layout_width="wrap_content"
                 android:layout_height="60sp"
@@ -210,6 +200,16 @@
                 android:layout_weight="1"
                 android:background="@drawable/btn_style_main_1"
                 android:text="人脸识别"
+                android:textColor="@color/white" />
+
+            <Button
+                android:id="@+id/btn_xxx_test"
+                android:layout_width="wrap_content"
+                android:layout_height="60sp"
+                android:layout_margin="5sp"
+                android:layout_weight="1"
+                android:background="@drawable/btn_style_main_1"
+                android:text=""
                 android:textColor="@color/white" />
 
             <Button

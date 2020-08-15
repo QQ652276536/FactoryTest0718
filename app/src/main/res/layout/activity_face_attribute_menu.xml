@@ -56,16 +56,6 @@
         android:textColor="@color/deepSkyBlue" />
 
     <Button
-        android:id="@+id/btn_face_compare_video_menu"
-        android:layout_width="320sp"
-        android:layout_height="50sp"
-        android:layout_gravity="center_horizontal"
-        android:layout_margin="10sp"
-        android:background="@drawable/btn_style_1"
-        android:text="人脸比对1：N（视频VS人脸库，RGB活体）"
-        android:textColor="@color/deepSkyBlue" />
-
-    <Button
         android:id="@+id/btn_faceid_compare_menu"
         android:layout_width="220sp"
         android:layout_height="50sp"

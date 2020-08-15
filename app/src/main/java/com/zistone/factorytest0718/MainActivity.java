@@ -36,11 +36,11 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
     private static final int NFCACTIVITY_CODE = 113;
     private static final int SCANCODE_ACTIVITY_CODE = 114;
     private static final int BANKCARD_ACTIVITY_CODE = 115;
-    private static final int BANKCARD_FACE_CODE = 116;
+    private static final int FACE_CODE = 116;
 
     private boolean _isPermissionRequested = false;
     private Button _btnBluetooth, _btnWifi, _btnGPS, _btnKeyDown, _btnSIM, _btnScreen, _btnSound, _btnCOM, _btnTouch, _btnIdCard,
-            _btnWaterCamera, _btnSystemCamera, _btnNFC, _btnScanCode, _btnBankCard, _btnFaceIdCompare, _btnTestTest,_btnFace;
+            _btnWaterCamera, _btnSystemCamera, _btnNFC, _btnScanCode, _btnBankCard, _btnTestTest,_btnFace;
     private long _exitTime = 0;
 
     /**
@@ -144,7 +144,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
                 case BANKCARD_ACTIVITY_CODE:
                     SetPassBackgroundColor(_btnBankCard, str);
                     break;
-                case BANKCARD_FACE_CODE:
+                case FACE_CODE:
                     SetPassBackgroundColor(_btnFace, str);
                     break;
             }
@@ -204,9 +204,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
                 startActivityForResult(new Intent(this, BankCardActivity.class), BANKCARD_ACTIVITY_CODE);
                 break;
             case R.id.btn_face:
-                startActivityForResult(new Intent(this, FaceAttributeMenuActivity.class), BANKCARD_FACE_CODE);
-                break;
-            case R.id.btn_faceidcompare:
+                startActivityForResult(new Intent(this, FaceAttributeMenuActivity.class), FACE_CODE);
                 break;
             case R.id.btn_test_test:
                 startActivity(new Intent(this, TestTestActivity.class));
@@ -246,7 +244,6 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
         _btnNFC = findViewById(R.id.btn_nfc);
         _btnScanCode = findViewById(R.id.btn_scancode);
         _btnBankCard = findViewById(R.id.btn_bankcard);
-        _btnFaceIdCompare = findViewById(R.id.btn_faceidcompare);
         _btnTestTest = findViewById(R.id.btn_test_test);
         _btnFace = findViewById(R.id.btn_face);
         _btnBluetooth.setOnClickListener(this::onClick);
@@ -264,7 +261,6 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
         _btnNFC.setOnClickListener(this::onClick);
         _btnScanCode.setOnClickListener(this::onClick);
         _btnBankCard.setOnClickListener(this::onClick);
-        _btnFaceIdCompare.setOnClickListener(this::onClick);
         _btnTestTest.setOnClickListener(this::onClick);
         _btnFace.setOnClickListener(this::onClick);
     }

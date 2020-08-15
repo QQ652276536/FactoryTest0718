@@ -50,18 +50,6 @@ dependencies {
     androidTestImplementation 'androidx.test.ext:junit:1.1.1'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0'
     /**
-     *   百度人脸离线识别库所需要的奥比中光的模型资源，该文件将会参与编译和打包
-     */
-    api files('libs/orbbec_module-debug.aar')
-    /**
-     *   百度人脸离线识别库所需要的深度视觉资源，该文件将会参与编译和打包
-     */
-    api files('libs/picozensesdk-release.aar')
-    /**
-     *   百度人脸离线识别库
-     */
-    implementation project(':facelibrary')
-    /**
      *   GIF控件，还可以让GIF图片作为文本和按钮的背景显示
      */
     implementation 'pl.droidsonroids.gif:android-gif-drawable:1.2.6'
