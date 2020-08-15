@@ -18,6 +18,7 @@ import com.arcsoft.imageutil.ArcSoftImageUtilError;
 import com.arcsoft.imageutil.ArcSoftRotateDegree;
 import com.zistone.factorytest0718.face.constants.CompareResult;
 import com.zistone.factorytest0718.face.model.FaceRegisterInfo;
+import com.zistone.factorytest0718.util.MyFileUtil;
 
 import java.io.File;
 import java.io.FileInputStream;

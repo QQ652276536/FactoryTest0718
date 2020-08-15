@@ -51,6 +51,8 @@ public class FaceIdCompareMenuActivity extends AppCompatActivity {
 
     private static final String TAG = "FaceIdCompareMenuActivity";
     private static final int ACTION_CHOOSE_MAIN_IMAGE = 0x201;
+    //用于进行比对的证件照名称
+    private static final String IMAGE_NAME = "FaceIdCompareTest";
 
     private ImageView _image;
     private TextView _txt;
@@ -175,8 +177,7 @@ public class FaceIdCompareMenuActivity extends AppCompatActivity {
                 }
                 _txt.setText(stringBuilder);
                 //将照片注册进人脸库，比对时通过人脸库
-                _registerSuccess = FaceServer.getInstance().RegisterBgr24(this, bgr24, compyBitmap.getWidth(),
-                        compyBitmap.getHeight(), null);
+                _registerSuccess = FaceServer.getInstance().RegisterBgr24(this, bgr24, compyBitmap.getWidth(), compyBitmap.getHeight(), IMAGE_NAME);
             } else {
                 _bitmap = null;
             }
@@ -257,14 +258,13 @@ public class FaceIdCompareMenuActivity extends AppCompatActivity {
 
     @Override
     protected void onResume() {
-        //本地人脸库初始化，在这里初始化可以避免从实时采集返回时导致引擎为空
-        FaceServer.getInstance().Init(this);
         super.onResume();
     }
 
     @Override
     protected void onDestroy() {
         UnInitEngine();
+        FaceServer.getInstance().UnInit();
         super.onDestroy();
     }
 
@@ -277,6 +277,8 @@ public class FaceIdCompareMenuActivity extends AppCompatActivity {
         _image = findViewById(R.id.img_faceid_compare_menu);
         _txt = findViewById(R.id.txt_faceid_compare_menu);
         InitEngine();
+        FaceServer.getInstance().Init(this);
+        FaceServer.getInstance().ClearAllFaces(this);
     }
 
 }

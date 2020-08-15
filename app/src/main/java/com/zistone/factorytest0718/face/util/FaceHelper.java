@@ -27,63 +27,73 @@ import java.util.concurrent.TimeUnit;
 public class FaceHelper {
 
     public static final class Builder {
-        private FaceEngine _ftEngine;
-        private FaceEngine _frEngine;
-        private FaceEngine _flEngine;
+
+        //检测引擎
+        private FaceEngine _faceDetectionEngine;
+        //特征引擎
+        private FaceEngine _faceFeatureEngine;
+        //活体引擎
+        private FaceEngine _faceLivnessEngine;
+        //预览大小
         private Camera.Size _previewSize;
+        //人脸监听
         private FaceListener _faceListener;
-        private int _frQueueSize;
-        private int _flQueueSize;
+        //特征队列大小
+        private int _faceFeatureQueueSize;
+        //活体队列大小
+        private int _faceLivnessQueueSize;
+        //检测人脸数
         private int _trackedFaceCount;
 
-        public FaceHelper build() {
+        public FaceHelper Build() {
             return new FaceHelper(this);
         }
-        public Builder ftEngine(FaceEngine val) {
-            _ftEngine = val;
+
+        public Builder SetFaceDetectionEngine(FaceEngine val) {
+            _faceDetectionEngine = val;
             return this;
         }
 
-        public Builder frEngine(FaceEngine val) {
-            _frEngine = val;
+        public Builder SetFaceFeatureEngine(FaceEngine val) {
+            _faceFeatureEngine = val;
             return this;
         }
 
-        public Builder flEngine(FaceEngine val) {
-            _flEngine = val;
+        public Builder SetFaceLivnessEngine(FaceEngine val) {
+            _faceLivnessEngine = val;
             return this;
         }
 
 
-        public Builder previewSize(Camera.Size val) {
+        public Builder SetPreviewSize(Camera.Size val) {
             _previewSize = val;
             return this;
         }
 
 
-        public Builder faceListener(FaceListener val) {
+        public Builder SetFaceListener(FaceListener val) {
             _faceListener = val;
             return this;
         }
 
-        public Builder frQueueSize(int val) {
-            _frQueueSize = val;
+        public Builder SetFaceFeatureQueueSize(int val) {
+            _faceFeatureQueueSize = val;
             return this;
         }
 
-        public Builder flQueueSize(int val) {
-            _flQueueSize = val;
+        public Builder SetFaceLivnessQueueSize(int val) {
+            _faceLivnessQueueSize = val;
             return this;
         }
 
-        public Builder trackedFaceCount(int val) {
+        public Builder SetTrackedFaceCount(int val) {
             _trackedFaceCount = val;
             return this;
         }
     }
 
     /**
-     * 人脸特征提取线程
+     * 人脸特征提取的线程
      */
     public class FaceRecognizeRunnable implements Runnable {
 
@@ -109,12 +119,12 @@ public class FaceHelper {
         @Override
         public void run() {
             if (_faceListener != null && _nv21Data != null) {
-                if (_frEngine != null) {
+                if (_faceFeatureEngine != null) {
                     FaceFeature faceFeature = new FaceFeature();
                     long frStartTime = System.currentTimeMillis();
                     int frCode;
-                    synchronized (_frEngine) {
-                        frCode = _frEngine.extractFaceFeature(_nv21Data, _width, _height, _format, _faceInfo, faceFeature);
+                    synchronized (_faceFeatureEngine) {
+                        frCode = _faceFeatureEngine.extractFaceFeature(_nv21Data, _width, _height, _format, _faceInfo, faceFeature);
                     }
                     if (frCode == ErrorInfo.MOK) {
                         Log.i(TAG, "人脸特征提取耗时：" + (System.currentTimeMillis() - frStartTime) + "ms");
@@ -136,6 +146,7 @@ public class FaceHelper {
      * 活体检测的线程
      */
     public class FaceLivenessDetectRunnable implements Runnable {
+
         private FaceInfo _faceInfo;
         private int _width;
         private int _height;
@@ -160,24 +171,23 @@ public class FaceHelper {
         @Override
         public void run() {
             if (_faceListener != null && _nv21Data != null) {
-                if (_flEngine != null) {
+                if (_faceLivnessEngine != null) {
                     List<LivenessInfo> livenessInfoList = new ArrayList<>();
                     int flCode;
-                    synchronized (_flEngine) {
+                    synchronized (_faceLivnessEngine) {
                         if (_livenessType == LivenessType.RGB) {
-                            flCode = _flEngine.process(_nv21Data, _width, _height, _format, Arrays.asList(_faceInfo), FaceEngine.ASF_LIVENESS);
+                            flCode = _faceLivnessEngine.process(_nv21Data, _width, _height, _format, Arrays.asList(_faceInfo), FaceEngine.ASF_LIVENESS);
                         } else {
-                            flCode = _flEngine.processIr(_nv21Data, _width, _height, _format, Arrays.asList(_faceInfo), FaceEngine.ASF_IR_LIVENESS);
+                            flCode = _faceLivnessEngine.processIr(_nv21Data, _width, _height, _format, Arrays.asList(_faceInfo), FaceEngine.ASF_IR_LIVENESS);
                         }
                     }
                     if (flCode == ErrorInfo.MOK) {
                         if (_livenessType == LivenessType.RGB) {
-                            flCode = _flEngine.getLiveness(livenessInfoList);
+                            flCode = _faceLivnessEngine.getLiveness(livenessInfoList);
                         } else {
-                            flCode = _flEngine.getIrLiveness(livenessInfoList);
+                            flCode = _faceLivnessEngine.getIrLiveness(livenessInfoList);
                         }
                     }
-
                     if (flCode == ErrorInfo.MOK && livenessInfoList.size() > 0) {
                         _faceListener.onFaceLivenessInfoGet(livenessInfoList.get(0), _trackId, flCode);
                     } else {
@@ -202,21 +212,21 @@ public class FaceHelper {
     private static final int ERROR_FL_ENGINE_IS_NULL = -3;
 
     //人脸追踪引擎
-    private FaceEngine _ftEngine;
+    private FaceEngine _faceDetectionEngine;
     //特征提取引擎
-    private FaceEngine _frEngine;
+    private FaceEngine _faceFeatureEngine;
     //活体检测引擎
-    private FaceEngine _flEngine;
+    private FaceEngine _faceLivnessEngine;
     private Camera.Size _size;
     private List<FaceInfo> _faceInfoList = new ArrayList<>();
     //特征提取线程池
-    private ExecutorService _frExecutor;
+    private ExecutorService _faceFeatureExecutor;
     //活体检测线程池
-    private ExecutorService _flExecutor;
+    private ExecutorService _faceLivnessExecutor;
     //特征提取线程队列
-    private LinkedBlockingQueue<Runnable> _frThreadQueue;
+    private LinkedBlockingQueue<Runnable> _faceFeatureThreadQueue;
     //活体检测线程队列
-    private LinkedBlockingQueue<Runnable> _flThreadQueue;
+    private LinkedBlockingQueue<Runnable> _faceLivnessThreadQueue;
     private FaceListener _faceListener;
     //上次应用退出时，记录的该App检测过的人脸数了
     private int _trackedFaceCount = 0;
@@ -228,30 +238,30 @@ public class FaceHelper {
     private ConcurrentHashMap<Integer, String> _nameMap = new ConcurrentHashMap<>();
 
     private FaceHelper(Builder builder) {
-        _ftEngine = builder._ftEngine;
+        _faceDetectionEngine = builder._faceDetectionEngine;
         _faceListener = builder._faceListener;
         _trackedFaceCount = builder._trackedFaceCount;
         _size = builder._previewSize;
-        _frEngine = builder._frEngine;
-        _flEngine = builder._flEngine;
+        _faceFeatureEngine = builder._faceFeatureEngine;
+        _faceLivnessEngine = builder._faceLivnessEngine;
         //特征提取线程队列大小
         int frQueueSize = 5;
-        if (builder._frQueueSize > 0) {
-            frQueueSize = builder._frQueueSize;
+        if (builder._faceFeatureQueueSize > 0) {
+            frQueueSize = builder._faceFeatureQueueSize;
         } else {
             Log.e(TAG, "线程数必须大于0，现在使用默认值：" + frQueueSize);
         }
-        _frThreadQueue = new LinkedBlockingQueue<>(frQueueSize);
-        _frExecutor = new ThreadPoolExecutor(1, frQueueSize, 0, TimeUnit.MILLISECONDS, _frThreadQueue);
+        _faceFeatureThreadQueue = new LinkedBlockingQueue<>(frQueueSize);
+        _faceFeatureExecutor = new ThreadPoolExecutor(1, frQueueSize, 0, TimeUnit.MILLISECONDS, _faceFeatureThreadQueue);
         //活体检测线程队列大小
         int flQueueSize = 5;
-        if (builder._flQueueSize > 0) {
-            flQueueSize = builder._flQueueSize;
+        if (builder._faceLivnessQueueSize > 0) {
+            flQueueSize = builder._faceLivnessQueueSize;
         } else {
             Log.e(TAG, "线程数必须大于0，现在使用默认值：" + flQueueSize);
         }
-        _flThreadQueue = new LinkedBlockingQueue<Runnable>(flQueueSize);
-        _flExecutor = new ThreadPoolExecutor(1, flQueueSize, 0, TimeUnit.MILLISECONDS, _flThreadQueue);
+        _faceLivnessThreadQueue = new LinkedBlockingQueue<Runnable>(flQueueSize);
+        _faceLivnessExecutor = new ThreadPoolExecutor(1, flQueueSize, 0, TimeUnit.MILLISECONDS, _faceLivnessThreadQueue);
         if (_size == null) {
             throw new RuntimeException("必须指定预览图像大小！");
         }
@@ -269,8 +279,8 @@ public class FaceHelper {
      */
     public void RequestFaceFeature(byte[] nv21, FaceInfo faceInfo, int width, int height, int format, Integer trackId) {
         if (_faceListener != null) {
-            if (_frEngine != null && _frThreadQueue.remainingCapacity() > 0) {
-                _frExecutor.execute(new FaceRecognizeRunnable(nv21, faceInfo, width, height, format, trackId));
+            if (_faceFeatureEngine != null && _faceFeatureThreadQueue.remainingCapacity() > 0) {
+                _faceFeatureExecutor.execute(new FaceRecognizeRunnable(nv21, faceInfo, width, height, format, trackId));
             } else {
                 _faceListener.onFaceFeatureInfoGet(null, trackId, ERROR_BUSY);
             }
@@ -290,8 +300,8 @@ public class FaceHelper {
      */
     public void RequestFaceLiveness(byte[] nv21, FaceInfo faceInfo, int width, int height, int format, Integer trackId, LivenessType livenessType) {
         if (_faceListener != null) {
-            if (_flEngine != null && _flThreadQueue.remainingCapacity() > 0) {
-                _flExecutor.execute(new FaceLivenessDetectRunnable(nv21, faceInfo, width, height, format, trackId, livenessType));
+            if (_faceLivnessEngine != null && _faceLivnessThreadQueue.remainingCapacity() > 0) {
+                _faceLivnessExecutor.execute(new FaceLivenessDetectRunnable(nv21, faceInfo, width, height, format, trackId, livenessType));
             } else {
                 _faceListener.onFaceLivenessInfoGet(null, trackId, ERROR_BUSY);
             }
@@ -302,24 +312,24 @@ public class FaceHelper {
      * 释放对象
      */
     public void Release() {
-        if (!_frExecutor.isShutdown()) {
-            _frExecutor.shutdownNow();
-            _frThreadQueue.clear();
+        if (!_faceFeatureExecutor.isShutdown()) {
+            _faceFeatureExecutor.shutdownNow();
+            _faceFeatureThreadQueue.clear();
         }
-        if (!_flExecutor.isShutdown()) {
-            _flExecutor.shutdownNow();
-            _flThreadQueue.clear();
+        if (!_faceLivnessExecutor.isShutdown()) {
+            _faceLivnessExecutor.shutdownNow();
+            _faceLivnessThreadQueue.clear();
         }
         if (_faceInfoList != null) {
             _faceInfoList.clear();
         }
-        if (_frThreadQueue != null) {
-            _frThreadQueue.clear();
-            _frThreadQueue = null;
+        if (_faceFeatureThreadQueue != null) {
+            _faceFeatureThreadQueue.clear();
+            _faceFeatureThreadQueue = null;
         }
-        if (_flThreadQueue != null) {
-            _flThreadQueue.clear();
-            _flThreadQueue = null;
+        if (_faceLivnessThreadQueue != null) {
+            _faceLivnessThreadQueue.clear();
+            _faceLivnessThreadQueue = null;
         }
         if (_nameMap != null) {
             _nameMap.clear();
@@ -337,9 +347,9 @@ public class FaceHelper {
      */
     public List<FacePreviewInfo> OnPreviewFrame(byte[] nv21) {
         if (_faceListener != null) {
-            if (_ftEngine != null) {
+            if (_faceDetectionEngine != null) {
                 _faceInfoList.clear();
-                int code = _ftEngine.detectFaces(nv21, _size.width, _size.height, FaceEngine.CP_PAF_NV21, _faceInfoList);
+                int code = _faceDetectionEngine.detectFaces(nv21, _size.width, _size.height, FaceEngine.CP_PAF_NV21, _faceInfoList);
                 if (code != ErrorInfo.MOK) {
                     _faceListener.onFail(new Exception("处理帧数据失败，错误代码：" + code));
                 } else {

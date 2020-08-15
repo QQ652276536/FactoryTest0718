@@ -77,13 +77,13 @@ public class FaceIdCompareVerifyActivity extends BaseActivity implements ViewTre
     private Camera.Size _previewSize;
     //优先打开的摄像头，本界面主要用于单目RGB摄像头设备，因此默认打开前置
     private Integer rgbCameraID = Camera.CameraInfo.CAMERA_FACING_FRONT;
-    //VIDEO模式人脸检测引擎，用于预览帧人脸追踪
+    //人脸检测引擎，用于预览帧人脸追踪
     private FaceEngine _faceDetectionEngine;
     private int _faceDetectionInitCode = -1;
     //用于特征提取的引擎
     private FaceEngine _faceFeatureEngine;
     private int _faceFeatureInitCode = -1;
-    //IMAGE模式活体检测引擎，用于预览帧人脸活体检测
+    //检测引擎，用于预览帧人脸活体检测
     private FaceEngine _faceLivnessEngine;
     private int _faceLivnessInitCode = -1;
     //是否开启活体检测
@@ -259,7 +259,7 @@ public class FaceIdCompareVerifyActivity extends BaseActivity implements ViewTre
                         trackedFaceCount = _faceHelper.GetTrackedFaceCount();
                         _faceHelper.Release();
                     }
-                    _faceHelper = new FaceHelper.Builder().ftEngine(_faceDetectionEngine).frEngine(_faceFeatureEngine).flEngine(_faceLivnessEngine).frQueueSize(MAX_DETECT_NUM).flQueueSize(MAX_DETECT_NUM).previewSize(_previewSize).faceListener(faceListener).trackedFaceCount(trackedFaceCount == null ? ConfigUtil.GetTrackedFaceCount(FaceIdCompareVerifyActivity.this.getApplicationContext()) : trackedFaceCount).build();
+                    _faceHelper = new FaceHelper.Builder().SetFaceDetectionEngine(_faceDetectionEngine).SetFaceFeatureEngine(_faceFeatureEngine).SetFaceLivnessEngine(_faceLivnessEngine).SetFaceFeatureQueueSize(MAX_DETECT_NUM).SetFaceLivnessQueueSize(MAX_DETECT_NUM).SetPreviewSize(_previewSize).SetFaceListener(faceListener).SetTrackedFaceCount(trackedFaceCount == null ? ConfigUtil.GetTrackedFaceCount(FaceIdCompareVerifyActivity.this.getApplicationContext()) : trackedFaceCount).Build();
                 }
             }
 
@@ -549,7 +549,8 @@ public class FaceIdCompareVerifyActivity extends BaseActivity implements ViewTre
             _faceHelper.Release();
             _faceHelper = null;
         }
-        FaceServer.getInstance().UnInit();
+        //这个Activity结束时不销毁人脸库的操作，在前面选取证件照的Activity里销毁，避免前面注册失败
+        //        FaceServer.getInstance().UnInit();
         super.onDestroy();
     }
 
