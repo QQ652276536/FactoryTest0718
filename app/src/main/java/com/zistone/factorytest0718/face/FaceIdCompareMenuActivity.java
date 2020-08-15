@@ -176,7 +176,8 @@ public class FaceIdCompareMenuActivity extends AppCompatActivity {
                     stringBuilder.append("人脸[").append(i).append("]:\n").append(_faceInfoList.get(i)).append("年龄：").append(age).append("，性别：").append(gender).append("\n人脸三维角度：").append(face3DAngleList.get(i)).append("\n");
                 }
                 _txt.setText(stringBuilder);
-                //将照片注册进人脸库，比对时通过人脸库
+                //将照片注册进人脸库，且始终保持人脸库只有一张证件照片，比对时通过人脸库
+                FaceServer.getInstance().ClearAllFaces(this);
                 _registerSuccess = FaceServer.getInstance().RegisterBgr24(this, bgr24, compyBitmap.getWidth(), compyBitmap.getHeight(), IMAGE_NAME);
             } else {
                 _bitmap = null;
@@ -278,7 +279,6 @@ public class FaceIdCompareMenuActivity extends AppCompatActivity {
         _txt = findViewById(R.id.txt_faceid_compare_menu);
         InitEngine();
         FaceServer.getInstance().Init(this);
-        FaceServer.getInstance().ClearAllFaces(this);
     }
 
 }

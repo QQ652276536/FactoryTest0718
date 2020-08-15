@@ -43,6 +43,7 @@ import com.arcsoft.imageutil.ArcSoftImageUtil;
 import com.arcsoft.imageutil.ArcSoftImageUtilError;
 import com.bumptech.glide.Glide;
 import com.zistone.factorytest0718.R;
+import com.zistone.factorytest0718.util.MyProgressDialogUtil;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -137,8 +138,7 @@ public class FaceAttributeDetectionImageActivity extends AppCompatActivity imple
             CreateNotificationInfo(notificationSpannableStringBuilder, new StyleSpan(Typeface.BOLD), "转换bitmap到图片数据失败", "错误代码：", String.valueOf(transformCode), "\n");
             return;
         }
-        CreateNotificationInfo(notificationSpannableStringBuilder, new StyleSpan(Typeface.BOLD), "检测到图片，宽：",
-                String.valueOf(width), "，高：", String.valueOf(height), "\n");
+        CreateNotificationInfo(notificationSpannableStringBuilder, new StyleSpan(Typeface.BOLD), "检测到图片，宽：", String.valueOf(width), "，高：", String.valueOf(height), "\n");
         List<FaceInfo> faceInfoList = new ArrayList<>();
         /**
          * 2.成功获取到了BGR24数据，开始人脸检测
@@ -154,8 +154,7 @@ public class FaceAttributeDetectionImageActivity extends AppCompatActivity imple
         Bitmap bitmapForDraw = bitmap.copy(Bitmap.Config.RGB_565, true);
         Canvas canvas = new Canvas(bitmapForDraw);
         Paint paint = new Paint();
-        CreateNotificationInfo(notificationSpannableStringBuilder, null, "检测结果：\n错误代码：", String.valueOf(detectCode),
-                "，人脸数：", String.valueOf(faceInfoList.size()), "\n");
+        CreateNotificationInfo(notificationSpannableStringBuilder, null, "检测结果：\n错误代码：", String.valueOf(detectCode), "，人脸数：", String.valueOf(faceInfoList.size()), "\n");
         /**
          * 3.若检测结果人脸数量大于0，则在bitmap上绘制人脸框并且重新显示到ImageView，若人脸数量为0，则无法进行下一步操作，操作结束
          */
@@ -318,14 +317,9 @@ public class FaceAttributeDetectionImageActivity extends AppCompatActivity imple
                 }
             }
         }
-        runOnUiThread(new Runnable() {
-            @Override
-            public void run() {
-                _txt.setText(notificationSpannableStringBuilder);
-                if (progressDialog != null && progressDialog.isShowing()) {
-                    progressDialog.dismiss();
-                }
-            }
+        runOnUiThread(() -> {
+            _txt.setText(notificationSpannableStringBuilder);
+            MyProgressDialogUtil.DismissProgressDialog();
         });
     }
 
@@ -397,10 +391,7 @@ public class FaceAttributeDetectionImageActivity extends AppCompatActivity imple
                 break;
             case R.id.btn_start_compare_attribute_detection_img:
                 _btnStart.setClickable(false);
-                if (progressDialog == null || progressDialog.isShowing()) {
-                    return;
-                }
-                progressDialog.show();
+                MyProgressDialogUtil.ShowProgressDialog(this, false, null, "正在处理...");
                 //图像转化操作和部分引擎调用比较耗时，建议放子线程操作
                 Observable.create(new ObservableOnSubscribe<Object>() {
                     @Override
