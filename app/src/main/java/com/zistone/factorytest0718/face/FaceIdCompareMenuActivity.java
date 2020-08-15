@@ -41,6 +41,7 @@ import com.zistone.factorytest0718.R;
 import com.zistone.factorytest0718.face.util.FaceServer;
 import com.zistone.factorytest0718.face.widget.MultiFaceInfoAdapter;
 import com.zistone.factorytest0718.util.MyImageUtil;
+import com.zistone.factorytest0718.util.MyProgressDialogUtil;
 
 import java.io.File;
 import java.io.IOException;
@@ -165,17 +166,19 @@ public class FaceIdCompareMenuActivity extends AppCompatActivity {
                 if (res != ErrorInfo.MOK) {
                     _faceFeature = null;
                 }
-                Glide.with(_image.getContext()).load(compyBitmap).into(_image);
-                StringBuilder stringBuilder = new StringBuilder();
-                if (_faceInfoList.size() > 0) {
-                    stringBuilder.append("人脸信息：\n");
-                }
-                for (int i = 0; i < _faceInfoList.size(); i++) {
-                    int age = ageInfoList.get(i).getAge();
-                    String gender = genderInfoList.get(i).getGender() == GenderInfo.MALE ? "男" : (genderInfoList.get(i).getGender() == GenderInfo.FEMALE ? "女" : "未知");
-                    stringBuilder.append("人脸[").append(i).append("]:\n").append(_faceInfoList.get(i)).append("年龄：").append(age).append("，性别：").append(gender).append("\n人脸三维角度：").append(face3DAngleList.get(i)).append("\n");
-                }
-                _txt.setText(stringBuilder);
+                runOnUiThread(() -> {
+                    Glide.with(_image.getContext()).load(compyBitmap).into(_image);
+                    StringBuilder stringBuilder = new StringBuilder();
+                    if (_faceInfoList.size() > 0) {
+                        stringBuilder.append("人脸信息：\n");
+                    }
+                    for (int i = 0; i < _faceInfoList.size(); i++) {
+                        int age = ageInfoList.get(i).getAge();
+                        String gender = genderInfoList.get(i).getGender() == GenderInfo.MALE ? "男" : (genderInfoList.get(i).getGender() == GenderInfo.FEMALE ? "女" : "未知");
+                        stringBuilder.append("人脸[").append(i).append("]:\n").append(_faceInfoList.get(i)).append("年龄：").append(age).append("，性别：").append(gender).append("\n人脸三维角度：").append(face3DAngleList.get(i)).append("\n");
+                    }
+                    _txt.setText(stringBuilder);
+                });
                 //将照片注册进人脸库，且始终保持人脸库只有一张证件照片，比对时通过人脸库
                 FaceServer.getInstance().ClearAllFaces(this);
                 _registerSuccess = FaceServer.getInstance().RegisterBgr24(this, bgr24, compyBitmap.getWidth(), compyBitmap.getHeight(), IMAGE_NAME);
@@ -185,6 +188,7 @@ public class FaceIdCompareMenuActivity extends AppCompatActivity {
         } else {
             _txt.setText("不能从位图得到BGR24！");
         }
+        runOnUiThread(() -> MyProgressDialogUtil.DismissProgressDialog());
     }
 
     /**
@@ -253,7 +257,10 @@ public class FaceIdCompareMenuActivity extends AppCompatActivity {
                 _txt.setText("获取图片失败");
                 return;
             }
-            ProcessImage(_bitmap);
+            MyProgressDialogUtil.ShowProgressDialog(this, false, null, "正在注册...");
+            new Thread(() -> {
+                ProcessImage(_bitmap);
+            }).start();
         }
     }
 
