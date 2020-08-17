@@ -40,9 +40,9 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
     private static final int TFCARD_ACTIVITY_CODE = 117;
 
     private boolean _isPermissionRequested = false;
-    private Button _btnBluetooth, _btnWifi, _btnGPS, _btnKeyDown, _btnSIM, _btnScreen, _btnSound, _btnCOM, _btnTouch, _btnIdCard,
-            _btnWaterCamera, _btnSystemCamera, _btnNFC, _btnScanCode, _btnBankCard, _btnTestTest,_btnFace,_btnTfCard;
+    private Button _btnBluetooth, _btnWifi, _btnGPS, _btnKeyDown, _btnSIM, _btnScreen, _btnSound, _btnCOM, _btnTouch, _btnIdCard, _btnWaterCamera, _btnSystemCamera, _btnNFC, _btnScanCode, _btnBankCard, _btnTestTest, _btnFace, _btnTfCard;
     private long _exitTime = 0;
+    private String _deviceType = "未知", _systemVersion = "未知";
 
     /**
      * Android6.0之后需要动态申请权限
@@ -52,14 +52,14 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
             _isPermissionRequested = true;
             ArrayList<String> permissionsList = new ArrayList<>();
             String[] permissions = {Manifest.permission.WRITE_SETTINGS, Manifest.permission.BLUETOOTH_ADMIN,
-                    Manifest.permission.BLUETOOTH, Manifest.permission.ACCESS_COARSE_LOCATION,
-                    Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.READ_EXTERNAL_STORAGE,
-                    Manifest.permission.INTERNET, Manifest.permission.ACCESS_NETWORK_STATE,
-                    Manifest.permission.MODIFY_AUDIO_SETTINGS, Manifest.permission.WAKE_LOCK,
-                    Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.ACCESS_WIFI_STATE,
-                    Manifest.permission.CHANGE_WIFI_STATE, Manifest.permission.CAMERA,
-                    Manifest.permission.READ_PHONE_NUMBERS, Manifest.permission.READ_PHONE_STATE,
-                    Manifest.permission.READ_SMS, Manifest.permission.RECORD_AUDIO};
+                                    Manifest.permission.BLUETOOTH, Manifest.permission.ACCESS_COARSE_LOCATION,
+                                    Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.READ_EXTERNAL_STORAGE,
+                                    Manifest.permission.INTERNET, Manifest.permission.ACCESS_NETWORK_STATE,
+                                    Manifest.permission.MODIFY_AUDIO_SETTINGS, Manifest.permission.WAKE_LOCK,
+                                    Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.ACCESS_WIFI_STATE,
+                                    Manifest.permission.CHANGE_WIFI_STATE, Manifest.permission.CAMERA,
+                                    Manifest.permission.READ_PHONE_NUMBERS, Manifest.permission.READ_PHONE_STATE,
+                                    Manifest.permission.READ_SMS, Manifest.permission.RECORD_AUDIO};
             for (String perm : permissions) {
                 //进入到这里代表没有权限
                 if (PackageManager.PERMISSION_GRANTED != checkSelfPermission(perm))
@@ -67,6 +67,22 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
             }
             if (!permissionsList.isEmpty())
                 requestPermissions(permissionsList.toArray(new String[permissionsList.size()]), 1);
+        }
+    }
+
+    /**
+     * 根据设备类型决定展现哪些测试功能
+     */
+    private void JudgeDeviceType() {
+        if (_deviceType.contains("wd220B")) {
+            //测试用的Activity
+            _btnTestTest.setVisibility(View.GONE);
+            //水印相机
+            _btnWaterCamera.setVisibility(View.GONE);
+            //银行卡读取（使用浙江中正的身份证模块）
+            _btnBankCard.setVisibility(View.GONE);
+            //身份证测试（使用浙江中正的身份证模块）
+            _btnIdCard.setVisibility(View.GONE);
         }
     }
 
@@ -235,6 +251,9 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        _deviceType = Build.MODEL;
+        _systemVersion = Build.VERSION.RELEASE;
+        Log.i(TAG, "\n设备型号：" + _deviceType + "，系统版本号：" + _systemVersion);
         RequestPermission();
         _btnBluetooth = findViewById(R.id.btn_bluetooth);
         _btnWifi = findViewById(R.id.btn_wifi);
@@ -272,6 +291,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
         _btnTestTest.setOnClickListener(this::onClick);
         _btnFace.setOnClickListener(this::onClick);
         _btnTfCard.setOnClickListener(this::onClick);
+        JudgeDeviceType();
     }
 
 }
