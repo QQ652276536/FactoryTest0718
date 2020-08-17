@@ -34,6 +34,26 @@ public class BaseActivity extends AppCompatActivity implements View.OnClickListe
     public LinearLayout _baseLinearLayout;
 
     /**
+     * 测试通过
+     */
+    public void Pass() {
+        Intent intent = new Intent();
+        intent.putExtra(ARG_PARAM1, PASS);
+        setResult(RESULT_OK, intent);
+        finish();
+    }
+
+    /**
+     * 测试失败
+     */
+    public void Fail() {
+        Intent intent = new Intent();
+        intent.putExtra(ARG_PARAM1, FAIL);
+        setResult(RESULT_OK, intent);
+        finish();
+    }
+
+    /**
      * 权限检查
      *
      * @param neededPermissions 需要的权限
@@ -81,10 +101,10 @@ public class BaseActivity extends AppCompatActivity implements View.OnClickListe
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.btn_pass_base:
-                Log.i(TAG, "父类的点击Pass事件触发");
+                Pass();
                 break;
             case R.id.btn_fail_base:
-                Log.i(TAG, "父类的点击Fail事件触发");
+                Fail();
                 break;
         }
     }

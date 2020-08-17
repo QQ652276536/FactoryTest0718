@@ -79,6 +79,8 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
             _btnTestTest.setVisibility(View.GONE);
             //水印相机
             _btnWaterCamera.setVisibility(View.GONE);
+            //人脸识别
+            _btnFace.setVisibility(View.GONE);
             //银行卡读取（使用浙江中正的身份证模块）
             _btnBankCard.setVisibility(View.GONE);
             //身份证测试（使用浙江中正的身份证模块）

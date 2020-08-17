@@ -1,5 +1,6 @@
 package com.zistone.factorytest0718;
 
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.bluetooth.BluetoothAdapter;
@@ -34,6 +35,8 @@ import pl.droidsonroids.gif.GifImageView;
 public class BluetoothActivity extends BaseActivity {
 
     private static final String TAG = "BluetoothActivity";
+
+    private boolean _isPass = false;
 
     /**
      * 蓝牙搜索的监听
@@ -131,6 +134,12 @@ public class BluetoothActivity extends BaseActivity {
                 int rssi = intent.getShortExtra(BluetoothDevice.EXTRA_RSSI, Short.MIN_VALUE);
                 Log.i(TAG, "搜索到蓝牙，名称：" + name + "，地址：" + address + "，信号强度：" + rssi);
                 _deviceSearchListener.onDeviceFounded(device, rssi);
+                if (rssi >= -75 && !_isPass) {
+                    _isPass = true;
+                    _btnPass.setEnabled(true);
+                    MyProgressDialogUtil.ShowWarning(BluetoothActivity.this, "提示",
+                            "蓝牙测试已通过！\n\n蓝牙名称：" + name + "\n蓝牙地址：" + address + "\n信号强度：" + rssi, false, () -> Pass());
+                }
             }
         }
     }
@@ -291,17 +300,6 @@ public class BluetoothActivity extends BaseActivity {
         InitListener();
         _materialRefreshLayout.setMaterialRefreshListener(_materialRefreshListener);
         //        _materialRefreshLayout.autoRefresh();
-        _btnPass.setOnClickListener(v -> {
-            Intent intent = new Intent();
-            intent.putExtra(ARG_PARAM1, PASS);
-            setResult(RESULT_OK, intent);
-            finish();
-        });
-        _btnFail.setOnClickListener(v -> {
-            Intent intent = new Intent();
-            intent.putExtra(ARG_PARAM1, FAIL);
-            setResult(RESULT_OK, intent);
-            finish();
-        });
+        _btnPass.setEnabled(false);
     }
 }

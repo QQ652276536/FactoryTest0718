@@ -41,6 +41,8 @@ public class WifiActivity extends BaseActivity {
 
     private static final String TAG = "WifiActivity";
 
+    private boolean _isPass = false;
+
     /**
      * Wifi搜索的监听
      */
@@ -150,6 +152,13 @@ public class WifiActivity extends BaseActivity {
                         txtType.setText("加密（WPA）");
                     } else if (capabilities.toUpperCase().contains("WEP")) {
                         txtType.setText("加密（WEP）");
+                    }
+                    if (rssi >= -75 && !_isPass) {
+                        _isPass = true;
+                        _btnPass.setEnabled(true);
+                        MyProgressDialogUtil.ShowWarning(WifiActivity.this, "提示",
+                                "Wifi测试已通过！\n\nWifi名称：" + ssid + "\nWifi地址：" + bssid + "\n信号强度：" + rssi, false,
+                                () -> Pass());
                     }
                 }
             }
@@ -263,17 +272,6 @@ public class WifiActivity extends BaseActivity {
         InitListener();
         _materialRefreshLayout.setMaterialRefreshListener(_materialRefreshListener);
         //        _materialRefreshLayout.autoRefresh();
-        _btnPass.setOnClickListener(v -> {
-            Intent intent = new Intent();
-            intent.putExtra(ARG_PARAM1, PASS);
-            setResult(RESULT_OK, intent);
-            finish();
-        });
-        _btnFail.setOnClickListener(v -> {
-            Intent intent = new Intent();
-            intent.putExtra(ARG_PARAM1, FAIL);
-            setResult(RESULT_OK, intent);
-            finish();
-        });
+        _btnPass.setEnabled(false);
     }
 }

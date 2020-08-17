@@ -10,7 +10,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
-        android:text="搜索到信号强度≥-70的Wifi可代表测试通过"
+        android:text="搜索到信号强度≥-75的Wifi可代表测试通过"
         android:textColor="@color/orchid"
         android:textSize="20sp" />
 
