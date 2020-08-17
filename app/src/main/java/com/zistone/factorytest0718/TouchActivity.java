@@ -392,10 +392,7 @@ public class TouchActivity extends BaseActivity {
                 @Override
                 public void run() {
                     Log.i(TAG, "所有格子已触摸完毕");
-                    Intent intent = new Intent();
-                    intent.putExtra(ARG_PARAM1, PASS);
-                    setResult(RESULT_OK, intent);
-                    finish();
+                    Pass();
                 }
             });
             return true;

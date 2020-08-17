@@ -285,18 +285,6 @@ public class ComTestActivity extends BaseActivity implements View.OnClickListene
         _imgBtnClear.setOnClickListener(this::onClick);
         _btnSend = findViewById(R.id.btn_send_com);
         _btnSend.setOnClickListener(this::onClick);
-        _btnPass.setOnClickListener(v -> {
-            Intent intent = new Intent();
-            intent.putExtra(ARG_PARAM1, PASS);
-            setResult(RESULT_OK, intent);
-            finish();
-        });
-        _btnFail.setOnClickListener(v -> {
-            Intent intent = new Intent();
-            intent.putExtra(ARG_PARAM1, FAIL);
-            setResult(RESULT_OK, intent);
-            finish();
-        });
     }
 
 }

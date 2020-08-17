@@ -141,18 +141,6 @@ public class SimActivity extends BaseActivity {
         _txtSequence = findViewById(R.id.txt_sequence_sim);
         _txtDataState = findViewById(R.id.txt_data_sim);
         GetSimInfoAndSetTextView();
-        _btnPass.setOnClickListener(v -> {
-            Intent intent = new Intent();
-            intent.putExtra(ARG_PARAM1, PASS);
-            setResult(RESULT_OK, intent);
-            finish();
-        });
-        _btnFail.setOnClickListener(v -> {
-            Intent intent = new Intent();
-            intent.putExtra(ARG_PARAM1, FAIL);
-            setResult(RESULT_OK, intent);
-            finish();
-        });
     }
 
 }

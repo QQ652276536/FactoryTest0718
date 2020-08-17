@@ -201,18 +201,6 @@ public class FaceAttributeMenuActivity extends BaseActivity implements View.OnCl
         _btnFaceCompareImage.setOnClickListener(this::onClick);
         _btnFaceIdCompare = findViewById(R.id.btn_faceid_compare_menu);
         _btnFaceIdCompare.setOnClickListener(this::onClick);
-        _btnPass.setOnClickListener(v -> {
-            Intent intent = new Intent();
-            intent.putExtra(ARG_PARAM1, PASS);
-            setResult(RESULT_OK, intent);
-            finish();
-        });
-        _btnFail.setOnClickListener(v -> {
-            Intent intent = new Intent();
-            intent.putExtra(ARG_PARAM1, FAIL);
-            setResult(RESULT_OK, intent);
-            finish();
-        });
         if (!CheckSoFile(LIBRARIES)) {
             _txt.setText("未找到库文件，请检查是否有将.so文件放至工程的app\\src\\main\\jniLibs目录下");
             _txt.setTextColor(Color.RED);

@@ -352,17 +352,11 @@ public class IdCardActivity extends BaseActivity implements View.OnClickListener
         _gpio.set_gpio(1, 66);
         _btnPass.setOnClickListener(v -> {
             _gpio.set_gpio(0, 66);
-            Intent intent = new Intent();
-            intent.putExtra(ARG_PARAM1, PASS);
-            setResult(RESULT_OK, intent);
-            finish();
+            Pass();
         });
         _btnFail.setOnClickListener(v -> {
             _gpio.set_gpio(0, 66);
-            Intent intent = new Intent();
-            intent.putExtra(ARG_PARAM1, FAIL);
-            setResult(RESULT_OK, intent);
-            finish();
+            Fail();
         });
     }
 

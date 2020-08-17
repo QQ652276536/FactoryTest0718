@@ -52,10 +52,7 @@ public class BankCardActivity extends BaseActivity {
                         MyProgressDialogUtil.ShowWarning(BankCardActivity.this, "警告", "串口打开失败，请检查串口节点是否正确！", false, new MyProgressDialogUtil.WarningListener() {
                             @Override
                             public void OnIKnow() {
-                                Intent intent = new Intent();
-                                intent.putExtra(ARG_PARAM1, FAIL);
-                                setResult(RESULT_OK, intent);
-                                finish();
+                                Fail();
                             }
                         });
                     }
@@ -245,18 +242,6 @@ public class BankCardActivity extends BaseActivity {
             e.printStackTrace();
         }
         _sendThread.start();
-        _btnPass.setOnClickListener(v -> {
-            Intent intent = new Intent();
-            intent.putExtra(ARG_PARAM1, PASS);
-            setResult(RESULT_OK, intent);
-            finish();
-        });
-        _btnFail.setOnClickListener(v -> {
-            Intent intent = new Intent();
-            intent.putExtra(ARG_PARAM1, FAIL);
-            setResult(RESULT_OK, intent);
-            finish();
-        });
     }
 
 }

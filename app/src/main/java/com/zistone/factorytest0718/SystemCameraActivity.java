@@ -75,16 +75,10 @@ public class SystemCameraActivity extends BaseActivity {
                 _already = true;
                 _handler.sendEmptyMessageDelayed(CHANGE_TO_BACK_CAMERA, 100);
             } else {
-                Intent intent = new Intent();
-                intent.putExtra(ARG_PARAM1, PASS);
-                setResult(RESULT_OK, intent);
-                finish();
+                Pass();
             }
         } else {
-            Intent intent = new Intent();
-            intent.putExtra(ARG_PARAM1, FAIL);
-            setResult(RESULT_OK, intent);
-            finish();
+            Fail();
         }
         super.onActivityResult(requestCode, resultCode, data);
     }

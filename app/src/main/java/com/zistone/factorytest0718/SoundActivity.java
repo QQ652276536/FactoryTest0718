@@ -317,18 +317,6 @@ public class SoundActivity extends BaseActivity implements View.OnClickListener,
         _txtRecordPath = findViewById(R.id.txt_record_path_sound);
         _txtRecordPath.setOnClickListener(this::onClick);
         _txtRecordPath.setVisibility(View.INVISIBLE);
-        _btnPass.setOnClickListener(v -> {
-            Intent intent = new Intent();
-            intent.putExtra(ARG_PARAM1, PASS);
-            setResult(RESULT_OK, intent);
-            finish();
-        });
-        _btnFail.setOnClickListener(v -> {
-            Intent intent = new Intent();
-            intent.putExtra(ARG_PARAM1, FAIL);
-            setResult(RESULT_OK, intent);
-            finish();
-        });
     }
 
 }

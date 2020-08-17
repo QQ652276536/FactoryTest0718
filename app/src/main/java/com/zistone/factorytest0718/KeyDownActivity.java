@@ -50,17 +50,5 @@ public class KeyDownActivity extends BaseActivity {
         SetBaseContentView(R.layout.activity_keydown);
         _txt = findViewById(R.id.txt_keydown);
         _iv = findViewById(R.id.iv_keydown);
-        _btnPass.setOnClickListener(v -> {
-            Intent intent = new Intent();
-            intent.putExtra(ARG_PARAM1, PASS);
-            setResult(RESULT_OK, intent);
-            finish();
-        });
-        _btnFail.setOnClickListener(v -> {
-            Intent intent = new Intent();
-            intent.putExtra(ARG_PARAM1, FAIL);
-            setResult(RESULT_OK, intent);
-            finish();
-        });
     }
 }

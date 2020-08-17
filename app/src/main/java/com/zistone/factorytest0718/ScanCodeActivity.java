@@ -196,24 +196,9 @@ public class ScanCodeActivity extends BaseActivity implements View.OnClickListen
             UpdateText(_txt, "串口已打开\r\n", "Append");
         } catch (Exception e) {
             MyProgressDialogUtil.ShowWarning(this, "警告", "该设备不支持扫码，无法使用此功能！", false, () -> {
-                Intent intent = new Intent();
-                intent.putExtra(ARG_PARAM1, FAIL);
-                setResult(RESULT_OK, intent);
-                finish();
+                Fail();
             });
         }
-        _btnPass.setOnClickListener(v -> {
-            Intent intent = new Intent();
-            intent.putExtra(ARG_PARAM1, PASS);
-            setResult(RESULT_OK, intent);
-            finish();
-        });
-        _btnFail.setOnClickListener(v -> {
-            Intent intent = new Intent();
-            intent.putExtra(ARG_PARAM1, FAIL);
-            setResult(RESULT_OK, intent);
-            finish();
-        });
     }
 
 }

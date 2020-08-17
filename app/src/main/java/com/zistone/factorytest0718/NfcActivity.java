@@ -119,10 +119,7 @@ public class NfcActivity extends BaseActivity {
             _nfcAdapter.enableForegroundDispatch(this, _pendingIntent, null, null);
         } else {
             MyProgressDialogUtil.ShowWarning(this, "警告", "该设备不支持NFC，无法使用此功能！",false, () -> {
-                Intent intent = new Intent();
-                intent.putExtra(ARG_PARAM1, FAIL);
-                setResult(RESULT_OK, intent);
-                finish();
+                Fail();
             });
         }
     }
@@ -138,18 +135,6 @@ public class NfcActivity extends BaseActivity {
         _pendingIntent = PendingIntent.getActivity(this, 0, new Intent(this, getClass()), 0);
         _txt1 = findViewById(R.id.txt1_nfc);
         _txt1.setGravity(Gravity.CENTER);
-        _btnPass.setOnClickListener(v -> {
-            Intent intent = new Intent();
-            intent.putExtra(ARG_PARAM1, PASS);
-            setResult(RESULT_OK, intent);
-            finish();
-        });
-        _btnFail.setOnClickListener(v -> {
-            Intent intent = new Intent();
-            intent.putExtra(ARG_PARAM1, FAIL);
-            setResult(RESULT_OK, intent);
-            finish();
-        });
     }
 
 }

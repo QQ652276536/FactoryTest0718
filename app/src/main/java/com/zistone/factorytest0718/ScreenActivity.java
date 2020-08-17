@@ -92,18 +92,12 @@ public class ScreenActivity extends BaseActivity {
                 MyProgressDialogUtil.ShowConfirm(this, "提示", "点击屏幕切换不同颜色，并观察屏幕是否有坏点", false, new MyProgressDialogUtil.ConfirmListener() {
                     @Override
                     public void OnConfirm() {
-                        Intent intent = new Intent();
-                        intent.putExtra(ARG_PARAM1, PASS);
-                        setResult(RESULT_OK, intent);
-                        finish();
+                        Pass();
                     }
 
                     @Override
                     public void OnCancel() {
-                        Intent intent = new Intent();
-                        intent.putExtra(ARG_PARAM1, FAIL);
-                        setResult(RESULT_OK, intent);
-                        finish();
+                        Fail();
                     }
                 });
             }

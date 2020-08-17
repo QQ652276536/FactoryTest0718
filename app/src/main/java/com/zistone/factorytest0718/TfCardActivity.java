@@ -114,18 +114,6 @@ public class TfCardActivity extends BaseActivity {
         //        setContentView(R.layout.activity_tf_card);
         SetBaseContentView(R.layout.activity_tf_card);
         _txt = findViewById(R.id.txt_tfcard);
-        _btnPass.setOnClickListener(v -> {
-            Intent intent = new Intent();
-            intent.putExtra(ARG_PARAM1, PASS);
-            setResult(RESULT_OK, intent);
-            finish();
-        });
-        _btnFail.setOnClickListener(v -> {
-            Intent intent = new Intent();
-            intent.putExtra(ARG_PARAM1, FAIL);
-            setResult(RESULT_OK, intent);
-            finish();
-        });
         if (IsExistCard()) {
             _btnPass.setEnabled(true);
             _txt.setTextColor(Color.GREEN);
