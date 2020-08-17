@@ -43,6 +43,7 @@ public class TfCardActivity extends BaseActivity {
                 } else {
                     _txt.setTextColor(Color.RED);
                     _txt.setText("SD/TF卡已拨出");
+                    _btnPass.setEnabled(false);
                 }
             }
         }
@@ -80,13 +81,7 @@ public class TfCardActivity extends BaseActivity {
                     break;
                 }
             }
-        } catch (ClassNotFoundException e) {
-            e.printStackTrace();
-        } catch (InvocationTargetException e) {
-            e.printStackTrace();
-        } catch (NoSuchMethodException e) {
-            e.printStackTrace();
-        } catch (IllegalAccessException e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
         return result;
@@ -173,6 +168,8 @@ public class TfCardActivity extends BaseActivity {
             _btnPass.setEnabled(true);
             _txt.setTextColor(Color.GREEN);
             _txt.setText("已检测到SD/TF卡");
+        } else {
+            _btnPass.setEnabled(false);
         }
         IntentFilter filter = new IntentFilter();
         filter.addAction(Intent.ACTION_MEDIA_MOUNTED);
