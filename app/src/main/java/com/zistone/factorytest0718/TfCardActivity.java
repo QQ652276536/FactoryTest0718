@@ -54,10 +54,10 @@ public class TfCardActivity extends BaseActivity {
      *
      * @return
      */
-    public boolean isExistCard2() {
+    public boolean IsExistCard() {
         boolean result = false;
         StorageManager mStorageManager = (StorageManager) this.getSystemService(Context.STORAGE_SERVICE);
-        Class<?> storageVolumeClazz = null;
+        Class<?> storageVolumeClazz;
         try {
             storageVolumeClazz = Class.forName("android.os.storage.StorageVolume");
             Method getVolumeList = mStorageManager.getClass().getMethod("getVolumeList");
@@ -79,44 +79,6 @@ public class TfCardActivity extends BaseActivity {
                 if (removable && state.equals(Environment.MEDIA_MOUNTED)) {
                     result = true;
                     break;
-                }
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        return result;
-    }
-
-    /**
-     * 判断外置sd卡是否挂载
-     *
-     * @return
-     */
-    private boolean isExistCard() {
-        boolean result = false;
-        StorageManager storageManager = (StorageManager) getSystemService(Context.STORAGE_SERVICE);
-        try {
-            Method method1 = StorageManager.class.getMethod("getVolumeList");
-            method1.setAccessible(true);
-            Object[] arrays = (Object[]) method1.invoke(storageManager);
-            if (arrays != null) {
-                for (Object temp : arrays) {
-                    Method mRemoveable = temp.getClass().getMethod("isRemovable");
-                    Boolean isRemovable = (Boolean) mRemoveable.invoke(temp);
-                    try {
-                        if (isRemovable) {
-                            Method getPath = temp.getClass().getMethod("getPath");
-                            String path = (String) mRemoveable.invoke(temp);
-                            Method getState = storageManager.getClass().getMethod("getVolumeState", String.class);
-                            String state = (String) getState.invoke(storageManager, path);
-                            if (state.equals(Environment.MEDIA_MOUNTED)) {
-                                result = true;
-                                break;
-                            }
-                        }
-                    } catch (Exception e) {
-                        e.printStackTrace();
-                    }
                 }
             }
         } catch (Exception e) {
@@ -164,7 +126,7 @@ public class TfCardActivity extends BaseActivity {
             setResult(RESULT_OK, intent);
             finish();
         });
-        if (isExistCard2()) {
+        if (IsExistCard()) {
             _btnPass.setEnabled(true);
             _txt.setTextColor(Color.GREEN);
             _txt.setText("已检测到SD/TF卡");
