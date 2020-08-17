@@ -29,7 +29,7 @@ import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
 
-public class ComTestActivity extends BaseActivity implements View.OnClickListener {
+public class ComTestActivity extends BaseActivity {
 
     private static final String TAG = "ComTestActivity";
     private static final int TASKTIME = 1 * 1000;
@@ -156,55 +156,6 @@ public class ComTestActivity extends BaseActivity implements View.OnClickListene
     }
 
     @Override
-    public void onClick(View v) {
-        switch (v.getId()) {
-            case R.id.btn_top_com:
-                _txtMessag.scrollTo(0, 0);
-                break;
-            case R.id.btn_bottom_com:
-                int offset = _txtMessag.getLineCount() * _txtMessag.getLineHeight();
-                if (offset > _txtMessag.getHeight()) {
-                    _txtMessag.scrollTo(0, offset - _txtMessag.getHeight());
-                }
-                break;
-            case R.id.btn_clear_com:
-                _txtMessag.setText("");
-                break;
-            case R.id.btn_send_com:
-                if (_btnSend.getText().equals("开始发送")) {
-                    try {
-                        Log.i(TAG, "串口名称：" + _portName + "，波特率：" + _baudRate + "，发送的数据：" + _hexData);
-                        MySerialPortManager.NewInstance(_portName, _baudRate);
-                        _timer = new Timer();
-                        _timerTask = new TimerTask() {
-                            @Override
-                            public void run() {
-                                InitTimerTask();
-                            }
-                        };
-                        //任务、延迟执行时间、重复调用间隔
-                        _timer.schedule(_timerTask, 0, TASKTIME);
-                        _btnSend.setText("停止发送");
-                    } catch (Exception e) {
-                        e.printStackTrace();
-                        UpdateText(_txtMessag, "\r\n" + e.toString(), "Append");
-                        MyProgressDialogUtil.ShowWarning(ComTestActivity.this, "警告", "串口打开失败，请检查串口节点是否正确！", true, new MyProgressDialogUtil.WarningListener() {
-                            @Override
-                            public void OnIKnow() {
-                            }
-                        });
-                    }
-                } else {
-                    _btnSend.setText("开始发送");
-                    _timer.cancel();
-                    _timerTask.cancel();
-                    MySerialPortManager.Close();
-                }
-                break;
-        }
-    }
-
-    @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         //        setContentView(R.layout.activity_comtest);
@@ -278,13 +229,53 @@ public class ComTestActivity extends BaseActivity implements View.OnClickListene
         _txtMessag = findViewById(R.id.txt_message_com);
         _txtMessag.setMovementMethod(ScrollingMovementMethod.getInstance());
         _imgBtnTop = findViewById(R.id.btn_top_com);
-        _imgBtnTop.setOnClickListener(this::onClick);
+        _imgBtnTop.setOnClickListener(v -> {
+            _txtMessag.scrollTo(0, 0);
+        });
         _imgBtnBottom = findViewById(R.id.btn_bottom_com);
-        _imgBtnBottom.setOnClickListener(this::onClick);
+        _imgBtnBottom.setOnClickListener(v -> {
+            int offset = _txtMessag.getLineCount() * _txtMessag.getLineHeight();
+            if (offset > _txtMessag.getHeight()) {
+                _txtMessag.scrollTo(0, offset - _txtMessag.getHeight());
+            }
+        });
         _imgBtnClear = findViewById(R.id.btn_clear_com);
-        _imgBtnClear.setOnClickListener(this::onClick);
+        _imgBtnClear.setOnClickListener(v -> {
+            _txtMessag.setText("");
+        });
         _btnSend = findViewById(R.id.btn_send_com);
-        _btnSend.setOnClickListener(this::onClick);
+        _btnSend.setOnClickListener(v -> {
+            if (_btnSend.getText().equals("开始发送")) {
+                try {
+                    Log.i(TAG, "串口名称：" + _portName + "，波特率：" + _baudRate + "，发送的数据：" + _hexData);
+                    MySerialPortManager.NewInstance(_portName, _baudRate);
+                    _timer = new Timer();
+                    _timerTask = new TimerTask() {
+                        @Override
+                        public void run() {
+                            InitTimerTask();
+                        }
+                    };
+                    //任务、延迟执行时间、重复调用间隔
+                    _timer.schedule(_timerTask, 0, TASKTIME);
+                    _btnSend.setText("停止发送");
+                } catch (Exception e) {
+                    e.printStackTrace();
+                    UpdateText(_txtMessag, "\r\n" + e.toString(), "Append");
+                    MyProgressDialogUtil.ShowWarning(ComTestActivity.this, "警告", "串口打开失败，请检查串口节点是否正确！", true, new MyProgressDialogUtil.WarningListener() {
+                        @Override
+                        public void OnIKnow() {
+                        }
+                    });
+                }
+            } else {
+                _btnSend.setText("开始发送");
+                _timer.cancel();
+                _timerTask.cancel();
+                MySerialPortManager.Close();
+            }
+        });
+        _btnPass.setEnabled(false);
     }
 
 }
