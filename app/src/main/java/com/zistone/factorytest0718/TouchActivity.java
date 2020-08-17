@@ -446,6 +446,7 @@ public class TouchActivity extends BaseActivity {
         super.onBackPressed();
     }
 
+    @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         _myTouchView = new MyTouchView(this);

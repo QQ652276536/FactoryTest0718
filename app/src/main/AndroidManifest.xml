@@ -55,6 +55,10 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
+            android:name=".TfCardActivity"
+            android:label="TF卡信息"
+            android:launchMode="singleTask" />
+        <activity
             android:name=".face.FaceIdCompareMenuActivity"
             android:label="人脸识别-人证核验"
             android:launchMode="singleTask" />

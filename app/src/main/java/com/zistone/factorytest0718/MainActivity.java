@@ -36,11 +36,12 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
     private static final int NFCACTIVITY_CODE = 113;
     private static final int SCANCODE_ACTIVITY_CODE = 114;
     private static final int BANKCARD_ACTIVITY_CODE = 115;
-    private static final int FACE_CODE = 116;
+    private static final int FACE_ACTIVITY_CODE = 116;
+    private static final int TFCARD_ACTIVITY_CODE = 117;
 
     private boolean _isPermissionRequested = false;
     private Button _btnBluetooth, _btnWifi, _btnGPS, _btnKeyDown, _btnSIM, _btnScreen, _btnSound, _btnCOM, _btnTouch, _btnIdCard,
-            _btnWaterCamera, _btnSystemCamera, _btnNFC, _btnScanCode, _btnBankCard, _btnTestTest,_btnFace;
+            _btnWaterCamera, _btnSystemCamera, _btnNFC, _btnScanCode, _btnBankCard, _btnTestTest,_btnFace,_btnTfCard;
     private long _exitTime = 0;
 
     /**
@@ -144,8 +145,11 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
                 case BANKCARD_ACTIVITY_CODE:
                     SetPassBackgroundColor(_btnBankCard, str);
                     break;
-                case FACE_CODE:
+                case FACE_ACTIVITY_CODE:
                     SetPassBackgroundColor(_btnFace, str);
+                    break;
+                case TFCARD_ACTIVITY_CODE:
+                    SetPassBackgroundColor(_btnTfCard, str);
                     break;
             }
         }
@@ -204,10 +208,13 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
                 startActivityForResult(new Intent(this, BankCardActivity.class), BANKCARD_ACTIVITY_CODE);
                 break;
             case R.id.btn_face:
-                startActivityForResult(new Intent(this, FaceAttributeMenuActivity.class), FACE_CODE);
+                startActivityForResult(new Intent(this, FaceAttributeMenuActivity.class), FACE_ACTIVITY_CODE);
                 break;
             case R.id.btn_test_test:
                 startActivity(new Intent(this, TestTestActivity.class));
+                break;
+            case R.id.btn_tfcard:
+                startActivityForResult(new Intent(this, TfCardActivity.class), TFCARD_ACTIVITY_CODE);
                 break;
         }
     }
@@ -246,6 +253,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
         _btnBankCard = findViewById(R.id.btn_bankcard);
         _btnTestTest = findViewById(R.id.btn_test_test);
         _btnFace = findViewById(R.id.btn_face);
+        _btnTfCard = findViewById(R.id.btn_tfcard);
         _btnBluetooth.setOnClickListener(this::onClick);
         _btnWifi.setOnClickListener(this::onClick);
         _btnGPS.setOnClickListener(this::onClick);
@@ -263,6 +271,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
         _btnBankCard.setOnClickListener(this::onClick);
         _btnTestTest.setOnClickListener(this::onClick);
         _btnFace.setOnClickListener(this::onClick);
+        _btnTfCard.setOnClickListener(this::onClick);
     }
 
 }

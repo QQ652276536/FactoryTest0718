@@ -122,7 +122,6 @@ public class ScreenActivity extends BaseActivity {
         WakeUnlock();
         super.onPause();
         _handler.removeCallbacks(_runnable);
-        setResult(RESULT_CANCELED);
     }
 
     private void WakeLock() {
