@@ -42,7 +42,6 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
     private boolean _isPermissionRequested = false;
     private Button _btnBluetooth, _btnWifi, _btnGPS, _btnKeyDown, _btnSIM, _btnScreen, _btnSound, _btnCOM, _btnTouch, _btnIdCard, _btnWaterCamera, _btnSystemCamera, _btnNFC, _btnScanCode, _btnBankCard, _btnTestTest, _btnFace, _btnTfCard;
     private long _exitTime = 0;
-    private String _deviceType = "未知", _systemVersion = "未知";
 
     /**
      * Android6.0之后需要动态申请权限

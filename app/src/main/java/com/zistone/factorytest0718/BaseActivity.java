@@ -32,6 +32,7 @@ public class BaseActivity extends AppCompatActivity implements View.OnClickListe
     public static final String FAIL = "FAIL";
     public static final int SPRING_GREEN = Color.parseColor("#3CB371");
 
+    public String _deviceType = "", _systemVersion = "";
     public Button _btnPass, _btnFail;
     public int _screenHeight, _screenWidth;
     //基类布局
