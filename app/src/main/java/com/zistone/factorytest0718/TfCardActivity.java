@@ -7,10 +7,9 @@ import android.content.IntentFilter;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Environment;
+import android.os.StatFs;
 import android.os.storage.StorageManager;
-import android.view.View;
-import android.view.View.OnClickListener;
-import android.widget.Button;
+import android.util.Log;
 import android.widget.TextView;
 
 import java.lang.reflect.Array;
@@ -20,20 +19,19 @@ import java.util.Objects;
 
 public class TfCardActivity extends BaseActivity {
 
-    private static final String TAG = "TFCardTest";
+    private static final String TAG = "TfCardActivity";
 
     private TextView _txt;
 
     final BroadcastReceiver _broadcastReceiver = new BroadcastReceiver() {
         @Override
         public void onReceive(Context context, Intent intent) {
-            //SD/TF卡已插入
+            //SD/TF卡插入
             if (Objects.equals(intent.getAction(), Intent.ACTION_MEDIA_MOUNTED)) {
-                _txt.setTextColor(Color.GREEN);
-                _txt.setText("已检测到SD/TF卡");
-                _btnPass.setEnabled(true);
+                Log.i(TAG, "检测到SD/TF卡插入");
+                IsExistCard();
             }
-            //SD/TF卡已拨出
+            //SD/TF卡拨出
             if (Objects.equals(intent.getAction(), Intent.ACTION_MEDIA_UNMOUNTED)) {
                 if (_btnPass.isEnabled()) {
                     Intent resultIntent = new Intent();
@@ -41,6 +39,7 @@ public class TfCardActivity extends BaseActivity {
                     TfCardActivity.this.setResult(RESULT_OK, resultIntent);
                     finish();
                 } else {
+                    Log.i(TAG, "检测到SD/TF卡拨出");
                     _txt.setTextColor(Color.RED);
                     _txt.setText("SD/TF卡已拨出");
                     _btnPass.setEnabled(false);
@@ -50,11 +49,12 @@ public class TfCardActivity extends BaseActivity {
     };
 
     /**
-     * 判断外置sd卡是否挂载
+     * 判断外置SD/TF卡是否挂载
      *
      * @return
      */
     public boolean IsExistCard() {
+        _btnPass.setEnabled(false);
         boolean result = false;
         StorageManager mStorageManager = (StorageManager) this.getSystemService(Context.STORAGE_SERVICE);
         Class<?> storageVolumeClazz;
@@ -78,6 +78,18 @@ public class TfCardActivity extends BaseActivity {
                 String state = (String) getState.invoke(storageVolumeElement);
                 if (removable && state.equals(Environment.MEDIA_MOUNTED)) {
                     result = true;
+                    Log.i(TAG, "SD/TF卡的路径：" + path);
+                    StatFs statFs = new StatFs(path);
+                    long size = statFs.getBlockSizeLong();
+                    long count = statFs.getBlockCountLong();
+                    double total = size * count / 1000.00 / 1000.00 / 1000.00;
+                    Log.i(TAG, "全部存储空间：" + String.format("%.2f", total) + "GB");
+                    long availableSize = statFs.getAvailableBlocksLong();
+                    double canUse = size * availableSize / 1000.00 / 1000.00 / 1000.00;
+                    Log.i(TAG, "可用存储空间：" + String.format("%.2f", canUse) + "GB");
+                    _btnPass.setEnabled(true);
+                    _txt.setTextColor(SPRING_GREEN);
+                    _txt.setText("检测到SD/TF卡\n共" + String.format("%.2f", total) + "GB");
                     break;
                 }
             }
@@ -114,18 +126,12 @@ public class TfCardActivity extends BaseActivity {
         //        setContentView(R.layout.activity_tf_card);
         SetBaseContentView(R.layout.activity_tf_card);
         _txt = findViewById(R.id.txt_tfcard);
-        if (IsExistCard()) {
-            _btnPass.setEnabled(true);
-            _txt.setTextColor(Color.GREEN);
-            _txt.setText("已检测到SD/TF卡");
-        } else {
-            _btnPass.setEnabled(false);
-        }
         IntentFilter filter = new IntentFilter();
         filter.addAction(Intent.ACTION_MEDIA_MOUNTED);
         filter.addAction(Intent.ACTION_MEDIA_UNMOUNTED);
         filter.addDataScheme("file");
         registerReceiver(_broadcastReceiver, filter);
+        IsExistCard();
     }
 
 }

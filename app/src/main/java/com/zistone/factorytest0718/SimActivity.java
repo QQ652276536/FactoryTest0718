@@ -60,7 +60,7 @@ public class SimActivity extends BaseActivity {
         if (simState == _telephonyManager.SIM_STATE_READY) {
             Log.i(TAG, "检测到SIM卡");
             _txtSim.setText("检测到SIM卡");
-            _txtSim.setTextColor(Color.parseColor("#3CB371"));
+            _txtSim.setTextColor(SPRING_GREEN);
         } else if (simState == _telephonyManager.SIM_STATE_ABSENT) {
             Log.i(TAG, "无SIM卡");
             _txtSim.setText("无SIM卡");

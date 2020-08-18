@@ -73,7 +73,7 @@ public class SoundActivity extends BaseActivity implements View.OnTouchListener 
         _imgBtnRecord.setEnabled(true);
         _txtRecordPath.setEnabled(true);
         _imgBtnRecord.setBackground(getDrawable(R.drawable.sound_record_start1));
-        _txtRecordPath.setTextColor(Color.parseColor("#3CB371"));
+        _txtRecordPath.setTextColor(SPRING_GREEN);
         _txtRecordPath.setBackground(getDrawable(R.drawable.sound_record_txt_border1));
         _ringtone.stop();
     }
@@ -108,7 +108,7 @@ public class SoundActivity extends BaseActivity implements View.OnTouchListener 
         _imgBtnRecord.setEnabled(true);
         _imgBtnPlay.setBackground(getDrawable(R.drawable.sound_play_start1));
         _imgBtnRecord.setBackground(getDrawable(R.drawable.sound_record_start1));
-        _txtRecordPath.setTextColor(Color.parseColor("#3CB371"));
+        _txtRecordPath.setTextColor(SPRING_GREEN);
         _txtRecordPath.setBackground(getDrawable(R.drawable.sound_record_txt_border1));
     }
 

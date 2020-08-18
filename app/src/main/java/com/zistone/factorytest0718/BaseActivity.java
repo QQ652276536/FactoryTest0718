@@ -6,6 +6,7 @@ import androidx.core.content.ContextCompat;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.graphics.Color;
 import android.graphics.Point;
 import android.graphics.Rect;
 import android.os.Bundle;
@@ -29,6 +30,7 @@ public class BaseActivity extends AppCompatActivity implements View.OnClickListe
     public static final String ARG_PARAM2 = "param2";
     public static final String PASS = "PASS";
     public static final String FAIL = "FAIL";
+    public static final int SPRING_GREEN = Color.parseColor("#3CB371");
 
     public Button _btnPass, _btnFail;
     public int _screenHeight, _screenWidth;

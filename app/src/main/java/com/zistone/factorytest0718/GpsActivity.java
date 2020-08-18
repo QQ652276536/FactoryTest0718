@@ -254,7 +254,7 @@ public class GpsActivity extends BaseActivity implements LocationListener {
                         break;
                     case 1:
                         _txtState.setText("定位服务开启");
-                        _txtState.setTextColor(Color.parseColor("#3CB371"));
+                        _txtState.setTextColor(SPRING_GREEN);
                         _btnPass.setEnabled(true);
                         break;
                 }
