@@ -18,6 +18,7 @@ import android.view.ViewGroup;
 import android.view.Window;
 import android.widget.Button;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 
 public class BaseActivity extends AppCompatActivity implements View.OnClickListener {
 
@@ -32,6 +33,22 @@ public class BaseActivity extends AppCompatActivity implements View.OnClickListe
     public int _screenHeight, _screenWidth;
     //基类布局
     public LinearLayout _baseLinearLayout;
+
+    public void TxtToTop(TextView txt) {
+        txt.scrollTo(0, 0);
+    }
+
+    public void TxtToBottom(TextView txt) {
+        int offset = txt.getLineCount() * txt.getLineHeight();
+        if (offset > txt.getHeight()) {
+            txt.scrollTo(0, offset - txt.getHeight());
+        }
+    }
+
+    public void TxtClear(TextView txt) {
+        txt.setText("");
+        txt.scrollTo(0, 0);
+    }
 
     /**
      * 测试通过

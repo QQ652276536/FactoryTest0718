@@ -36,7 +36,7 @@ import com.zz.impl.mifarecard.MifareCardDeviceImpl;
 import java.io.UnsupportedEncodingException;
 import java.util.List;
 
-public class IdCardActivity extends BaseActivity implements View.OnClickListener {
+public class IdCardActivity extends BaseActivity {
 
     private static final String TAG = "IdCardActivity";
     private static final String PORT_NAME = "/dev/ttyHSL2";
@@ -166,6 +166,8 @@ public class IdCardActivity extends BaseActivity implements View.OnClickListener
     }
 
     private void UpdateText(final String str, final String setOrAppend) {
+        if (null == _txt)
+            return;
         runOnUiThread(new Runnable() {
             @Override
             public void run() {
@@ -175,9 +177,7 @@ public class IdCardActivity extends BaseActivity implements View.OnClickListener
                         break;
                     case "Append":
                         _txt.append(str + "\n");
-                        int offset = _txt.getLineCount() * _txt.getLineHeight();
-                        if (offset > _txt.getHeight())
-                            _txt.scrollTo(0, offset - _txt.getHeight());
+                        TxtToBottom(_txt);
                         break;
                 }
             }
@@ -310,24 +310,6 @@ public class IdCardActivity extends BaseActivity implements View.OnClickListener
     }
 
     @Override
-    public void onClick(View v) {
-        switch (v.getId()) {
-            case R.id.btn_top_idcard:
-                _txt.scrollTo(0, 0);
-                break;
-            case R.id.btn_bottom_idcard:
-                int offset = _txt.getLineCount() * _txt.getLineHeight();
-                if (offset > _txt.getHeight()) {
-                    _txt.scrollTo(0, offset - _txt.getHeight());
-                }
-                break;
-            case R.id.btn_clear_idcard:
-                _txt.setText("");
-                break;
-        }
-    }
-
-    @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         //        setContentView(R.layout.activity_idcard);
@@ -338,11 +320,11 @@ public class IdCardActivity extends BaseActivity implements View.OnClickListener
         _btnRead = findViewById(R.id.btn_read_idcard);
         _btnVersion = findViewById(R.id.btn_readversion_idcard);
         _btnTop = findViewById(R.id.btn_top_idcard);
-        _btnTop.setOnClickListener(this::onClick);
+        _btnTop.setOnClickListener(v -> TxtToTop(_txt));
         _btnBottom = findViewById(R.id.btn_bottom_idcard);
-        _btnBottom.setOnClickListener(this::onClick);
+        _btnBottom.setOnClickListener(v -> TxtToBottom(_txt));
         _btnClear = findViewById(R.id.btn_clear_idcard);
-        _btnClear.setOnClickListener(this::onClick);
+        _btnClear.setOnClickListener(v -> TxtClear(_txt));
         _btnRead.setFocusable(true);
         _btnRead.setFocusableInTouchMode(true);
         _btnRead.requestFocus();

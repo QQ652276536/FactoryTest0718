@@ -94,9 +94,7 @@ public class ComTestActivity extends BaseActivity {
                         break;
                     case "Append":
                         txt.append(str);
-                        int offset = txt.getLineCount() * txt.getLineHeight();
-                        if (offset > txt.getHeight())
-                            txt.scrollTo(0, offset - txt.getHeight());
+                        TxtToBottom(txt);
                         break;
                 }
             }
@@ -230,18 +228,15 @@ public class ComTestActivity extends BaseActivity {
         _txtMessag.setMovementMethod(ScrollingMovementMethod.getInstance());
         _imgBtnTop = findViewById(R.id.btn_top_com);
         _imgBtnTop.setOnClickListener(v -> {
-            _txtMessag.scrollTo(0, 0);
+            TxtToTop(_txtMessag);
         });
         _imgBtnBottom = findViewById(R.id.btn_bottom_com);
         _imgBtnBottom.setOnClickListener(v -> {
-            int offset = _txtMessag.getLineCount() * _txtMessag.getLineHeight();
-            if (offset > _txtMessag.getHeight()) {
-                _txtMessag.scrollTo(0, offset - _txtMessag.getHeight());
-            }
+            TxtToBottom(_txtMessag);
         });
         _imgBtnClear = findViewById(R.id.btn_clear_com);
         _imgBtnClear.setOnClickListener(v -> {
-            _txtMessag.setText("");
+            TxtClear(_txtMessag);
         });
         _btnSend = findViewById(R.id.btn_send_com);
         _btnSend.setOnClickListener(v -> {

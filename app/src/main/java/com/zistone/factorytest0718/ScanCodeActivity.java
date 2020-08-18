@@ -24,7 +24,7 @@ import com.zistone.factorytest0718.util.MySoundPlayUtil;
 import java.io.File;
 import java.util.List;
 
-public class ScanCodeActivity extends BaseActivity implements View.OnClickListener, MyScanCodeManager.ScanCodeListener {
+public class ScanCodeActivity extends BaseActivity implements MyScanCodeManager.ScanCodeListener {
 
     private static final String TAG = "ScanCodeActivity";
 
@@ -59,9 +59,7 @@ public class ScanCodeActivity extends BaseActivity implements View.OnClickListen
                         break;
                     case "Append":
                         txt.append(str);
-                        int offset = txt.getLineCount() * txt.getLineHeight();
-                        if (offset > txt.getHeight())
-                            txt.scrollTo(0, offset - txt.getHeight());
+                        TxtToBottom(txt);
                         break;
                 }
             }
@@ -146,35 +144,6 @@ public class ScanCodeActivity extends BaseActivity implements View.OnClickListen
     }
 
     @Override
-    public void onClick(View v) {
-        switch (v.getId()) {
-            case R.id.btn_top_scancode:
-                _txt.scrollTo(0, 0);
-                break;
-            case R.id.btn_bottom_scancode:
-                int offset = _txt.getLineCount() * _txt.getLineHeight();
-                if (offset > _txt.getHeight()) {
-                    _txt.scrollTo(0, offset - _txt.getHeight());
-                }
-                break;
-            case R.id.btn_clear_scancode:
-                _txt.setText("");
-                break;
-            case R.id.btn_scan_scancode:
-                _btnScan.setEnabled(false);
-                MyScanCodeManager.StopReadThread();
-                MyScanCodeManager.StartReadThread();
-                try {
-                    Thread.sleep(3 * 1000);
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                }
-                _btnScan.setEnabled(true);
-                break;
-        }
-    }
-
-    @Override
     protected void onCreate(Bundle savedInstanceState) {
         Log.i(TAG, "onCreate");
         super.onCreate(savedInstanceState);
@@ -183,13 +152,23 @@ public class ScanCodeActivity extends BaseActivity implements View.OnClickListen
         _txt = findViewById(R.id.txt_scancode);
         _txt.setMovementMethod(ScrollingMovementMethod.getInstance());
         _btnTop = findViewById(R.id.btn_top_scancode);
-        _btnTop.setOnClickListener(this::onClick);
+        _btnTop.setOnClickListener(v -> TxtToTop(_txt));
         _btnBottom = findViewById(R.id.btn_bottom_scancode);
-        _btnBottom.setOnClickListener(this::onClick);
+        _btnBottom.setOnClickListener(v -> TxtToBottom(_txt));
         _btnClear = findViewById(R.id.btn_clear_scancode);
-        _btnClear.setOnClickListener(this::onClick);
+        _btnClear.setOnClickListener(v -> TxtClear(_txt));
         _btnScan = findViewById(R.id.btn_scan_scancode);
-        _btnScan.setOnClickListener(this::onClick);
+        _btnScan.setOnClickListener(v -> {
+            _btnScan.setEnabled(false);
+            MyScanCodeManager.StopReadThread();
+            MyScanCodeManager.StartReadThread();
+            try {
+                Thread.sleep(3 * 1000);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+            _btnScan.setEnabled(true);
+        });
         MyScanCodeManager.Init(this::onReceived);
         try {
             MyScanCodeManager.OpenSerialPort(new File("/dev/ttyHSL1"), 9600, 0);
