@@ -66,7 +66,7 @@ public final class MyProgressDialogUtil {
                 CountDownTimer countDownTimer = new CountDownTimer(timerCount, 1000) {
                     @Override
                     public void onTick(long millisUntilFinished) {
-                        btn.setText(btnStr + "（" + millisUntilFinished / 1000 + "）");
+                        btn.setText(btnStr + "(" + millisUntilFinished / 1000 + ")");
                     }
 
                     @Override
