@@ -42,7 +42,6 @@ public class FaceServer {
     public static FaceEngine _faceEngine = null;
     public static FaceServer _faceServer = null;
     public static List<FaceRegisterInfo> _faceRegisterInfoList;
-    public static String _rootPath;
     //是否正在搜索人脸，保证搜索操作单线程进行
     public boolean _isProcessing = false;
 
@@ -104,10 +103,7 @@ public class FaceServer {
      */
     private void InitFaceList(Context context) {
         synchronized (this) {
-            if (_rootPath == null) {
-                _rootPath = context.getFilesDir().getAbsolutePath();
-            }
-            File featureDir = new File(_rootPath + File.separator + SAVE_FEATURE_DIR);
+            File featureDir = new File(SAVE_FEATURE_DIR);
             if (!featureDir.exists() || !featureDir.isDirectory()) {
                 return;
             }
@@ -135,17 +131,14 @@ public class FaceServer {
             if (context == null) {
                 return 0;
             }
-            if (_rootPath == null) {
-                _rootPath = context.getFilesDir().getAbsolutePath();
-            }
-            File featureFileDir = new File(_rootPath + File.separator + SAVE_FEATURE_DIR);
+            File featureFileDir = new File(SAVE_FEATURE_DIR);
             int featureCount = 0;
             if (featureFileDir.exists() && featureFileDir.isDirectory()) {
                 String[] featureFiles = featureFileDir.list();
                 featureCount = featureFiles == null ? 0 : featureFiles.length;
             }
             int imageCount = 0;
-            File imgFileDir = new File(_rootPath + File.separator + SAVE_IMG_DIR);
+            File imgFileDir = new File(SAVE_IMG_DIR);
             if (imgFileDir.exists() && imgFileDir.isDirectory()) {
                 String[] imageFiles = imgFileDir.list();
                 imageCount = imageFiles == null ? 0 : imageFiles.length;
@@ -159,13 +152,10 @@ public class FaceServer {
             if (context == null) {
                 return 0;
             }
-            if (_rootPath == null) {
-                _rootPath = context.getFilesDir().getAbsolutePath();
-            }
             if (_faceRegisterInfoList != null) {
                 _faceRegisterInfoList.clear();
             }
-            File featureFileDir = new File(_rootPath + File.separator + SAVE_FEATURE_DIR);
+            File featureFileDir = new File(SAVE_FEATURE_DIR);
             int deletedFeatureCount = 0;
             if (featureFileDir.exists() && featureFileDir.isDirectory()) {
                 File[] featureFiles = featureFileDir.listFiles();
@@ -178,7 +168,7 @@ public class FaceServer {
                 }
             }
             int deletedImageCount = 0;
-            File imgFileDir = new File(_rootPath + File.separator + SAVE_IMG_DIR);
+            File imgFileDir = new File(SAVE_IMG_DIR);
             if (imgFileDir.exists() && imgFileDir.isDirectory()) {
                 File[] imgFiles = imgFileDir.listFiles();
                 if (imgFiles != null && imgFiles.length > 0) {
@@ -210,17 +200,14 @@ public class FaceServer {
                 Log.e(TAG, "RegisterNv21：参数无效！");
                 return false;
             }
-            if (_rootPath == null) {
-                _rootPath = context.getFilesDir().getAbsolutePath();
-            }
             //特征存储的文件夹
-            File featureDir = new File(_rootPath + File.separator + SAVE_FEATURE_DIR);
+            File featureDir = new File(SAVE_FEATURE_DIR);
             if (!featureDir.exists() && !featureDir.mkdirs()) {
                 Log.e(TAG, "RegisterNv21：创建用于存储人脸特征的文件失败！");
                 return false;
             }
             //图片存储的文件夹
-            File imgDir = new File(_rootPath + File.separator + SAVE_IMG_DIR);
+            File imgDir = new File(SAVE_IMG_DIR);
             if (!imgDir.exists() && !imgDir.mkdirs()) {
                 Log.e(TAG, "RegisterNv21：创建用于存储图片的文件失败！");
                 return false;
@@ -284,17 +271,14 @@ public class FaceServer {
                 Log.e(TAG, "RegisterBgr24：参数无效！");
                 return false;
             }
-            if (_rootPath == null) {
-                _rootPath = context.getFilesDir().getAbsolutePath();
-            }
             //特征存储的文件夹
-            File featureDir = new File(_rootPath + File.separator + SAVE_FEATURE_DIR);
+            File featureDir = new File(SAVE_FEATURE_DIR);
             if (!featureDir.exists() && !featureDir.mkdirs()) {
                 Log.e(TAG, "RegisterBgr24：创建用于存储人脸特征的失败！");
                 return false;
             }
             //图片存储的文件夹
-            File imgDir = new File(_rootPath + File.separator + SAVE_IMG_DIR);
+            File imgDir = new File(SAVE_IMG_DIR);
             if (!imgDir.exists() && !imgDir.mkdirs()) {
                 Log.e(TAG, "RegisterBgr24：创建用于存储图片的文件失败！");
                 return false;

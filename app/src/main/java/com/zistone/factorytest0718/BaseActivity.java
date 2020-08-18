@@ -24,6 +24,7 @@ public class BaseActivity extends AppCompatActivity implements View.OnClickListe
 
     private static final String TAG = "BaseActivity";
 
+    public static final String ROOT_PATH = "/sdcard/FactoryTest0718/";
     public static final String ARG_PARAM1 = "param1";
     public static final String ARG_PARAM2 = "param2";
     public static final String PASS = "PASS";

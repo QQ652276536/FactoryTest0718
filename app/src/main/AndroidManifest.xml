@@ -100,7 +100,7 @@
             android:launchMode="singleTask" />
         <activity
             android:name=".GpsActivity"
-            android:label="系统原生定位" />
+            android:label="系统位置信息" />
         <activity
             android:name=".SimActivity"
             android:label="SIM卡信息" />

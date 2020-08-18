@@ -24,11 +24,11 @@ import java.io.File;
 import java.util.Calendar;
 import java.util.Locale;
 
-public class SoundActivity extends BaseActivity implements View.OnClickListener, View.OnTouchListener {
+public class SoundActivity extends BaseActivity implements View.OnTouchListener {
 
     private static final String TAG = "SoundActivity";
     //录音文件所在目录
-    private static final String FILE_DIR = "/sdcard/Factory0718/SoundTest/";
+    private static final String FILE_DIR = "SoundTest/";
     //录音文件名
     private static final String FILENAME_FORMAT = "yyyyMMdd_HHmmss";
     //系统默认来电铃声
@@ -60,8 +60,7 @@ public class SoundActivity extends BaseActivity implements View.OnClickListener,
     private void StartPlaySound() {
         _imgBtnRecord.setEnabled(false);
         _txtRecordPath.setEnabled(false);
-        _imgBtnPlay.setBackground(getDrawable(R.drawable.sound_play_stop));
-        _imgBtnRecord.setBackground(getDrawable(R.drawable.sound_record_start3));
+        _imgBtnRecord.setBackground(getDrawable(R.drawable.sound_record_start2));
         _txtRecordPath.setTextColor(Color.GRAY);
         _txtRecordPath.setBackground(getDrawable(R.drawable.sound_record_txt_border3));
         _ringtone.play();
@@ -73,7 +72,6 @@ public class SoundActivity extends BaseActivity implements View.OnClickListener,
     private void StopPlaySound() {
         _imgBtnRecord.setEnabled(true);
         _txtRecordPath.setEnabled(true);
-        _imgBtnPlay.setBackground(getDrawable(R.drawable.sound_play_start1));
         _imgBtnRecord.setBackground(getDrawable(R.drawable.sound_record_start1));
         _txtRecordPath.setTextColor(Color.parseColor("#3CB371"));
         _txtRecordPath.setBackground(getDrawable(R.drawable.sound_record_txt_border1));
@@ -86,8 +84,8 @@ public class SoundActivity extends BaseActivity implements View.OnClickListener,
     private void PlayRecord() {
         _imgBtnPlay.setEnabled(false);
         _imgBtnRecord.setEnabled(false);
-        _imgBtnPlay.setBackground(getDrawable(R.drawable.sound_play_start3));
-        _imgBtnRecord.setBackground(getDrawable(R.drawable.sound_record_start3));
+        _imgBtnPlay.setBackground(getDrawable(R.drawable.sound_play_start2));
+        _imgBtnRecord.setBackground(getDrawable(R.drawable.sound_record_start2));
         _txtRecordPath.setTextColor(Color.RED);
         _txtRecordPath.setBackground(getDrawable(R.drawable.sound_record_txt_border2));
         try {
@@ -119,7 +117,7 @@ public class SoundActivity extends BaseActivity implements View.OnClickListener,
      */
     private void StopRecord() {
         //只有正在录音的时候才能停止，否则会有异常
-        if (_isRecording) {
+        if (_isRecording && null != _mediaRecorder) {
             //停止录音
             _mediaRecorder.stop();
             _mediaRecorder.reset();
@@ -132,7 +130,6 @@ public class SoundActivity extends BaseActivity implements View.OnClickListener,
         _txtRecordPath.setText("点击可开始/停止播放录音\n" + _fileName);
         _imgBtnPlay.setEnabled(true);
         _imgBtnPlay.setBackground(getDrawable(R.drawable.sound_play_start1));
-        _imgBtnRecord.setBackground(getDrawable(R.drawable.sound_record_start1));
     }
 
     /**
@@ -146,8 +143,7 @@ public class SoundActivity extends BaseActivity implements View.OnClickListener,
         _txtRecordPath.setVisibility(View.INVISIBLE);
         _txtRecordPath.setText("点击可开始/停止播放录音\n" + _fileName);
         _imgBtnPlay.setEnabled(false);
-        _imgBtnPlay.setBackground(getDrawable(R.drawable.sound_play_start3));
-        _imgBtnRecord.setBackground(getDrawable(R.drawable.sound_record_stop));
+        _imgBtnPlay.setBackground(getDrawable(R.drawable.sound_play_start2));
         try {
             //设置麦克风
             _mediaRecorder.setAudioSource(MediaRecorder.AudioSource.DEFAULT);
@@ -161,8 +157,8 @@ public class SoundActivity extends BaseActivity implements View.OnClickListener,
             _mediaRecorder.setMaxFileSize(100 * 1024);
             _fileName = DateFormat.format(FILENAME_FORMAT, Calendar.getInstance(Locale.CHINA)) + ".m4a";
             //按路径建立文件，已有相同路径的文件则不建立
-            MyFileUtil.MakeFile(FILE_DIR + _fileName);
-            _filePath = FILE_DIR + _fileName;
+            MyFileUtil.MakeFile(ROOT_PATH + FILE_DIR + _fileName);
+            _filePath = ROOT_PATH + FILE_DIR + _fileName;
             //准备
             _mediaRecorder.setOutputFile(_filePath);
             _mediaRecorder.prepare();
@@ -170,28 +166,6 @@ public class SoundActivity extends BaseActivity implements View.OnClickListener,
             _mediaRecorder.start();
         } catch (Exception e) {
             e.printStackTrace();
-            Log.e(TAG, e.toString());
-        }
-    }
-
-    @Override
-    protected void onDestroy() {
-        try {
-            super.onDestroy();
-            _ringtone.stop();
-            if (_isRecording) {
-                _mediaRecorder.stop();
-                _mediaRecorder.reset();
-            }
-            _mediaRecorder.release();
-            _mediaRecorder = null;
-            if (!"".equals(_filePath)) {
-                File file = new File(_filePath);
-                if (file.exists())
-                    file.delete();
-            }
-            _filePath = "";
-        } catch (Exception e) {
             Log.e(TAG, e.toString());
         }
     }
@@ -224,51 +198,47 @@ public class SoundActivity extends BaseActivity implements View.OnClickListener,
     }
 
     @Override
-    public void onClick(View v) {
-        switch (v.getId()) {
-            //扬声器
-            case R.id.btn_play_sound:
-                //开始扬声器以后：可以停止扬声器，但是禁止录音和播放录音
-                if (!_isPlaying) {
-                    _isPlaying = true;
-                    StartPlaySound();
-                }
-                //停止扬声器以后：可以再次开启扬声器、可以录音、可以播放录音
-                else {
-                    _isPlaying = false;
-                    StopPlaySound();
-                }
-                break;
-            //录音机
-            case R.id.btn_record_sound:
-                //开始录音以后：可以停止录音，但是禁止扬声器和录音
-                if (!_isRecording) {
-                    _isRecording = true;
-                    StartRecord();
-                }
-                //停止录音以后：可以再次录音、可以开启扬声器、可以播放录音
-                else {
-                    StopRecord();
-                    //停止录音需要判断当前标识位，所以将标识位的改变放在停止录音以后
-                    _isRecording = false;
-                }
-                break;
-            //播放录音
-            case R.id.txt_record_path_sound:
-                //开始播放录音以后：可以停止播放录音，但是禁止录音和扬声器
-                if (!_isPlayingRecord) {
-                    _isPlayingRecord = true;
-                    PlayRecord();
-                }
-                //停止播放录音以后：可以播放扬声器、可以录音、可以播放录音
-                else {
-                    _isPlayingRecord = false;
-                    //记个笔记：MediaPlayer在pause之后可以直接start，但是在stop以后需要perpare才能start
-                    _mediaPlayer.stop();
-                    PlayOrRecordOver();
-                }
-                break;
+    protected void onDestroy() {
+        try {
+            super.onDestroy();
+            _ringtone.stop();
+            if (_isRecording && null != _mediaRecorder) {
+                _mediaRecorder.stop();
+                _mediaRecorder.reset();
+            }
+            _mediaRecorder.release();
+            _mediaRecorder = null;
+            if (!"".equals(_filePath)) {
+                File file = new File(_filePath);
+                if (file.exists())
+                    file.delete();
+            }
+            _filePath = "";
+        } catch (Exception e) {
+            Log.e(TAG, e.toString());
         }
+    }
+
+    @Override
+    protected void onStop() {
+        //停止播放录音
+        _isPlayingRecord = false;
+        //记个笔记：MediaPlayer在pause之后可以直接start，但是在stop以后需要perpare才能start
+        _mediaPlayer.stop();
+        //停止录音，只有正在录音的时候才能停止，否则会有异常
+        if (_isRecording && null != _mediaRecorder) {
+            //停止录音
+            _mediaRecorder.stop();
+            _mediaRecorder.reset();
+        }
+        //取消并隐藏录音倒计时
+        _countDownTimer.cancel();
+        _txtCountDown.setVisibility(View.INVISIBLE);
+        _imgBtnPlay.setEnabled(true);
+        _imgBtnPlay.setBackground(getDrawable(R.drawable.sound_play_start1));
+        //停止扬声器
+        StopPlaySound();
+        super.onStop();
     }
 
     @Override
@@ -307,15 +277,51 @@ public class SoundActivity extends BaseActivity implements View.OnClickListener,
             }
         });
         _imgBtnPlay = findViewById(R.id.btn_play_sound);
-        _imgBtnPlay.setOnClickListener(this::onClick);
+        _imgBtnPlay.setOnClickListener(v -> {
+            //开启扬声器以后：可以停止扬声器，但是禁止录音和播放录音
+            if (!_isPlaying) {
+                _isPlaying = true;
+                StartPlaySound();
+            }
+            //停止扬声器以后：可以再次开启扬声器、可以录音、可以播放录音
+            else {
+                _isPlaying = false;
+                StopPlaySound();
+            }
+        });
         _imgBtnPlay.setOnTouchListener(this::onTouch);
         _imgBtnRecord = findViewById(R.id.btn_record_sound);
-        _imgBtnRecord.setOnClickListener(this::onClick);
+        _imgBtnRecord.setOnClickListener(v -> {
+            //开始录音以后：可以停止录音，但是禁止扬声器和录音
+            if (!_isRecording) {
+                _isRecording = true;
+                StartRecord();
+            }
+            //停止录音以后：可以再次录音、可以开启扬声器、可以播放录音
+            else {
+                StopRecord();
+                //停止录音需要判断当前标识位，所以将标识位的改变放在停止录音以后
+                _isRecording = false;
+            }
+        });
         _imgBtnRecord.setOnTouchListener(this::onTouch);
         _txtCountDown = findViewById(R.id.txt_record_countdown_sound);
         _txtCountDown.setVisibility(View.INVISIBLE);
         _txtRecordPath = findViewById(R.id.txt_record_path_sound);
-        _txtRecordPath.setOnClickListener(this::onClick);
+        _txtRecordPath.setOnClickListener(v -> {
+            //开始播放录音以后：可以停止播放录音，但是禁止录音和扬声器
+            if (!_isPlayingRecord) {
+                _isPlayingRecord = true;
+                PlayRecord();
+            }
+            //停止播放录音以后：可以播放扬声器、可以录音、可以播放录音
+            else {
+                _isPlayingRecord = false;
+                //记个笔记：MediaPlayer在pause之后可以直接start，但是在stop以后需要perpare才能start
+                _mediaPlayer.stop();
+                PlayOrRecordOver();
+            }
+        });
         _txtRecordPath.setVisibility(View.INVISIBLE);
     }
 
