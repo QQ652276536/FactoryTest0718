@@ -174,7 +174,7 @@ public class ScanCodeActivity extends BaseActivity implements MyScanCodeManager.
             MyScanCodeManager.OpenSerialPort(new File("/dev/ttyHSL1"), 9600, 0);
             UpdateText(_txt, "串口已打开\r\n", "Append");
         } catch (Exception e) {
-            MyProgressDialogUtil.ShowWarning(this, "警告", "该设备不支持扫码，无法使用此功能！", false, () -> {
+            MyProgressDialogUtil.ShowWarning(this, "知道了", "警告", "该设备不支持扫码，无法使用此功能！", false, () -> {
                 Fail();
             });
         }

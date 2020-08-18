@@ -49,7 +49,7 @@ public class BankCardActivity extends BaseActivity {
                 runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
-                        MyProgressDialogUtil.ShowWarning(BankCardActivity.this, "警告", "串口打开失败，请检查串口节点是否正确！", false, new MyProgressDialogUtil.WarningListener() {
+                        MyProgressDialogUtil.ShowWarning(BankCardActivity.this, "知道了", "警告", "串口打开失败，请检查串口节点是否正确！", false, new MyProgressDialogUtil.WarningListener() {
                             @Override
                             public void OnIKnow() {
                                 Fail();

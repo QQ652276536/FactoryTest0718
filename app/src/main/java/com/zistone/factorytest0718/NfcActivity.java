@@ -118,7 +118,7 @@ public class NfcActivity extends BaseActivity {
         if (null != _nfcAdapter) {
             _nfcAdapter.enableForegroundDispatch(this, _pendingIntent, null, null);
         } else {
-            MyProgressDialogUtil.ShowWarning(this, "警告", "该设备不支持NFC，无法使用此功能！",false, () -> {
+            MyProgressDialogUtil.ShowWarning(this, "知道了", "警告", "该设备不支持NFC，无法使用此功能！", false, () -> {
                 Fail();
             });
         }

@@ -61,7 +61,7 @@ public class ScreenActivity extends BaseActivity {
         _linearLayout = findViewById(R.id.ll_screen);
         _powerManager = (PowerManager) getSystemService(Context.POWER_SERVICE);
         _WakeLock = _powerManager.newWakeLock(PowerManager.PARTIAL_WAKE_LOCK, "BackLight");
-        MyProgressDialogUtil.ShowWarning(this, "提示", "点击屏幕切换不同颜色，并观察屏幕是否有坏点", true, null);
+        MyProgressDialogUtil.ShowWarning(this, "知道了", "提示", "点击屏幕切换不同颜色，并观察屏幕是否有坏点", true, null);
     }
 
     private Runnable _runnable = new Runnable() {
@@ -89,7 +89,7 @@ public class ScreenActivity extends BaseActivity {
             _handler.postDelayed(_runnable, 0);
             if (_imgSeq >= _testImg.length) {
                 _imgSeq = 0;
-                MyProgressDialogUtil.ShowConfirm(this, "提示", "点击屏幕切换不同颜色，并观察屏幕是否有坏点", false, new MyProgressDialogUtil.ConfirmListener() {
+                MyProgressDialogUtil.ShowConfirm(this, "通过", "失败", "提示", "点击屏幕切换不同颜色，并观察屏幕是否有坏点", false, new MyProgressDialogUtil.ConfirmListener() {
                     @Override
                     public void OnConfirm() {
                         Pass();

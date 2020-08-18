@@ -1,16 +1,11 @@
 package com.zistone.factorytest0718;
 
-import android.bluetooth.BluetoothAdapter;
-import android.bluetooth.BluetoothDevice;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
-import android.net.NetworkInfo;
 import android.net.wifi.ScanResult;
-import android.net.wifi.WifiInfo;
 import android.net.wifi.WifiManager;
-import android.os.Build;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Log;
@@ -23,17 +18,12 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import androidx.appcompat.app.AppCompatActivity;
-
 import com.cjj.MaterialRefreshLayout;
 import com.cjj.MaterialRefreshListener;
 import com.zistone.factorytest0718.util.MyProgressDialogUtil;
 
-import org.w3c.dom.Text;
-
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
 
 import pl.droidsonroids.gif.GifImageView;
 
@@ -156,9 +146,10 @@ public class WifiActivity extends BaseActivity {
                     if (rssi >= -75 && !_isPass) {
                         _isPass = true;
                         _btnPass.setEnabled(true);
-                        MyProgressDialogUtil.ShowWarning(WifiActivity.this, "提示",
-                                "Wifi测试已通过！\n\nWifi名称：" + ssid + "\nWifi地址：" + bssid + "\n信号强度：" + rssi, false,
-                                () -> Pass());
+                        MyProgressDialogUtil.ShowCountDownTimerWarning(WifiActivity.this, "知道了", 3 * 1000, "提示", "Wifi" + "测试已通过！\n\nWifi名称：" + ssid + "\nWifi地址：" + bssid + "\n信号强度：" + rssi, false, () -> {
+                            MyProgressDialogUtil.DismissAlertDialog();
+                            Pass();
+                        });
                     }
                 }
             }

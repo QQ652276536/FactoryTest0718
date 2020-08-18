@@ -319,7 +319,7 @@ public class FaceAttributeDetectionImageActivity extends AppCompatActivity imple
         }
         runOnUiThread(() -> {
             _txt.setText(notificationSpannableStringBuilder);
-            MyProgressDialogUtil.DismissProgressDialog();
+            MyProgressDialogUtil.DismissAlertDialog();
         });
     }
 

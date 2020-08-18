@@ -2,6 +2,7 @@ package com.zistone.factorytest0718.util;
 
 import android.content.ContentResolver;
 import android.content.Context;
+import android.content.Intent;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -67,7 +68,14 @@ public final class MyImageUtil {
         return Bitmap.createBitmap(bitmap, 0, 0, width, height, matrix, true);
     }
 
-    public static String getFilePathFromUri(Context context, Uri uri) {
+    /**
+     * 从URI中获取文件路径
+     *
+     * @param context
+     * @param uri
+     * @return
+     */
+    public static String GetFilePathFromUri(Context context, Uri uri) {
         if (null == uri)
             return null;
         final String scheme = uri.getScheme();
@@ -92,7 +100,7 @@ public final class MyImageUtil {
         return data;
     }
 
-    public static Uri geturi(android.content.Intent intent, Context context) {
+    public static Uri GetUri(Intent intent, Context context) {
         Uri uri = intent.getData();
         String type = intent.getType();
         if (uri.getScheme().equals("file") && (type.contains("image/*"))) {
@@ -107,7 +115,6 @@ public final class MyImageUtil {
                 int index = 0;
                 for (cur.moveToFirst(); !cur.isAfterLast(); cur.moveToNext()) {
                     index = cur.getColumnIndex(MediaStore.Images.ImageColumns._ID);
-                    // set _id value
                     index = cur.getInt(index);
                 }
                 if (index == 0) {

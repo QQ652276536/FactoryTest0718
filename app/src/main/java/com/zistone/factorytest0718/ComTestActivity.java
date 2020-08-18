@@ -257,7 +257,7 @@ public class ComTestActivity extends BaseActivity {
                 } catch (Exception e) {
                     e.printStackTrace();
                     UpdateText(_txtMessag, "\r\n" + e.toString(), "Append");
-                    MyProgressDialogUtil.ShowWarning(ComTestActivity.this, "警告", "串口打开失败，请检查串口节点是否正确！", true, new MyProgressDialogUtil.WarningListener() {
+                    MyProgressDialogUtil.ShowWarning(ComTestActivity.this, "知道了", "警告", "串口打开失败，请检查串口节点是否正确！", true, new MyProgressDialogUtil.WarningListener() {
                         @Override
                         public void OnIKnow() {
                         }

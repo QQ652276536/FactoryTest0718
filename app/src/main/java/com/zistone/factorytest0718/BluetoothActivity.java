@@ -137,8 +137,10 @@ public class BluetoothActivity extends BaseActivity {
                 if (rssi >= -75 && !_isPass) {
                     _isPass = true;
                     _btnPass.setEnabled(true);
-                    MyProgressDialogUtil.ShowWarning(BluetoothActivity.this, "提示",
-                            "蓝牙测试已通过！\n\n蓝牙名称：" + name + "\n蓝牙地址：" + address + "\n信号强度：" + rssi, false, () -> Pass());
+                    MyProgressDialogUtil.ShowCountDownTimerWarning(BluetoothActivity.this, "知道了", 3 * 1000, "提示", "蓝牙测试已通过！\n\n蓝牙名称：" + name + "\n蓝牙地址：" + address + "\n信号强度：" + rssi, false, () -> {
+                        MyProgressDialogUtil.DismissAlertDialog();
+                        Pass();
+                    });
                 }
             }
         }
@@ -192,7 +194,7 @@ public class BluetoothActivity extends BaseActivity {
         //获取本地蓝牙适配器
         _bluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
         if (null == _bluetoothAdapter) {
-            MyProgressDialogUtil.ShowConfirm(this, "错误", "当前设备不支持蓝牙", false, null);
+            MyProgressDialogUtil.ShowWarning(this, "知道了", "错误", "当前设备不支持蓝牙", false, null);
             return;
         }
         //注册蓝牙广播

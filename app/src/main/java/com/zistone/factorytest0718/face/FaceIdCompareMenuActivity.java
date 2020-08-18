@@ -188,7 +188,7 @@ public class FaceIdCompareMenuActivity extends AppCompatActivity {
         } else {
             _txt.setText("不能从位图得到BGR24！");
         }
-        runOnUiThread(() -> MyProgressDialogUtil.DismissProgressDialog());
+        runOnUiThread(() -> MyProgressDialogUtil.DismissAlertDialog());
     }
 
     /**
@@ -244,7 +244,7 @@ public class FaceIdCompareMenuActivity extends AppCompatActivity {
         }
         if (requestCode == ACTION_CHOOSE_MAIN_IMAGE) {
             try {
-                _imageUri = MyImageUtil.geturi(data, this);
+                _imageUri = MyImageUtil.GetUri(data, this);
                 _bitmap = MediaStore.Images.Media.getBitmap(getContentResolver(), data.getData());
             } catch (IOException e) {
                 e.printStackTrace();
