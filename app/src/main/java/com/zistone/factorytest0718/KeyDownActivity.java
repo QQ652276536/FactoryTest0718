@@ -1,8 +1,5 @@
 package com.zistone.factorytest0718;
 
-import androidx.appcompat.app.AppCompatActivity;
-
-import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.util.Log;
@@ -11,9 +8,9 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
-import com.zistone.factorytest0718.util.MyActivityManager;
+import com.zistone.factorytest0718.util.HomeKeyObserver;
+import com.zistone.factorytest0718.util.PowerKeyObserver;
 
 public class KeyDownActivity extends BaseActivity {
 
@@ -24,6 +21,15 @@ public class KeyDownActivity extends BaseActivity {
     private LinearLayout _llWd220b;
     private TextView _txt;
     private ImageView _iv;
+    private HomeKeyObserver _homeKeyObserver;
+    private PowerKeyObserver _powerKeyObserver;
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        _homeKeyObserver.stopListen();
+        _powerKeyObserver.stopListen();
+    }
 
     @Override
     public boolean onKeyUp(int keyCode, KeyEvent event) {
@@ -50,8 +56,6 @@ public class KeyDownActivity extends BaseActivity {
             _txt3Wd220b.setBackgroundColor(SPRING_GREEN);
         } else if (keyCode == KeyEvent.KEYCODE_UNKNOWN && event.getAction() == KeyEvent.ACTION_DOWN) {
             _txt5Wd220b.setBackgroundColor(SPRING_GREEN);
-        } else if (keyCode == KeyEvent.KEYCODE_POWER && event.getAction() == KeyEvent.ACTION_DOWN) {
-            _txt6Wd220b.setBackgroundColor(SPRING_GREEN);
         }
         return false;
     }
@@ -62,6 +66,7 @@ public class KeyDownActivity extends BaseActivity {
         //        setContentView(R.layout.activity_keydown);
         SetBaseContentView(R.layout.activity_keydown);
         _txt = findViewById(R.id.txt_keydown);
+        _iv = findViewById(R.id.iv_keydown);
         //型号WD220B对应的控件
         _llWd220b = findViewById(R.id.ll_wd220b_keydown);
         _txt1Wd220b = findViewById(R.id.txt1_wd220b_keydown);
@@ -70,6 +75,32 @@ public class KeyDownActivity extends BaseActivity {
         _txt4Wd220b = findViewById(R.id.txt4_wd220b_keydown);
         _txt5Wd220b = findViewById(R.id.txt5_wd220b_keydown);
         _txt6Wd220b = findViewById(R.id.txt6_wd220b_keydown);
-        _iv = findViewById(R.id.iv_keydown);
+        init();
     }
+
+    private void init() {
+        _homeKeyObserver = new HomeKeyObserver(this);
+        _homeKeyObserver.setHomeKeyListener(new HomeKeyObserver.OnHomeKeyListener() {
+            @Override
+            public void onHomeKeyPressed() {
+                Log.i(TAG, "按下Home键");
+            }
+
+            @Override
+            public void onHomeKeyLongPressed() {
+                Log.i(TAG, "长按Home键");
+            }
+        });
+        _homeKeyObserver.startListen();
+        _powerKeyObserver = new PowerKeyObserver(this);
+        _powerKeyObserver.setHomeKeyListener(new PowerKeyObserver.OnPowerKeyListener() {
+            @Override
+            public void onPowerKeyPressed() {
+                Log.i(TAG, "按下电源键");
+                _txt6Wd220b.setBackgroundColor(SPRING_GREEN);
+            }
+        });
+        _powerKeyObserver.startListen();
+    }
+
 }
