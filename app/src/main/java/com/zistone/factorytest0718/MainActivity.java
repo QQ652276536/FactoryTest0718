@@ -15,8 +15,13 @@ import android.widget.Button;
 import android.widget.Toast;
 
 import com.zistone.factorytest0718.util.MyActivityManager;
+import com.zistone.factorytest0718.util.MySharedPreferences;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Map;
 
 public class MainActivity extends BaseActivity implements View.OnClickListener {
 
@@ -42,6 +47,8 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
     private boolean _isPermissionRequested = false;
     private Button _btnBluetooth, _btnWifi, _btnGPS, _btnKeyDown, _btnSIM, _btnScreen, _btnSound, _btnCOM, _btnTouch, _btnIdCard, _btnWaterCamera, _btnSystemCamera, _btnNFC, _btnScanCode, _btnBankCard, _btnTestTest, _btnFace, _btnTfCard;
     private long _exitTime = 0;
+    private Map<Integer, Boolean> _testResultMap;
+    private Map<Integer, Button> _testBtnMap;
 
     /**
      * Android6.0之后需要动态申请权限
@@ -66,6 +73,32 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
             }
             if (!permissionsList.isEmpty())
                 requestPermissions(permissionsList.toArray(new String[permissionsList.size()]), 1);
+        }
+    }
+
+    /**
+     * 判断功能是否测试过
+     */
+    private void JudgePassFail() {
+        Iterator<Map.Entry<Integer, Boolean>> iterator1 = _testResultMap.entrySet().iterator();
+        //所有功能的测试结果
+        while (iterator1.hasNext()) {
+            Map.Entry<Integer, Boolean> entry1 = iterator1.next();
+            int key1 = entry1.getKey();
+            //所有功能对应的按钮
+            Iterator<Map.Entry<Integer, Button>> iterator2 = _testBtnMap.entrySet().iterator();
+            while (iterator2.hasNext()) {
+                Map.Entry<Integer, Button> entry2 = iterator2.next();
+                int key2 = entry2.getKey();
+                if (key1 == key2) {
+                    if (null == entry1.getValue() || !entry1.getValue()) {
+                        SetPassBackgroundColor(entry2.getValue(), FAIL);
+                    } else {
+                        SetPassBackgroundColor(entry2.getValue(), PASS);
+                    }
+                    break;
+                }
+            }
         }
     }
 
@@ -119,56 +152,74 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
             switch (requestCode) {
                 case BLUETOOTH_ACTIVITY_CODE:
                     SetPassBackgroundColor(_btnBluetooth, str);
+                    _testResultMap.put(BLUETOOTH_ACTIVITY_CODE, str.equals(PASS) ? true : false);
                     break;
                 case WIFI_ACTIVITY_CODE:
                     SetPassBackgroundColor(_btnWifi, str);
+                    _testResultMap.put(WIFI_ACTIVITY_CODE, str.equals(PASS) ? true : false);
                     break;
                 case GPS_ACTIVITY_CODE:
                     SetPassBackgroundColor(_btnGPS, str);
+                    _testResultMap.put(GPS_ACTIVITY_CODE, str.equals(PASS) ? true : false);
                     break;
                 case KEYDOWN_ACTIVITY_CODE:
                     SetPassBackgroundColor(_btnKeyDown, str);
+                    _testResultMap.put(KEYDOWN_ACTIVITY_CODE, str.equals(PASS) ? true : false);
                     break;
                 case SIM_ACTIVITY_CODE:
                     SetPassBackgroundColor(_btnSIM, str);
+                    _testResultMap.put(SIM_ACTIVITY_CODE, str.equals(PASS) ? true : false);
                     break;
                 case SCREEN_ACTIVITY_CODE:
                     SetPassBackgroundColor(_btnScreen, str);
+                    _testResultMap.put(SCREEN_ACTIVITY_CODE, str.equals(PASS) ? true : false);
                     break;
                 case SOUND_ACTIVITY_CODE:
                     SetPassBackgroundColor(_btnSound, str);
+                    _testResultMap.put(SOUND_ACTIVITY_CODE, str.equals(PASS) ? true : false);
                     break;
                 case COMTEST_ACTIVITY_CODE:
                     SetPassBackgroundColor(_btnCOM, str);
+                    _testResultMap.put(COMTEST_ACTIVITY_CODE, str.equals(PASS) ? true : false);
                     break;
                 case TOUCH_ACTIVITY_CODE:
                     SetPassBackgroundColor(_btnTouch, str);
+                    _testResultMap.put(TOUCH_ACTIVITY_CODE, str.equals(PASS) ? true : false);
                     break;
                 case IDCARD_ACTIVITY_CODE:
                     SetPassBackgroundColor(_btnIdCard, str);
+                    _testResultMap.put(IDCARD_ACTIVITY_CODE, str.equals(PASS) ? true : false);
                     break;
                 case WATERMARKCAMERA_ACTIVITY_CODE:
                     SetPassBackgroundColor(_btnWaterCamera, str);
+                    _testResultMap.put(WATERMARKCAMERA_ACTIVITY_CODE, str.equals(PASS) ? true : false);
                     break;
                 case SYSTEMCAMERA_ACTIVITY_CODE:
                     SetPassBackgroundColor(_btnSystemCamera, str);
+                    _testResultMap.put(SYSTEMCAMERA_ACTIVITY_CODE, str.equals(PASS) ? true : false);
                     break;
                 case NFCACTIVITY_CODE:
                     SetPassBackgroundColor(_btnNFC, str);
+                    _testResultMap.put(NFCACTIVITY_CODE, str.equals(PASS) ? true : false);
                     break;
                 case SCANCODE_ACTIVITY_CODE:
                     SetPassBackgroundColor(_btnScanCode, str);
+                    _testResultMap.put(SCANCODE_ACTIVITY_CODE, str.equals(PASS) ? true : false);
                     break;
                 case BANKCARD_ACTIVITY_CODE:
                     SetPassBackgroundColor(_btnBankCard, str);
+                    _testResultMap.put(BANKCARD_ACTIVITY_CODE, str.equals(PASS) ? true : false);
                     break;
                 case FACE_ACTIVITY_CODE:
                     SetPassBackgroundColor(_btnFace, str);
+                    _testResultMap.put(FACE_ACTIVITY_CODE, str.equals(PASS) ? true : false);
                     break;
                 case TFCARD_ACTIVITY_CODE:
                     SetPassBackgroundColor(_btnTfCard, str);
+                    _testResultMap.put(TFCARD_ACTIVITY_CODE, str.equals(PASS) ? true : false);
                     break;
             }
+            MySharedPreferences.SetMainPassFail(this, _testResultMap);
         }
     }
 
@@ -292,7 +343,28 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
         _btnTestTest.setOnClickListener(this::onClick);
         _btnFace.setOnClickListener(this::onClick);
         _btnTfCard.setOnClickListener(this::onClick);
+        _testBtnMap = new HashMap<Integer, Button>() {{
+            put(BLUETOOTH_ACTIVITY_CODE, _btnBluetooth);
+            put(WIFI_ACTIVITY_CODE, _btnWifi);
+            put(GPS_ACTIVITY_CODE, _btnGPS);
+            put(KEYDOWN_ACTIVITY_CODE, _btnKeyDown);
+            put(SIM_ACTIVITY_CODE, _btnSIM);
+            put(SCREEN_ACTIVITY_CODE, _btnScreen);
+            put(SOUND_ACTIVITY_CODE, _btnSound);
+            put(COMTEST_ACTIVITY_CODE, _btnCOM);
+            put(TOUCH_ACTIVITY_CODE, _btnTouch);
+            put(IDCARD_ACTIVITY_CODE, _btnIdCard);
+            put(WATERMARKCAMERA_ACTIVITY_CODE, _btnWaterCamera);
+            put(SYSTEMCAMERA_ACTIVITY_CODE, _btnSystemCamera);
+            put(NFCACTIVITY_CODE, _btnNFC);
+            put(SCANCODE_ACTIVITY_CODE, _btnScanCode);
+            put(BANKCARD_ACTIVITY_CODE, _btnBankCard);
+            put(FACE_ACTIVITY_CODE, _btnFace);
+            put(TFCARD_ACTIVITY_CODE, _btnTfCard);
+        }};
         JudgeDeviceType();
+        _testResultMap = MySharedPreferences.GetMainPassFail(this);
+        JudgePassFail();
     }
 
 }
