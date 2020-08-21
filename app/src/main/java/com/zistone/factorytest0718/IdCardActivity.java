@@ -47,7 +47,6 @@ public class IdCardActivity extends BaseActivity {
     private static final int READ_CARD_FAIL = 101;
     //刷新界面信息
     private static final int READ_CARD_THREAD_EXIT = 102;
-
     private static volatile boolean _threadExitFlag = true;
     private static volatile boolean _readingFlag = false;
     private static volatile boolean bFingerFlag = false;
@@ -73,7 +72,6 @@ public class IdCardActivity extends BaseActivity {
                     }
                     Message msg = new Message();
                     Message thread_msg = new Message();
-
                     _readingFlag = true;
                     int result = 0;
                     try {
@@ -234,7 +232,7 @@ public class IdCardActivity extends BaseActivity {
         if (_btnRead.getText().equals("读取身份证")) {
             _btnVersion.setEnabled(false);
             _threadExitFlag = false;
-            _btnRead.setText("停 止");
+            _btnRead.setText("停  止");
             _readIDCardThread = new ReadIDCardThread();
             _readIDCardThread.start();
         } else {
@@ -342,6 +340,9 @@ public class IdCardActivity extends BaseActivity {
             Fail();
         });
         _btnPass.setEnabled(false);
+        _btnVersion.setEnabled(false);
+        _btnRead.performClick();
+        _btnRead.setText("停  止");
     }
 
 }
