@@ -9,46 +9,32 @@ import android.util.Log;
 
 import java.util.List;
 
-import static com.zistone.factorytest0718.BuildConfig.DEBUG;
+import static android.hardware.SensorManager.STANDARD_GRAVITY;
 
 /**
- * 光线传感器的类型常量是Sensor.TYPE_LIGHT。values数组只有第一个元素（values[0]）有意义。表示光线的强度，最大的值是120000.0f
- * Android SDK将光线强度分为不同的等级，每一个等级的最大值由一个常量表示，这些常量都定义在SensorManager类中
- * 代码如下：
- * public static final float LIGHT_SUNLIGHT_MAX =120000.0f
- * public static final float LIGHT_SUNLIGHT=110000.0f
- * public static final float LIGHT_SHADE=20000.0f
- * public static final float LIGHT_OVERCAST= 10000.0f
- * public static final float LIGHT_SUNRISE= 400.0f
- * public static final float LIGHT_CLOUDY= 100.0f
- * public static final float LIGHT_FULLMOON= 0.25f
- * public static final float LIGHT_NO_MOON= 0.001f
- * 上面的八个常量只是临界值，在实际使用光线传感器时要根据实际情况确定一个范围
- * 例如，当太阳逐渐升起时，values[0] 的值很可能会超过 LIGHT_SUNRISE
- * 当 values[0] 的值逐渐增大时，就会逐渐越过LIGHT_OVERCAST，而达到 LIGHT_SHADE
- * 当然，如果天特别好的话，也可能会达到LIGHT_SUNLIGHT，甚至更高
+ * 加速度计传感器
  */
-public class MyLightSensorUtil implements SensorEventListener {
+public class MyAccelerometerSensorUtil implements SensorEventListener {
 
-    private static final String TAG = "MyLightSensorUtil";
+    private static final String TAG = "MyAccelerometerSensorUtil";
     private static final Object _object = new Object();
-    private static MyLightSensorUtil _myLightSensorUtil;
+    private static MyAccelerometerSensorUtil _myAccelerometerSensorUtil;
     private static Context _context;
 
     private static SensorManager _sensorManager;
     private static List<Sensor> _list;
-    //设备是否有光传感器
+    //设备是否有加速度传感器
     private static boolean _isContains = false;
     private SensorListener _sensorListener;
 
     public interface SensorListener {
-        void SensorChanged(int value);
+        void SensorChanged(float[] array);
     }
 
     /**
      * （禁止外部实例化）
      */
-    private MyLightSensorUtil() {
+    private MyAccelerometerSensorUtil() {
     }
 
     public void SetSensorListener(SensorListener listener) {
@@ -61,7 +47,7 @@ public class MyLightSensorUtil implements SensorEventListener {
         //获取设备上支持的传感器
         _list = _sensorManager.getSensorList(Sensor.TYPE_ALL);
         for (Sensor sensor : _list) {
-            if (Sensor.TYPE_LIGHT == sensor.getType()) {
+            if (Sensor.TYPE_ACCELEROMETER == sensor.getType()) {
                 _isContains = true;
                 break;
             }
@@ -69,15 +55,15 @@ public class MyLightSensorUtil implements SensorEventListener {
         return _isContains;
     }
 
-    public static MyLightSensorUtil GetInstance() {
-        if (_myLightSensorUtil == null) {
+    public static MyAccelerometerSensorUtil GetInstance() {
+        if (_myAccelerometerSensorUtil == null) {
             synchronized (_object) {
-                if (_myLightSensorUtil == null) {
-                    _myLightSensorUtil = new MyLightSensorUtil();
+                if (_myAccelerometerSensorUtil == null) {
+                    _myAccelerometerSensorUtil = new MyAccelerometerSensorUtil();
                 }
             }
         }
-        return _myLightSensorUtil;
+        return _myAccelerometerSensorUtil;
     }
 
     /**
@@ -90,12 +76,12 @@ public class MyLightSensorUtil implements SensorEventListener {
      */
     public void RegisterSensor() {
         if (null != _sensorManager) {
-            Sensor sensor = _sensorManager.getDefaultSensor(Sensor.TYPE_LIGHT);
+            Sensor sensor = _sensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
             if (null != sensor && _isContains) {
                 _sensorManager.registerListener(this, sensor, SensorManager.SENSOR_DELAY_NORMAL);
-                Log.i(TAG, "光传感器注册成功");
+                Log.i(TAG, "加速度传感器注册成功");
             } else {
-                Log.e(TAG, "光传感器注册失败");
+                Log.e(TAG, "加速度传感器注册失败");
             }
         }
     }
@@ -107,16 +93,32 @@ public class MyLightSensorUtil implements SensorEventListener {
     }
 
     /**
-     * 对于光传感器，有效数值存放在values[0]中，单位为SI lunx
+     * 对于加速度传感器，有效数值存放在values[0]中
      *
      * @param event
      */
     @Override
     public void onSensorChanged(SensorEvent event) {
-        //光传感器
-        if (event.sensor.getType() == Sensor.TYPE_LIGHT) {
-            Log.i(TAG, "当前光照强度：" + event.values[0]);
-            _sensorListener.SensorChanged((int) event.values[0]);
+        //加速度传感器
+        if (event.sensor.getType() == Sensor.TYPE_ACCELEROMETER) {
+            float x = event.values[0];
+            float y = event.values[1];
+            float z = event.values[2];
+            Log.i(TAG, "X轴： " + x + "，Y轴： " + y + "，Z轴： " + z);
+            if (x > STANDARD_GRAVITY) {
+                Log.i(TAG, "重力指向设备左边");
+            } else if (x < -STANDARD_GRAVITY) {
+                Log.i(TAG, "重力指向设备右边");
+            } else if (y > STANDARD_GRAVITY) {
+                Log.i(TAG, "重力指向设备下边");
+            } else if (y < -STANDARD_GRAVITY) {
+                Log.i(TAG, "重力指向设备上边");
+            } else if (z > STANDARD_GRAVITY) {
+                Log.i(TAG, "屏幕朝上");
+            } else if (z < -STANDARD_GRAVITY) {
+                Log.i(TAG, "屏幕朝下");
+            }
+            _sensorListener.SensorChanged(event.values);
         }
     }
 

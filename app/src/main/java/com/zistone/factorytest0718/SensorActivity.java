@@ -11,6 +11,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.widget.TextView;
 
+import com.zistone.factorytest0718.util.MyAccelerometerSensorUtil;
 import com.zistone.factorytest0718.util.MyLightSensorUtil;
 
 public class SensorActivity extends BaseActivity {
@@ -18,8 +19,10 @@ public class SensorActivity extends BaseActivity {
     private static final String TAG = "SensorActivity";
 
     private MyLightSensorUtil _myLightSensorUtil;
-    private MyLightSensorUtil.SensorListener _sensorListener;
-    private TextView _txtLight, _txtBattery, _txtSpeed, _txtMagnetic, _txtRotate;
+    private MyAccelerometerSensorUtil _myAccelerometerSensorUtil;
+    private MyLightSensorUtil.SensorListener _lightSensorListener;
+    private MyAccelerometerSensorUtil.SensorListener _accelerometerSensorListener;
+    private TextView _txtLight, _txtBattery, _txtAccelerometer, _txtMagnetic, _txtRotate;
     private IntentFilter _batteryIntentFilter;
 
     private BroadcastReceiver _batteryBroadcastReceiver = new BroadcastReceiver() {
@@ -57,6 +60,8 @@ public class SensorActivity extends BaseActivity {
         _myLightSensorUtil.UnRegisterSensor();
         //注销电池
         unregisterReceiver(_batteryBroadcastReceiver);
+        //注销加速度
+        _myAccelerometerSensorUtil.UnRegisterSensor();
     }
 
     @Override
@@ -66,6 +71,8 @@ public class SensorActivity extends BaseActivity {
         _myLightSensorUtil.RegisterSensor();
         //注册电池
         registerReceiver(_batteryBroadcastReceiver, _batteryIntentFilter);
+        //注册加速度
+        _myAccelerometerSensorUtil.RegisterSensor();
     }
 
     @Override
@@ -75,17 +82,18 @@ public class SensorActivity extends BaseActivity {
         SetBaseContentView(R.layout.activity_sensor);
         _txtLight = findViewById(R.id.txt_light_sensor);
         _txtBattery = findViewById(R.id.txt_battery_sensor);
-        _txtSpeed = findViewById(R.id.txt_speed_sensor);
+        _txtAccelerometer = findViewById(R.id.txt_accelerometer_sensor);
         _txtMagnetic = findViewById(R.id.txt_magnetic_sensor);
         _txtRotate = findViewById(R.id.txt_rotate_sensor);
-        _myLightSensorUtil = MyLightSensorUtil.GetInstance();
-        _sensorListener = value -> {
-            _txtLight.setText(value + "lx");
-        };
+        //光感监听
+        _lightSensorListener = value -> _txtLight.setText(value + "lx");
+        //加速度监听
+        _accelerometerSensorListener = array -> _txtAccelerometer.setText(array[0] + "米/秒²\n" + array[1] + "米/秒²\n" + array[2] + "米/秒²");
         //光感
+        _myLightSensorUtil = MyLightSensorUtil.GetInstance();
         if (_myLightSensorUtil.Init(getApplicationContext())) {
             Log.i(TAG, "已检测到该设备的光传感器");
-            _myLightSensorUtil.SetSensorListener(_sensorListener);
+            _myLightSensorUtil.SetSensorListener(_lightSensorListener);
         } else {
             Log.e(TAG, "未检测到该设备的光传感器");
         }
@@ -93,6 +101,13 @@ public class SensorActivity extends BaseActivity {
         _batteryIntentFilter = new IntentFilter();
         _batteryIntentFilter.addAction(Intent.ACTION_BATTERY_CHANGED);
         registerReceiver(_batteryBroadcastReceiver, _batteryIntentFilter);
-        //
+        //加速度
+        _myAccelerometerSensorUtil = MyAccelerometerSensorUtil.GetInstance();
+        if (_myAccelerometerSensorUtil.Init(getApplicationContext())) {
+            Log.i(TAG, "已检测到该设备的加速度传感器");
+            _myAccelerometerSensorUtil.SetSensorListener(_accelerometerSensorListener);
+        } else {
+            Log.e(TAG, "未检测到该设备的加速度传感器");
+        }
     }
 }

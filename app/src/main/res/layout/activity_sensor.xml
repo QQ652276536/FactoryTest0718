@@ -101,7 +101,7 @@
                 android:textStyle="bold" />
 
             <TextView
-                android:id="@+id/txt_speed_sensor"
+                android:id="@+id/txt_accelerometer_sensor"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"
