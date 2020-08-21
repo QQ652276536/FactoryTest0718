@@ -1,7 +1,5 @@
 package com.zistone.factorytest0718;
 
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
@@ -88,7 +86,12 @@ public class SensorActivity extends BaseActivity {
         //光感监听
         _lightSensorListener = value -> _txtLight.setText(value + "lx");
         //加速度监听
-        _accelerometerSensorListener = array -> _txtAccelerometer.setText(array[0] + "米/秒²\n" + array[1] + "米/秒²\n" + array[2] + "米/秒²");
+        _accelerometerSensorListener = array -> {
+            String x = String.format("%.2f", array[0]);
+            String y = String.format("%.2f", array[1]);
+            String z = String.format("%.2f", array[2]);
+            _txtAccelerometer.setText(x + "米/秒²\n" + y + "米/秒²\n" + z + "米/秒²");
+        };
         //光感
         _myLightSensorUtil = MyLightSensorUtil.GetInstance();
         if (_myLightSensorUtil.Init(getApplicationContext())) {
