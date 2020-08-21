@@ -12,6 +12,8 @@ import android.os.storage.StorageManager;
 import android.util.Log;
 import android.widget.TextView;
 
+import com.zistone.factorytest0718.util.MyProgressDialogUtil;
+
 import java.lang.reflect.Array;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
@@ -34,10 +36,7 @@ public class TfCardActivity extends BaseActivity {
             //SD/TF卡拨出
             if (Objects.equals(intent.getAction(), Intent.ACTION_MEDIA_UNMOUNTED)) {
                 if (_btnPass.isEnabled()) {
-                    Intent resultIntent = new Intent();
-                    resultIntent.putExtra(ARG_PARAM1, PASS);
-                    TfCardActivity.this.setResult(RESULT_OK, resultIntent);
-                    finish();
+                    Pass();
                 } else {
                     Log.i(TAG, "检测到SD/TF卡拨出");
                     _txt.setTextColor(Color.RED);
@@ -54,7 +53,6 @@ public class TfCardActivity extends BaseActivity {
      * @return
      */
     public boolean IsExistCard() {
-        _btnPass.setEnabled(false);
         boolean result = false;
         StorageManager mStorageManager = (StorageManager) this.getSystemService(Context.STORAGE_SERVICE);
         Class<?> storageVolumeClazz;
@@ -90,6 +88,12 @@ public class TfCardActivity extends BaseActivity {
                     _btnPass.setEnabled(true);
                     _txt.setTextColor(SPRING_GREEN);
                     _txt.setText("检测到SD/TF卡\n共" + String.format("%.2f", total) + "GB");
+                    _btnPass.setEnabled(true);
+                    MyProgressDialogUtil.ShowCountDownTimerWarning(this, "知道了", 3 * 1000, "提示",
+                            "TF卡测试已通过！\n\n卡存储空间：" + String.format("%.2f", total) + "GB", false, () -> {
+                        MyProgressDialogUtil.DismissAlertDialog();
+                        Pass();
+                    });
                     break;
                 }
             }
@@ -126,6 +130,7 @@ public class TfCardActivity extends BaseActivity {
         //        setContentView(R.layout.activity_tf_card);
         SetBaseContentView(R.layout.activity_tf_card);
         _txt = findViewById(R.id.txt_tfcard);
+        _btnPass.setEnabled(false);
         IntentFilter filter = new IntentFilter();
         filter.addAction(Intent.ACTION_MEDIA_MOUNTED);
         filter.addAction(Intent.ACTION_MEDIA_UNMOUNTED);

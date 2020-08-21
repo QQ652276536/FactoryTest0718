@@ -43,7 +43,7 @@ public class ComTestActivity extends BaseActivity {
     private TimerTask _timerTask;
     private String _portName, _hexData;
     private int _baudRate;
-    private boolean _isAppOnForeground = true;
+    private boolean _isAppOnForeground = true, _isPass = false;
 
     /**
      * 定时任务的内容
@@ -57,6 +57,7 @@ public class ComTestActivity extends BaseActivity {
             //没有数据时这里会阻塞
             byte[] bytes = MySerialPortManager.ReadData();
             if (bytes != null && bytes.length > 0) {
+                _isPass = true;
                 String dataStr = MyConvertUtil.ByteArrayToHexStr(bytes);
                 Log.i(TAG, "收到串口数据：" + dataStr);
                 UpdateText(_txtMessag, "收到串口数据：" + dataStr + "\r\n", "Append");
@@ -96,6 +97,18 @@ public class ComTestActivity extends BaseActivity {
                         txt.append(str);
                         TxtToBottom(txt);
                         break;
+                }
+                //收到数据即测试通过，同时停止定时任务
+                if (_isPass) {
+                    //防止重复触发
+                    _isPass = false;
+                    _timer.cancel();
+                    _timerTask.cancel();
+                    _btnPass.setEnabled(true);
+                    MyProgressDialogUtil.ShowCountDownTimerWarning(ComTestActivity.this, "知道了", 3 * 1000, "提示", "串口测试已通过！\n\n收到数据：" + str, false, () -> {
+                        MyProgressDialogUtil.DismissAlertDialog();
+                        Pass();
+                    });
                 }
             }
         });
@@ -267,10 +280,10 @@ public class ComTestActivity extends BaseActivity {
                 _btnSend.setText("开始发送");
                 _timer.cancel();
                 _timerTask.cancel();
-                MySerialPortManager.Close();
             }
         });
         _btnPass.setEnabled(false);
+        _btnSend.performClick();
     }
 
 }

@@ -31,7 +31,7 @@ public class ScanCodeActivity extends BaseActivity implements MyScanCodeManager.
     private TextView _txt;
     private ImageButton _btnTop, _btnBottom, _btnClear;
     private Button _btnScan;
-    private boolean _isAppOnForeground = true;
+    private boolean _isAppOnForeground = true, _isPass = false;
 
     @SuppressLint("HandlerLeak")
     private Handler _handler = new Handler() {
@@ -40,6 +40,7 @@ public class ScanCodeActivity extends BaseActivity implements MyScanCodeManager.
             Log.i(TAG, "msg.obj = " + msg.obj);
             switch (msg.what) {
                 case 1:
+                    _isPass = true;
                     UpdateText(_txt, msg.obj + "\r\n", "Append");
                     MySoundPlayUtil.SystemSoundPlay(ScanCodeActivity.this);
                     break;
@@ -61,6 +62,17 @@ public class ScanCodeActivity extends BaseActivity implements MyScanCodeManager.
                         txt.append(str);
                         TxtToBottom(txt);
                         break;
+                }
+                if (_isPass) {
+                    //防止重复触发
+                    _isPass = false;
+                    _btnPass.setEnabled(true);
+                    _btnScan.setEnabled(true);
+                    MyScanCodeManager.StopReadThread();
+                    MyProgressDialogUtil.ShowCountDownTimerWarning(ScanCodeActivity.this, "知道了", 3 * 1000, "提示", "扫码测试已通过！\n\n扫描数据：" + str, false, () -> {
+                        MyProgressDialogUtil.DismissAlertDialog();
+                        Pass();
+                    });
                 }
             }
         });
@@ -178,6 +190,10 @@ public class ScanCodeActivity extends BaseActivity implements MyScanCodeManager.
                 Fail();
             });
         }
+        _btnPass.setEnabled(false);
+        //直接开始测试
+        MyScanCodeManager.StopReadThread();
+        MyScanCodeManager.StartReadThread();
     }
 
 }

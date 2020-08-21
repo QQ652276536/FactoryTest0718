@@ -140,6 +140,7 @@ public class IdCardActivity extends BaseActivity {
                 super.handleMessage(msg);
                 //读卡成功
                 if (msg.what == READ_CARD_SUCCESS) {
+                    _btnPass.setEnabled(true);
                     ShowIdCardInfo();
                     //读取成功后停止循环读取，并发出提示音
                     _threadExitFlag = true;
@@ -340,6 +341,7 @@ public class IdCardActivity extends BaseActivity {
             _gpio.set_gpio(0, 66);
             Fail();
         });
+        _btnPass.setEnabled(false);
     }
 
 }

@@ -115,16 +115,14 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
             _btnFace.setVisibility(View.GONE);
             //银行卡读取（使用浙江中正的身份证模块）
             _btnBankCard.setVisibility(View.GONE);
-            //身份证测试（使用浙江中正的身份证模块）
-            _btnIdCard.setVisibility(View.GONE);
         }
     }
 
     private void SetPassBackgroundColor(Button btn, String result) {
         if (PASS.equals(result))
-            btn.setBackground(getDrawable(R.drawable.main_btn_background4));
+            btn.setBackground(getDrawable(R.drawable.main_btn_background2));
         else
-            btn.setBackground(getDrawable(R.drawable.main_btn_background5));
+            btn.setBackground(getDrawable(R.drawable.main_btn_background1));
     }
 
     @Override

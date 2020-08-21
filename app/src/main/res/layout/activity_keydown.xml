@@ -52,7 +52,7 @@
             android:layout_height="wrap_content"
             android:layout_margin="5sp"
             android:background="@color/darkgray"
-            android:text="SOS"
+            android:text="F1"
             android:textAlignment="center"
             android:textColor="@color/white"
             android:textSize="22sp" />

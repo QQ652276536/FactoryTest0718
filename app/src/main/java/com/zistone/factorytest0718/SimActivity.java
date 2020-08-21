@@ -15,6 +15,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 
 import com.zistone.factorytest0718.R;
+import com.zistone.factorytest0718.util.MyProgressDialogUtil;
 
 public class SimActivity extends BaseActivity {
 
@@ -121,6 +122,14 @@ public class SimActivity extends BaseActivity {
             } else if (dataState == _telephonyManager.DATA_SUSPENDED) {
                 _txtDataState.setText("无网络");
             }
+            //能获取到SIM的运营商信息即视为测试通过
+            if (null != serviceProvder && !"".equals(serviceProvder)) {
+                _btnPass.setEnabled(true);
+                MyProgressDialogUtil.ShowCountDownTimerWarning(this, "知道了", 3 * 1000, "提示", "SIM卡测试已通过！\n\n服务商名称名称：" + serviceProvder, false, () -> {
+                    MyProgressDialogUtil.DismissAlertDialog();
+                    Pass();
+                });
+            }
         }
     }
 
@@ -141,6 +150,7 @@ public class SimActivity extends BaseActivity {
         _txtSequence = findViewById(R.id.txt_sequence_sim);
         _txtDataState = findViewById(R.id.txt_data_sim);
         GetSimInfoAndSetTextView();
+        _btnPass.setEnabled(false);
     }
 
 }

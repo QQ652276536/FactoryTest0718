@@ -59,6 +59,9 @@ public class KeyDownActivity extends BaseActivity {
             _keyPasss[1] = true;
         } else if (keyCode == KeyEvent.KEYCODE_F2 && event.getAction() == KeyEvent.ACTION_DOWN) {
             _txt3Wd220b.setBackgroundColor(SPRING_GREEN);
+            _keyPasss[3] = true;
+        } else if (keyCode == KeyEvent.KEYCODE_F1 && event.getAction() == KeyEvent.ACTION_DOWN) {
+            _txt4Wd220b.setBackgroundColor(SPRING_GREEN);
             _keyPasss[2] = true;
         } else if (keyCode == KeyEvent.KEYCODE_UNKNOWN && event.getAction() == KeyEvent.ACTION_DOWN) {
             _txt5Wd220b.setBackgroundColor(SPRING_GREEN);

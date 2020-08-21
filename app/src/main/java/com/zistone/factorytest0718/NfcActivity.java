@@ -26,6 +26,7 @@ public class NfcActivity extends BaseActivity {
     private NfcAdapter _nfcAdapter;
     private PendingIntent _pendingIntent;
     private TextView _txt1;
+    private boolean _isPass = false;
 
     private void GetIntent(Intent intent) {
         //取出封装在intent中的TAG
@@ -89,6 +90,14 @@ public class NfcActivity extends BaseActivity {
             //                    metaInfo += "Sector " + j + ":验证失败\n";
             //                }
             //            }
+            if (!_isPass) {
+                _isPass = true;
+                _btnPass.setEnabled(true);
+                MyProgressDialogUtil.ShowCountDownTimerWarning(this, "知道了", 3 * 1000, "提示", "NFC测试已通过！\n\n标签信息：\n" + metaInfo, false, () -> {
+                    MyProgressDialogUtil.DismissAlertDialog();
+                    Pass();
+                });
+            }
             return metaInfo;
         } catch (Exception e) {
             e.printStackTrace();
@@ -135,6 +144,7 @@ public class NfcActivity extends BaseActivity {
         _pendingIntent = PendingIntent.getActivity(this, 0, new Intent(this, getClass()), 0);
         _txt1 = findViewById(R.id.txt1_nfc);
         _txt1.setGravity(Gravity.CENTER);
+        _btnPass.setEnabled(false);
     }
 
 }
