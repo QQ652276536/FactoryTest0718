@@ -65,7 +65,7 @@ public final class MyFileUtil {
         } catch (IOException e) {
             e.printStackTrace();
         }
-        Log.i(TAG, "文件已被创建");
+        Log.i(TAG, "文件已创建");
         return file;
     }
 
@@ -104,6 +104,8 @@ public final class MyFileUtil {
             if (file.exists()) {
                 file.delete();
                 Log.i(TAG, "删除文件" + filePathAndName + "成功");
+            } else {
+                Log.i(TAG, "要删除的文件不存在");
             }
         } catch (Exception e) {
             e.printStackTrace();

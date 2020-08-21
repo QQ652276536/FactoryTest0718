@@ -71,8 +71,10 @@ public final class MyProgressDialogUtil {
 
                     @Override
                     public void onFinish() {
-                        if (null != _alertDialog)
+                        if (null != _alertDialog) {
                             _alertDialog.dismiss();
+                            _alertDialog = null;
+                        }
                         if (null != listener)
                             listener.OnIKnow();
                     }
