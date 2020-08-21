@@ -55,6 +55,10 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
+            android:name=".SensorActivity"
+            android:label="传感器信息"
+            android:launchMode="singleTask" />
+        <activity
             android:name=".TfCardActivity"
             android:label="TF卡信息"
             android:launchMode="singleTask" />

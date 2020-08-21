@@ -143,13 +143,13 @@
                 android:textColor="@color/white" />
 
             <Button
-                android:id="@+id/btn_test_test"
+                android:id="@+id/btn_sensor"
                 android:layout_width="wrap_content"
                 android:layout_height="60sp"
                 android:layout_margin="5sp"
                 android:layout_weight="1"
-                android:background="@drawable/btn_style_main_1"
-                android:text="★★★"
+                android:background="@drawable/btn_style_main_2"
+                android:text="传感器"
                 android:textColor="@color/white" />
 
         </TableRow>
@@ -222,6 +222,41 @@
                 android:background="@drawable/btn_style_main_2"
                 android:text="TF卡测试"
                 android:textColor="@color/white" />
+        </TableRow>
+
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <Button
+                android:id="@+id/btn_test_test"
+                android:layout_width="wrap_content"
+                android:layout_height="60sp"
+                android:layout_margin="5sp"
+                android:layout_weight="1"
+                android:background="@drawable/btn_style_main_1"
+                android:text="★★★"
+                android:textColor="@color/white" />
+
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="60sp"
+                android:layout_margin="5sp"
+                android:layout_weight="1"
+                android:background="@drawable/btn_style_main_2"
+                android:text="★★★"
+                android:textColor="@color/white"
+                android:visibility="invisible" />
+
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="60sp"
+                android:layout_margin="5sp"
+                android:layout_weight="1"
+                android:background="@drawable/btn_style_main_2"
+                android:text="★★★"
+                android:textColor="@color/white"
+                android:visibility="invisible" />
         </TableRow>
     </TableLayout>
 </LinearLayout>
