@@ -11,6 +11,7 @@ import android.widget.TextView;
 
 import com.zistone.factorytest0718.util.MyAccelerometerSensorUtil;
 import com.zistone.factorytest0718.util.MyLightSensorUtil;
+import com.zistone.factorytest0718.util.MyMagneticSensorUtil;
 
 public class SensorActivity extends BaseActivity {
 
@@ -18,8 +19,10 @@ public class SensorActivity extends BaseActivity {
 
     private MyLightSensorUtil _myLightSensorUtil;
     private MyAccelerometerSensorUtil _myAccelerometerSensorUtil;
+    private MyMagneticSensorUtil _myMagneticSensorUtil;
     private MyLightSensorUtil.SensorListener _lightSensorListener;
     private MyAccelerometerSensorUtil.SensorListener _accelerometerSensorListener;
+    private MyMagneticSensorUtil.SensorListener _magneticSensorListener;
     private TextView _txtLight, _txtBattery, _txtAccelerometer, _txtMagnetic, _txtRotate;
     private IntentFilter _batteryIntentFilter;
 
@@ -60,6 +63,8 @@ public class SensorActivity extends BaseActivity {
         unregisterReceiver(_batteryBroadcastReceiver);
         //注销加速度
         _myAccelerometerSensorUtil.UnRegisterSensor();
+        //注销磁场
+        _myMagneticSensorUtil.UnRegisterSensor();
     }
 
     @Override
@@ -71,6 +76,8 @@ public class SensorActivity extends BaseActivity {
         registerReceiver(_batteryBroadcastReceiver, _batteryIntentFilter);
         //注册加速度
         _myAccelerometerSensorUtil.RegisterSensor();
+        //注册磁场
+        _myMagneticSensorUtil.RegisterSensor();
     }
 
     @Override
@@ -92,6 +99,13 @@ public class SensorActivity extends BaseActivity {
             String z = String.format("%.2f", array[2]);
             _txtAccelerometer.setText(x + "米/秒²\n" + y + "米/秒²\n" + z + "米/秒²");
         };
+        //磁场传感器监听
+        _magneticSensorListener = array -> {
+            String x = String.format("%.2f", array[0]);
+            String y = String.format("%.2f", array[1]);
+            String z = String.format("%.2f", array[2]);
+            _txtMagnetic.setText(x + "μT\n" + y + "μT\n" + z + "μT");
+        };
         //光感
         _myLightSensorUtil = MyLightSensorUtil.GetInstance();
         if (_myLightSensorUtil.Init(getApplicationContext())) {
@@ -111,6 +125,14 @@ public class SensorActivity extends BaseActivity {
             _myAccelerometerSensorUtil.SetSensorListener(_accelerometerSensorListener);
         } else {
             Log.e(TAG, "未检测到该设备的加速度传感器");
+        }
+        //磁场
+        _myMagneticSensorUtil = MyMagneticSensorUtil.GetInstance();
+        if (_myMagneticSensorUtil.Init(getApplicationContext())) {
+            Log.i(TAG, "已检测到该设备的磁场传感器");
+            _myMagneticSensorUtil.SetSensorListener(_magneticSensorListener);
+        } else {
+            Log.e(TAG, "未检测到该设备的磁场传感器");
         }
     }
 }
