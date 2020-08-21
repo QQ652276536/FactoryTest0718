@@ -134,6 +134,11 @@ public class SimActivity extends BaseActivity {
     }
 
     @Override
+    protected void onStop() {
+        super.onStop();
+    }
+
+    @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         //        setContentView(R.layout.activity_sim);
