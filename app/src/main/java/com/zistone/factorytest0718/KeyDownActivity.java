@@ -11,11 +11,13 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.zistone.factorytest0718.util.MyFileUtil;
 import com.zistone.factorytest0718.util.MyProgressDialogUtil;
 
 public class KeyDownActivity extends BaseActivity {
 
     private static final String TAG = "KeyDownActivity";
+    private static final String F1KEY_TEST = "/sdcard/zsttest.txt";
 
     //型号WD220B所对应的控件
     private TextView _txt1Wd220b, _txt2Wd220b, _txt3Wd220b, _txt4Wd220b, _txt5Wd220b;
@@ -23,11 +25,6 @@ public class KeyDownActivity extends BaseActivity {
     private TextView _txt;
     private ImageView _iv;
     private boolean[] _keyPasss = new boolean[]{false, false, false, false, false};
-
-    @Override
-    protected void onPause() {
-        super.onPause();
-    }
 
     @Override
     protected void onDestroy() {
@@ -78,12 +75,21 @@ public class KeyDownActivity extends BaseActivity {
     }
 
     @Override
+    protected void onPause() {
+        super.onPause();
+        MyFileUtil.DeleteFile(F1KEY_TEST);
+    }
+
+    @Override
     protected void onResume() {
         super.onResume();
         IntentFilter intentFilter = new IntentFilter();
         intentFilter.addAction(Intent.ACTION_CLOSE_SYSTEM_DIALOGS);
-    }
 
+        //F1键在FrameWork层做了“一键拨号”的功能导致按键测试不能正常运行，现在是通过判断是否有/sdcard/zstest.txt而触发功能，测
+        //试程序运行时新建文件以达到屏蔽效果，退出时删除文件以解除屏蔽
+        MyFileUtil.MakeFile(F1KEY_TEST);
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

@@ -27,7 +27,6 @@ import java.util.Map;
 public class MainActivity extends BaseActivity implements View.OnClickListener {
 
     private static final String TAG = "MainActivity";
-    private static final String F1KEY_TEST = "/sdcard/zsttest.txt";
     private static final int BLUETOOTH_ACTIVITY_CODE = 101;
     private static final int WIFI_ACTIVITY_CODE = 102;
     private static final int GPS_ACTIVITY_CODE = 103;
@@ -117,9 +116,6 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
             _btnFace.setVisibility(View.GONE);
             //银行卡读取（使用浙江中正的身份证模块）
             _btnBankCard.setVisibility(View.GONE);
-            //F1键在FrameWork层做了“一键拨号”的功能导致按键测试不能正常运行，现在是通过判断是否有/sdcard/zstest.txt而触发功能，测
-            //试程序运行时新建文件以达到屏蔽效果，退出时删除文件以解除屏蔽
-            MyFileUtil.MakeFile(F1KEY_TEST);
         }
     }
 
@@ -137,8 +133,6 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
                 Toast.makeText(this, "再按一次退出程序", Toast.LENGTH_SHORT).show();
                 _exitTime = System.currentTimeMillis();
             } else {
-                //解除对F1功能的屏蔽
-                MyFileUtil.DeleteFile(F1KEY_TEST);
                 MyActivityManager.ExitAPP();
             }
         }
@@ -317,7 +311,6 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
     @Override
     protected void onStop() {
         super.onStop();
-        MyFileUtil.DeleteFile(F1KEY_TEST);
     }
 
     @Override
