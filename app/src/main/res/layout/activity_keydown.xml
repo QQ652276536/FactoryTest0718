@@ -67,6 +67,39 @@
             android:textAlignment="center"
             android:textColor="@color/white"
             android:textSize="22sp" />
+
+        <TextView
+            android:id="@+id/txt6_wd220b_keydown"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="5sp"
+            android:background="@color/darkgray"
+            android:text="Bank"
+            android:textAlignment="center"
+            android:textColor="@color/white"
+            android:textSize="22sp" />
+
+        <TextView
+            android:id="@+id/txt7_wd220b_keydown"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="5sp"
+            android:background="@color/darkgray"
+            android:text="Home"
+            android:textAlignment="center"
+            android:textColor="@color/white"
+            android:textSize="22sp" />
+
+        <TextView
+            android:id="@+id/txt8_wd220b_keydown"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="5sp"
+            android:background="@color/darkgray"
+            android:text="Menu"
+            android:textAlignment="center"
+            android:textColor="@color/white"
+            android:textSize="22sp" />
     </LinearLayout>
 
     <TextView

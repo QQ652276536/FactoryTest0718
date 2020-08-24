@@ -20,11 +20,11 @@ public class KeyDownActivity extends BaseActivity {
     private static final String F1KEY_TEST = "/sdcard/zsttest.txt";
 
     //型号WD220B所对应的控件
-    private TextView _txt1Wd220b, _txt2Wd220b, _txt3Wd220b, _txt4Wd220b, _txt5Wd220b;
+    private TextView _txt1Wd220b, _txt2Wd220b, _txt3Wd220b, _txt4Wd220b, _txt5Wd220b, _txt6Wd220b, _txt7Wd220b, _txt8Wd220b;
     private LinearLayout _llWd220b;
     private TextView _txt;
     private ImageView _iv;
-    private boolean[] _keyPasss = new boolean[]{false, false, false, false, false};
+    private boolean[] _keyPasss = new boolean[]{false, false, false, false, false, false, false, false};
 
     @Override
     protected void onDestroy() {
@@ -63,8 +63,17 @@ public class KeyDownActivity extends BaseActivity {
         } else if (keyCode == KeyEvent.KEYCODE_UNKNOWN && event.getAction() == KeyEvent.ACTION_DOWN) {
             _txt5Wd220b.setBackgroundColor(SPRING_GREEN);
             _keyPasss[4] = true;
+        } else if (keyCode == KeyEvent.KEYCODE_BACK && event.getAction() == KeyEvent.ACTION_DOWN) {
+            _txt6Wd220b.setBackgroundColor(SPRING_GREEN);
+            _keyPasss[5] = true;
+        } else if (keyCode == KeyEvent.KEYCODE_HOME && event.getAction() == KeyEvent.ACTION_DOWN) {
+            _txt7Wd220b.setBackgroundColor(SPRING_GREEN);
+            _keyPasss[6] = true;
+        } else if (keyCode == KeyEvent.KEYCODE_MENU && event.getAction() == KeyEvent.ACTION_DOWN) {
+            _txt8Wd220b.setBackgroundColor(SPRING_GREEN);
+            _keyPasss[7] = true;
         }
-        if (_keyPasss[0] && _keyPasss[1] && _keyPasss[2] && _keyPasss[3] && _keyPasss[4]) {
+        if (_keyPasss[0] && _keyPasss[1] && _keyPasss[2] && _keyPasss[3] && _keyPasss[4] && _keyPasss[5] && _keyPasss[6] && _keyPasss[7]) {
             _btnPass.setEnabled(true);
             MyProgressDialogUtil.ShowCountDownTimerWarning(this, "知道了", 3 * 1000, "提示", "按键测试已通过！", false, () -> {
                 MyProgressDialogUtil.DismissAlertDialog();
@@ -105,6 +114,9 @@ public class KeyDownActivity extends BaseActivity {
         _txt3Wd220b = findViewById(R.id.txt3_wd220b_keydown);
         _txt4Wd220b = findViewById(R.id.txt4_wd220b_keydown);
         _txt5Wd220b = findViewById(R.id.txt5_wd220b_keydown);
+        _txt6Wd220b = findViewById(R.id.txt6_wd220b_keydown);
+        _txt7Wd220b = findViewById(R.id.txt7_wd220b_keydown);
+        _txt8Wd220b = findViewById(R.id.txt8_wd220b_keydown);
         _btnPass.setEnabled(false);
     }
 
