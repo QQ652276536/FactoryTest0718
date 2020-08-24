@@ -10,6 +10,7 @@ import android.util.Log;
 import android.widget.TextView;
 
 import com.zistone.factorytest0718.util.MyAccelerometerSensorUtil;
+import com.zistone.factorytest0718.util.MyDirectionSensorUtil;
 import com.zistone.factorytest0718.util.MyLightSensorUtil;
 import com.zistone.factorytest0718.util.MyMagneticSensorUtil;
 
@@ -18,11 +19,13 @@ public class SensorActivity extends BaseActivity {
     private static final String TAG = "SensorActivity";
 
     private MyLightSensorUtil _myLightSensorUtil;
-    private MyAccelerometerSensorUtil _myAccelerometerSensorUtil;
-    private MyMagneticSensorUtil _myMagneticSensorUtil;
     private MyLightSensorUtil.SensorListener _lightSensorListener;
+    private MyAccelerometerSensorUtil _myAccelerometerSensorUtil;
     private MyAccelerometerSensorUtil.SensorListener _accelerometerSensorListener;
+    private MyMagneticSensorUtil _myMagneticSensorUtil;
     private MyMagneticSensorUtil.SensorListener _magneticSensorListener;
+    private MyDirectionSensorUtil _myDirectionSensorUtil;
+    private MyDirectionSensorUtil.SensorListener _directionListener;
     private TextView _txtLight, _txtBattery, _txtAccelerometer, _txtMagnetic, _txtRotate;
     private IntentFilter _batteryIntentFilter;
 
@@ -65,6 +68,8 @@ public class SensorActivity extends BaseActivity {
         _myAccelerometerSensorUtil.UnRegisterSensor();
         //注销磁场
         _myMagneticSensorUtil.UnRegisterSensor();
+        //注销方向
+        _myDirectionSensorUtil.UnRegisterSensor();
     }
 
     @Override
@@ -78,6 +83,8 @@ public class SensorActivity extends BaseActivity {
         _myAccelerometerSensorUtil.RegisterSensor();
         //注册磁场
         _myMagneticSensorUtil.RegisterSensor();
+        //注册方向
+        _myDirectionSensorUtil.RegisterSensor();
     }
 
     @Override
@@ -106,6 +113,13 @@ public class SensorActivity extends BaseActivity {
             String z = String.format("%.2f", array[2]);
             _txtMagnetic.setText(x + "μT\n" + y + "μT\n" + z + "μT");
         };
+        //方向传感器监听
+        _directionListener = array -> {
+            String x = String.format("%.2f", array[0]);
+            String y = String.format("%.2f", array[1]);
+            String z = String.format("%.2f", array[2]);
+            _txtRotate.setText(x + "\n" + y + "\n" + z);
+        };
         //光感
         _myLightSensorUtil = MyLightSensorUtil.GetInstance();
         if (_myLightSensorUtil.Init(getApplicationContext())) {
@@ -133,6 +147,14 @@ public class SensorActivity extends BaseActivity {
             _myMagneticSensorUtil.SetSensorListener(_magneticSensorListener);
         } else {
             Log.e(TAG, "未检测到该设备的磁场传感器");
+        }
+        //方向
+        _myDirectionSensorUtil = MyDirectionSensorUtil.GetInstance();
+        if (_myDirectionSensorUtil.Init(getApplicationContext())) {
+            Log.i(TAG, "已检测到该设备的方向传感器");
+            _myDirectionSensorUtil.SetSensorListener(_directionListener);
+        } else {
+            Log.e(TAG, "未检测到该设备的方向传感器");
         }
     }
 }
