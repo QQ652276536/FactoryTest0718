@@ -105,7 +105,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
     }
 
     /**
-     * 根据设备类型决定展现哪些测试功能
+     * 根据设备类型决定展现（隐藏）哪些测试功能
      */
     private void JudgeDeviceType() {
         if (_deviceType.contains("wd220B")) {

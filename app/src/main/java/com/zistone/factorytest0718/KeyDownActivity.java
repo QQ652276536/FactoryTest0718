@@ -94,7 +94,6 @@ public class KeyDownActivity extends BaseActivity {
         super.onResume();
         IntentFilter intentFilter = new IntentFilter();
         intentFilter.addAction(Intent.ACTION_CLOSE_SYSTEM_DIALOGS);
-
         //F1键在FrameWork层做了“一键拨号”的功能导致按键测试不能正常运行，现在是通过判断是否有/sdcard/zstest.txt而触发功能，测
         //试程序运行时新建文件以达到屏蔽效果，退出时删除文件以解除屏蔽
         MyFileUtil.MakeFile(F1KEY_TEST);
