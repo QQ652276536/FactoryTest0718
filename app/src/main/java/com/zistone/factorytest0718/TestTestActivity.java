@@ -1,13 +1,20 @@
 package com.zistone.factorytest0718;
 
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.TextView;
 
 public class TestTestActivity extends BaseActivity {
+
+    //加载本地库
+    static {
+        System.loadLibrary("native-lib");
+    }
+
     private static final String TAG = "TestTestActivity";
+
+    private TextView _txt;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -23,8 +30,13 @@ public class TestTestActivity extends BaseActivity {
         _btnFail.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Log.i(TAG,"继承Fail按钮后的点击事件触发");
+                Log.i(TAG, "继承Fail按钮后的点击事件触发");
             }
         });
+        _txt = findViewById(R.id.txt_test_test);
+        _txt.setText(stringFromJNI());
     }
+
+    public native String stringFromJNI();
+
 }
