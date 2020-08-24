@@ -202,8 +202,6 @@ public class FaceAttributeDetectionVideoActivity extends AppCompatActivity imple
             attributes.systemUiVisibility = View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY | View.SYSTEM_UI_FLAG_HIDE_NAVIGATION;
             getWindow().setAttributes(attributes);
         }
-        //Activity启动后就锁定为启动时的方向
-        setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LOCKED);
         _previewView = findViewById(R.id.texture_preview_attribute_detection_video);
         _faceRectView = findViewById(R.id.rect_view_attribute_detection_video);
         _btnReturn = findViewById(R.id.btn_return_attribute_detection_video);

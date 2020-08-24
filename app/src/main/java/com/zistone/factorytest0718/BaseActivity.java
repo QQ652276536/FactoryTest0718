@@ -5,6 +5,7 @@ import androidx.core.content.ContextCompat;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.ActivityInfo;
 import android.content.pm.PackageManager;
 import android.graphics.Color;
 import android.graphics.Point;
@@ -136,6 +137,8 @@ public class BaseActivity extends AppCompatActivity implements View.OnClickListe
         //去年系统的TitleBar
         //        getWindow().requestFeature(Window.FEATURE_NO_TITLE);
         setContentView(R.layout.activity_base);
+        //Activity启动后就锁定为启动时的方向
+        setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LOCKED);
         _btnPass = findViewById(R.id.btn_pass_base);
         _btnPass.setOnClickListener(this::onClick);
         _btnFail = findViewById(R.id.btn_fail_base);

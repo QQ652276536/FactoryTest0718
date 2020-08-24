@@ -565,8 +565,6 @@ public class FaceIdCompareVerifyActivity extends BaseActivity implements ViewTre
             attributes.systemUiVisibility = View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY | View.SYSTEM_UI_FLAG_HIDE_NAVIGATION;
             getWindow().setAttributes(attributes);
         }
-        //Activity启动后就锁定为启动时的方向
-        setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LOCKED);
         //本地人脸库初始化
         FaceServer.getInstance().Init(this);
         _previewView = findViewById(R.id.single_camera_texture_preview);

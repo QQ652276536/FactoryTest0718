@@ -22,23 +22,45 @@ public class SensorActivity extends BaseActivity {
     private BroadcastReceiver _batteryBroadcastReceiver = new BroadcastReceiver() {
         @Override
         public void onReceive(Context context, Intent intent) {
-            //电池剩余电量
-            int value1 = intent.getIntExtra("level", 0);
-            //获取电池满电量数值
-            int value2 = intent.getIntExtra("scale", 0);
-            //获取电池技术支持
-            String str = intent.getStringExtra("technology");
-            //获取电池状态
-            int value4 = intent.getIntExtra("status", BatteryManager.BATTERY_STATUS_UNKNOWN);
-            //获取电源信息
-            int value5 = intent.getIntExtra("plugged", 0);
-            //获取电池健康度
-            int value6 = intent.getIntExtra("health", BatteryManager.BATTERY_HEALTH_UNKNOWN);
-            //获取电池电压
-            int value7 = intent.getIntExtra("voltage", 0);
-            //获取电池温度
-            int value8 = intent.getIntExtra("temperature", 0);
-            _txtBattery.setText("电量：" + value1 + "%\n温度：" + (double) value8 / 10 + "℃");
+            final String action = intent.getAction();
+            if (action.equalsIgnoreCase(Intent.ACTION_BATTERY_CHANGED)) {
+                //电池剩余电量
+                int value1 = intent.getIntExtra(BatteryManager.EXTRA_LEVEL, 0);
+                //获取电池满电量数值
+                int value2 = intent.getIntExtra(BatteryManager.EXTRA_SCALE, 0);
+                //获取电池技术支持
+                String str = intent.getStringExtra(BatteryManager.EXTRA_TECHNOLOGY);
+                //获取电池状态
+                int value4 = intent.getIntExtra(BatteryManager.EXTRA_STATUS, BatteryManager.BATTERY_STATUS_UNKNOWN);
+                //获取电源信息
+                int value5 = intent.getIntExtra(BatteryManager.EXTRA_PLUGGED, -1);
+                String batteryState = "未充电";
+                switch (value5) {
+                    //充电状态
+                    case BatteryManager.BATTERY_STATUS_CHARGING:
+                        batteryState = "充电中";
+                        break;
+                    //放电中
+                    case BatteryManager.BATTERY_STATUS_DISCHARGING:
+                        batteryState = "放电中";
+                        break;
+                    //未充电
+                    case BatteryManager.BATTERY_STATUS_NOT_CHARGING:
+                        batteryState = "未充电";
+                        break;
+                    //电池满
+                    case BatteryManager.BATTERY_STATUS_FULL:
+                        batteryState = "电池满";
+                        break;
+                }
+                //获取电池健康度
+                int value6 = intent.getIntExtra(BatteryManager.EXTRA_HEALTH, BatteryManager.BATTERY_HEALTH_UNKNOWN);
+                //获取电池电压
+                int value7 = intent.getIntExtra(BatteryManager.EXTRA_VOLTAGE, 0);
+                //获取电池温度
+                int value8 = intent.getIntExtra(BatteryManager.EXTRA_TEMPERATURE, 0);
+                _txtBattery.setText("电量：" + value1 + "%\n温度：" + (double) value8 / 10 + "℃\n状态：" + batteryState);
+            }
         }
     };
 

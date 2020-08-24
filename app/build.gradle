@@ -6,7 +6,7 @@ android {
 
     defaultConfig {
         applicationId "com.zistone.factorytest0718"
-        minSdkVersion 24
+        minSdkVersion 22
         targetSdkVersion 29
         versionCode 2
         versionName "2.2"
