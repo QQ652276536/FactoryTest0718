@@ -21,7 +21,6 @@ public class KeyDownActivity extends BaseActivity {
 
     //型号WD220B所对应的控件
     private TextView _txt1Wd220b, _txt2Wd220b, _txt3Wd220b, _txt4Wd220b, _txt5Wd220b, _txt6Wd220b, _txt7Wd220b, _txt8Wd220b;
-    private LinearLayout _llWd220b;
     private TextView _txt;
     private ImageView _iv;
     private boolean[] _keyPasss = new boolean[]{false, false, false, false, false, false, false, false};
@@ -37,6 +36,24 @@ public class KeyDownActivity extends BaseActivity {
         _txt.setBackground(getDrawable(R.color.white));
         _iv.setVisibility(View.INVISIBLE);
         return super.onKeyUp(keyCode, event);
+    }
+
+    /**
+     * 因为这个版本的系统无法在onKeyDown里监听和拦截Bank键，所以在这里处理
+     *
+     * @param event
+     * @return
+     */
+    @Override
+    public boolean dispatchKeyEvent(KeyEvent event) {
+        if (event.getKeyCode() == KeyEvent.KEYCODE_BACK && event.getAction() == KeyEvent.ACTION_DOWN) {
+            _txt6Wd220b.setBackgroundColor(SPRING_GREEN);
+            _keyPasss[5] = true;
+            Log.i(TAG, "屏蔽Bank键已执行...");
+            return true;
+        } else {
+            return super.dispatchKeyEvent(event);
+        }
     }
 
     @Override
@@ -106,8 +123,6 @@ public class KeyDownActivity extends BaseActivity {
         SetBaseContentView(R.layout.activity_keydown);
         _txt = findViewById(R.id.txt_keydown);
         _iv = findViewById(R.id.iv_keydown);
-        //型号WD220B对应的控件
-        _llWd220b = findViewById(R.id.ll_wd220b_keydown);
         _txt1Wd220b = findViewById(R.id.txt1_wd220b_keydown);
         _txt2Wd220b = findViewById(R.id.txt2_wd220b_keydown);
         _txt3Wd220b = findViewById(R.id.txt3_wd220b_keydown);
