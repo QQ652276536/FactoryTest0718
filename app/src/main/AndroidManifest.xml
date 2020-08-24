@@ -91,7 +91,7 @@
             android:label="该Activity仅用于测试代码，无任何作用"
             android:launchMode="singleTask" />
         <activity
-            android:name=".ComTestActivity"
+            android:name=".ScmTestActivity"
             android:label="串口通讯"
             android:launchMode="singleTask" />
         <activity

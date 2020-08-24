@@ -1,10 +1,7 @@
 package com.zistone.factorytest0718;
 
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.app.ActivityManager;
 import android.content.Context;
-import android.content.Intent;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -29,9 +26,9 @@ import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
 
-public class ComTestActivity extends BaseActivity {
+public class ScmTestActivity extends BaseActivity {
 
-    private static final String TAG = "ComTestActivity";
+    private static final String TAG = "ScmTestActivity";
     private static final int TASKTIME = 1 * 1000;
 
     private TextView _txtMessag;
@@ -105,7 +102,7 @@ public class ComTestActivity extends BaseActivity {
                     _timer.cancel();
                     _timerTask.cancel();
                     _btnPass.setEnabled(true);
-                    MyProgressDialogUtil.ShowCountDownTimerWarning(ComTestActivity.this, "知道了", 3 * 1000, "提示", "串口测试已通过！\n\n收到数据：" + str, false, () -> {
+                    MyProgressDialogUtil.ShowCountDownTimerWarning(ScmTestActivity.this, "知道了", 3 * 1000, "提示", "串口测试已通过！\n\n收到数据：" + str, false, () -> {
                         MyProgressDialogUtil.DismissAlertDialog();
                         Pass();
                     });
@@ -190,7 +187,7 @@ public class ComTestActivity extends BaseActivity {
             @Override
             public void afterTextChanged(Editable s) {
                 _portName = s.toString();
-                MySharedPreferences.SetSerialPortNameAndBaudrate(ComTestActivity.this, _portName + "," + _baudRate + "," + _hexData);
+                MySharedPreferences.SetSerialPortNameAndBaudrate(ScmTestActivity.this, _portName + "," + _baudRate + "," + _hexData);
             }
         });
         _edtData = findViewById(R.id.edt_data_com);
@@ -207,7 +204,7 @@ public class ComTestActivity extends BaseActivity {
             @Override
             public void afterTextChanged(Editable s) {
                 _hexData = s.toString();
-                MySharedPreferences.SetSerialPortNameAndBaudrate(ComTestActivity.this, _portName + "," + _baudRate + "," + _hexData);
+                MySharedPreferences.SetSerialPortNameAndBaudrate(ScmTestActivity.this, _portName + "," + _baudRate + "," + _hexData);
             }
         });
         _spinnerRate = findViewById(R.id.spinner_rate_com);
@@ -230,7 +227,7 @@ public class ComTestActivity extends BaseActivity {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 _baudRate = Integer.parseInt(_spinnerRate.getSelectedItem().toString());
-                MySharedPreferences.SetSerialPortNameAndBaudrate(ComTestActivity.this, _portName + "," + _baudRate + "," + _hexData);
+                MySharedPreferences.SetSerialPortNameAndBaudrate(ScmTestActivity.this, _portName + "," + _baudRate + "," + _hexData);
             }
 
             @Override
@@ -270,7 +267,7 @@ public class ComTestActivity extends BaseActivity {
                 } catch (Exception e) {
                     e.printStackTrace();
                     UpdateText(_txtMessag, "\r\n" + e.toString(), "Append");
-                    MyProgressDialogUtil.ShowWarning(ComTestActivity.this, "知道了", "警告", "串口打开失败，请检查串口节点是否正确！", true, new MyProgressDialogUtil.WarningListener() {
+                    MyProgressDialogUtil.ShowWarning(ScmTestActivity.this, "知道了", "警告", "串口打开失败，请检查串口节点是否正确！", true, new MyProgressDialogUtil.WarningListener() {
                         @Override
                         public void OnIKnow() {
                         }

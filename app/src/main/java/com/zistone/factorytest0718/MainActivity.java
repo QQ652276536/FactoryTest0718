@@ -1,7 +1,6 @@
 package com.zistone.factorytest0718;
 
 import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
 
 import android.Manifest;
 import android.content.Intent;
@@ -15,13 +14,11 @@ import android.widget.Button;
 import android.widget.Toast;
 
 import com.zistone.factorytest0718.util.MyActivityManager;
-import com.zistone.factorytest0718.util.MyFileUtil;
 import com.zistone.factorytest0718.util.MySharedPreferences;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
-import java.util.List;
 import java.util.Map;
 
 public class MainActivity extends BaseActivity implements View.OnClickListener {
@@ -34,7 +31,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
     private static final int SIM_ACTIVITY_CODE = 105;
     private static final int SCREEN_ACTIVITY_CODE = 106;
     private static final int SOUND_ACTIVITY_CODE = 107;
-    private static final int COMTEST_ACTIVITY_CODE = 108;
+    private static final int SCMTEST_ACTIVITY_CODE = 108;
     private static final int TOUCH_ACTIVITY_CODE = 109;
     private static final int IDCARD_ACTIVITY_CODE = 110;
     private static final int WATERMARKCAMERA_ACTIVITY_CODE = 111;
@@ -47,7 +44,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
     private static final int SENSOR_ACTIVITY_CODE = 118;
 
     private boolean _isPermissionRequested = false;
-    private Button _btnBluetooth, _btnWifi, _btnGPS, _btnKeyDown, _btnSIM, _btnScreen, _btnSound, _btnCOM, _btnTouch, _btnIdCard, _btnWaterCamera, _btnSystemCamera, _btnNFC, _btnScanCode, _btnBankCard, _btnTestTest, _btnFace, _btnTfCard, _btnSensor;
+    private Button _btnBluetooth, _btnWifi, _btnGPS, _btnKeyDown, _btnSIM, _btnScreen, _btnSound, _btnSCM, _btnTouch, _btnIdCard, _btnWaterCamera, _btnSystemCamera, _btnNFC, _btnScanCode, _btnBankCard, _btnTestTest, _btnFace, _btnTfCard, _btnSensor;
     private long _exitTime = 0;
     private Map<Integer, Boolean> _testResultMap;
     private Map<Integer, Button> _testBtnMap;
@@ -178,9 +175,9 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
                     SetPassBackgroundColor(_btnSound, str);
                     _testResultMap.put(SOUND_ACTIVITY_CODE, str.equals(PASS) ? true : false);
                     break;
-                case COMTEST_ACTIVITY_CODE:
-                    SetPassBackgroundColor(_btnCOM, str);
-                    _testResultMap.put(COMTEST_ACTIVITY_CODE, str.equals(PASS) ? true : false);
+                case SCMTEST_ACTIVITY_CODE:
+                    SetPassBackgroundColor(_btnSCM, str);
+                    _testResultMap.put(SCMTEST_ACTIVITY_CODE, str.equals(PASS) ? true : false);
                     break;
                 case TOUCH_ACTIVITY_CODE:
                     SetPassBackgroundColor(_btnTouch, str);
@@ -251,8 +248,8 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
             case R.id.btn_sound:
                 startActivityForResult(new Intent(this, SoundActivity.class), SOUND_ACTIVITY_CODE);
                 break;
-            case R.id.btn_com:
-                startActivityForResult(new Intent(this, ComTestActivity.class), COMTEST_ACTIVITY_CODE);
+            case R.id.btn_scm:
+                startActivityForResult(new Intent(this, ScmTestActivity.class), SCMTEST_ACTIVITY_CODE);
                 break;
             case R.id.btn_touch:
                 startActivityForResult(new Intent(this, TouchActivity.class), TOUCH_ACTIVITY_CODE);
@@ -341,7 +338,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
         _btnSIM = findViewById(R.id.btn_sim);
         _btnScreen = findViewById(R.id.btn_screen);
         _btnSound = findViewById(R.id.btn_sound);
-        _btnCOM = findViewById(R.id.btn_com);
+        _btnSCM = findViewById(R.id.btn_scm);
         _btnTouch = findViewById(R.id.btn_touch);
         _btnIdCard = findViewById(R.id.btn_idcard);
         _btnWaterCamera = findViewById(R.id.btn_gpscamera);
@@ -360,7 +357,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
         _btnSIM.setOnClickListener(this::onClick);
         _btnScreen.setOnClickListener(this::onClick);
         _btnSound.setOnClickListener(this::onClick);
-        _btnCOM.setOnClickListener(this::onClick);
+        _btnSCM.setOnClickListener(this::onClick);
         _btnTouch.setOnClickListener(this::onClick);
         _btnIdCard.setOnClickListener(this::onClick);
         _btnWaterCamera.setOnClickListener(this::onClick);
@@ -380,7 +377,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
             put(SIM_ACTIVITY_CODE, _btnSIM);
             put(SCREEN_ACTIVITY_CODE, _btnScreen);
             put(SOUND_ACTIVITY_CODE, _btnSound);
-            put(COMTEST_ACTIVITY_CODE, _btnCOM);
+            put(SCMTEST_ACTIVITY_CODE, _btnSCM);
             put(TOUCH_ACTIVITY_CODE, _btnTouch);
             put(IDCARD_ACTIVITY_CODE, _btnIdCard);
             put(WATERMARKCAMERA_ACTIVITY_CODE, _btnWaterCamera);

@@ -5,7 +5,7 @@
     android:layout_height="fill_parent"
     android:layout_margin="5sp"
     android:orientation="vertical"
-    tools:context=".ComTestActivity">
+    tools:context=".ScmTestActivity">
 
     <LinearLayout
         android:layout_width="match_parent"
