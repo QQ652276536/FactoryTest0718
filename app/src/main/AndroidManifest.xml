@@ -55,7 +55,15 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".SystemIntoActivity"
+        <activity android:name=".Com485Activity"
+            android:label="串口自环"
+            android:launchMode="singleTask" />
+        <activity
+            android:name=".BackLightActivity"
+            android:label="背光亮度"
+            android:launchMode="singleTask" />
+        <activity
+            android:name=".SystemIntoActivity"
             android:label="系统信息"
             android:launchMode="singleTask" />
         <activity
