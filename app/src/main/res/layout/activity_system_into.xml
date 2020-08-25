@@ -1,0 +1,294 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".SystemIntoActivity">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_margin="5sp"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="设备型号："
+                android:textSize="18sp" />
+
+            <TextView
+                android:id="@+id/txt_type_systeminfo"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="***"
+                android:textSize="18sp" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_margin="5sp"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="设备制造商："
+                android:textSize="18sp" />
+
+            <TextView
+                android:id="@+id/txt_manu_systeminfo"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="***"
+                android:textSize="18sp" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_margin="5sp"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="系统定制商："
+                android:textSize="18sp" />
+
+            <TextView
+                android:id="@+id/txt_system_systeminfo"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="***"
+                android:textSize="18sp" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_margin="5sp"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="硬件制造商："
+                android:textSize="18sp" />
+
+            <TextView
+                android:id="@+id/txt_hardware_systeminfo"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="***"
+                android:textSize="18sp" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_margin="5sp"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="系统版本："
+                android:textSize="18sp" />
+
+            <TextView
+                android:id="@+id/txt_version_systeminfo"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="***"
+                android:textSize="18sp" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_margin="5sp"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="生产编号："
+                android:textSize="18sp" />
+
+            <TextView
+                android:id="@+id/txt_buildid_systeminfo"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="***"
+                android:textSize="18sp" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_margin="5sp"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="主板编号："
+                android:textSize="18sp" />
+
+            <TextView
+                android:id="@+id/txt_boardid_systeminfo"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="***"
+                android:textSize="18sp" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_margin="5sp"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="编译时间："
+                android:textSize="18sp" />
+
+            <TextView
+                android:id="@+id/txt_time_systeminfo"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="***"
+                android:textSize="18sp" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_margin="5sp"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Kernel版本："
+                android:textSize="18sp" />
+
+            <TextView
+                android:id="@+id/txt_kernel_systeminfo"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="***"
+                android:textSize="18sp" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_margin="5sp"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="支持的内核："
+                android:textSize="18sp" />
+
+            <TextView
+                android:id="@+id/txt_cpu_systeminfo"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="***"
+                android:textSize="18sp" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_margin="5sp"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="屏幕分辨率："
+                android:textSize="18sp" />
+
+            <TextView
+                android:id="@+id/txt_resolution_systeminfo"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="***"
+                android:textSize="18sp" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_margin="5sp"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="屏幕密度："
+                android:textSize="18sp" />
+
+            <TextView
+                android:id="@+id/txt_density_systeminfo"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="***"
+                android:textSize="18sp" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_margin="5sp"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="屏幕大小："
+                android:textSize="18sp" />
+
+            <TextView
+                android:id="@+id/txt_szie_systeminfo"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="***"
+                android:textSize="18sp" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_margin="5sp"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Root状态："
+                android:textSize="18sp" />
+
+            <TextView
+                android:id="@+id/txt_root_systeminfo"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="***"
+                android:textSize="18sp" />
+        </LinearLayout>
+    </LinearLayout>
+</ScrollView>

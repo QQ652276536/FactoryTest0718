@@ -43,9 +43,10 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
     private static final int TFCARD_ACTIVITY_CODE = 117;
     private static final int SENSOR_ACTIVITY_CODE = 118;
     private static final int SHAKE_ACTIVITY_CODE = 119;
+    private static final int SYSTEMINFO_ACTIVITY_CODE = 120;
 
     private boolean _isPermissionRequested = false;
-    private Button _btnBluetooth, _btnWifi, _btnGPS, _btnKeyDown, _btnSIM, _btnScreen, _btnSound, _btnSCM, _btnTouch, _btnIdCard, _btnWaterCamera, _btnSystemCamera, _btnNFC, _btnScanCode, _btnBankCard, _btnTestTest, _btnFace, _btnTfCard, _btnSensor, _btnShake;
+    private Button _btnBluetooth, _btnWifi, _btnGPS, _btnKeyDown, _btnSIM, _btnScreen, _btnSound, _btnSCM, _btnTouch, _btnIdCard, _btnWaterCamera, _btnSystemCamera, _btnNFC, _btnScanCode, _btnBankCard, _btnTestTest, _btnFace, _btnTfCard, _btnSensor, _btnShake, _btnSystemInfo;
     private long _exitTime = 0;
     private Map<Integer, Boolean> _testResultMap;
     private Map<Integer, Button> _testBtnMap;
@@ -224,6 +225,10 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
                     SetPassBackgroundColor(_btnShake, str);
                     _testResultMap.put(SHAKE_ACTIVITY_CODE, str.equals(PASS));
                     break;
+                case SYSTEMINFO_ACTIVITY_CODE:
+                    SetPassBackgroundColor(_btnSystemInfo, str);
+                    _testResultMap.put(SYSTEMINFO_ACTIVITY_CODE, str.equals(PASS));
+                    break;
             }
             MySharedPreferences.SetMainPassFail(this, _testResultMap);
         }
@@ -296,6 +301,9 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
             case R.id.btn_shake:
                 startActivityForResult(new Intent(this, ShakeActivity.class), SHAKE_ACTIVITY_CODE);
                 break;
+            case R.id.btn_systeminfo:
+                startActivityForResult(new Intent(this, SystemIntoActivity.class), SYSTEMINFO_ACTIVITY_CODE);
+                break;
         }
     }
 
@@ -359,6 +367,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
         _btnTfCard = findViewById(R.id.btn_tfcard);
         _btnSensor = findViewById(R.id.btn_sensor);
         _btnShake = findViewById(R.id.btn_shake);
+        _btnSystemInfo = findViewById(R.id.btn_systeminfo);
         _btnBluetooth.setOnClickListener(this::onClick);
         _btnWifi.setOnClickListener(this::onClick);
         _btnGPS.setOnClickListener(this::onClick);
@@ -379,6 +388,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
         _btnTfCard.setOnClickListener(this::onClick);
         _btnSensor.setOnClickListener(this::onClick);
         _btnShake.setOnClickListener(this::onClick);
+        _btnSystemInfo.setOnClickListener(this::onClick);
         _testBtnMap = new HashMap<Integer, Button>() {{
             put(BLUETOOTH_ACTIVITY_CODE, _btnBluetooth);
             put(WIFI_ACTIVITY_CODE, _btnWifi);
@@ -399,6 +409,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
             put(TFCARD_ACTIVITY_CODE, _btnTfCard);
             put(SENSOR_ACTIVITY_CODE, _btnSensor);
             put(SHAKE_ACTIVITY_CODE, _btnShake);
+            put(SYSTEMINFO_ACTIVITY_CODE, _btnSystemInfo);
         }};
         JudgeDeviceType();
         _testResultMap = MySharedPreferences.GetMainPassFail(this);
