@@ -63,6 +63,9 @@ public class MySensorUtil implements SensorEventListener {
      * 注销监听
      */
     public void UnRegister() {
+        _sensorManager.unregisterListener(this, _lightSensor);
+        _sensorManager.unregisterListener(this, _accelerometerSensor);
+        _sensorManager.unregisterListener(this, _magneticSensor);
     }
 
     /**
