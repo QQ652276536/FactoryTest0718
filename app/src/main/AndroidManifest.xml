@@ -3,6 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     package="com.zistone.factorytest0718">
 
+    <uses-permission android:name="android.permission.VIBRATE" /> <!-- 震动 -->
     <uses-permission android:name="android.permission.RECORD_AUDIO" /> <!-- 录音权限 -->
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" /> <!-- 写入权限 -->
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" /> <!-- 读取权限 -->
@@ -54,6 +55,10 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+        <activity
+            android:name=".ShakeActivity"
+            android:label="设备震动"
+            android:launchMode="singleTask" />
         <activity
             android:name=".SensorActivity"
             android:label="传感器信息"

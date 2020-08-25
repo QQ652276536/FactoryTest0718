@@ -42,9 +42,10 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
     private static final int FACE_ACTIVITY_CODE = 116;
     private static final int TFCARD_ACTIVITY_CODE = 117;
     private static final int SENSOR_ACTIVITY_CODE = 118;
+    private static final int SHAKE_ACTIVITY_CODE = 119;
 
     private boolean _isPermissionRequested = false;
-    private Button _btnBluetooth, _btnWifi, _btnGPS, _btnKeyDown, _btnSIM, _btnScreen, _btnSound, _btnSCM, _btnTouch, _btnIdCard, _btnWaterCamera, _btnSystemCamera, _btnNFC, _btnScanCode, _btnBankCard, _btnTestTest, _btnFace, _btnTfCard, _btnSensor;
+    private Button _btnBluetooth, _btnWifi, _btnGPS, _btnKeyDown, _btnSIM, _btnScreen, _btnSound, _btnSCM, _btnTouch, _btnIdCard, _btnWaterCamera, _btnSystemCamera, _btnNFC, _btnScanCode, _btnBankCard, _btnTestTest, _btnFace, _btnTfCard, _btnSensor, _btnShake;
     private long _exitTime = 0;
     private Map<Integer, Boolean> _testResultMap;
     private Map<Integer, Button> _testBtnMap;
@@ -149,75 +150,79 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
             switch (requestCode) {
                 case BLUETOOTH_ACTIVITY_CODE:
                     SetPassBackgroundColor(_btnBluetooth, str);
-                    _testResultMap.put(BLUETOOTH_ACTIVITY_CODE, str.equals(PASS) ? true : false);
+                    _testResultMap.put(BLUETOOTH_ACTIVITY_CODE, str.equals(PASS));
                     break;
                 case WIFI_ACTIVITY_CODE:
                     SetPassBackgroundColor(_btnWifi, str);
-                    _testResultMap.put(WIFI_ACTIVITY_CODE, str.equals(PASS) ? true : false);
+                    _testResultMap.put(WIFI_ACTIVITY_CODE, str.equals(PASS));
                     break;
                 case GPS_ACTIVITY_CODE:
                     SetPassBackgroundColor(_btnGPS, str);
-                    _testResultMap.put(GPS_ACTIVITY_CODE, str.equals(PASS) ? true : false);
+                    _testResultMap.put(GPS_ACTIVITY_CODE, str.equals(PASS));
                     break;
                 case KEYDOWN_ACTIVITY_CODE:
                     SetPassBackgroundColor(_btnKeyDown, str);
-                    _testResultMap.put(KEYDOWN_ACTIVITY_CODE, str.equals(PASS) ? true : false);
+                    _testResultMap.put(KEYDOWN_ACTIVITY_CODE, str.equals(PASS));
                     break;
                 case SIM_ACTIVITY_CODE:
                     SetPassBackgroundColor(_btnSIM, str);
-                    _testResultMap.put(SIM_ACTIVITY_CODE, str.equals(PASS) ? true : false);
+                    _testResultMap.put(SIM_ACTIVITY_CODE, str.equals(PASS));
                     break;
                 case SCREEN_ACTIVITY_CODE:
                     SetPassBackgroundColor(_btnScreen, str);
-                    _testResultMap.put(SCREEN_ACTIVITY_CODE, str.equals(PASS) ? true : false);
+                    _testResultMap.put(SCREEN_ACTIVITY_CODE, str.equals(PASS));
                     break;
                 case SOUND_ACTIVITY_CODE:
                     SetPassBackgroundColor(_btnSound, str);
-                    _testResultMap.put(SOUND_ACTIVITY_CODE, str.equals(PASS) ? true : false);
+                    _testResultMap.put(SOUND_ACTIVITY_CODE, str.equals(PASS));
                     break;
                 case SCMTEST_ACTIVITY_CODE:
                     SetPassBackgroundColor(_btnSCM, str);
-                    _testResultMap.put(SCMTEST_ACTIVITY_CODE, str.equals(PASS) ? true : false);
+                    _testResultMap.put(SCMTEST_ACTIVITY_CODE, str.equals(PASS));
                     break;
                 case TOUCH_ACTIVITY_CODE:
                     SetPassBackgroundColor(_btnTouch, str);
-                    _testResultMap.put(TOUCH_ACTIVITY_CODE, str.equals(PASS) ? true : false);
+                    _testResultMap.put(TOUCH_ACTIVITY_CODE, str.equals(PASS));
                     break;
                 case IDCARD_ACTIVITY_CODE:
                     SetPassBackgroundColor(_btnIdCard, str);
-                    _testResultMap.put(IDCARD_ACTIVITY_CODE, str.equals(PASS) ? true : false);
+                    _testResultMap.put(IDCARD_ACTIVITY_CODE, str.equals(PASS));
                     break;
                 case WATERMARKCAMERA_ACTIVITY_CODE:
                     SetPassBackgroundColor(_btnWaterCamera, str);
-                    _testResultMap.put(WATERMARKCAMERA_ACTIVITY_CODE, str.equals(PASS) ? true : false);
+                    _testResultMap.put(WATERMARKCAMERA_ACTIVITY_CODE, str.equals(PASS));
                     break;
                 case SYSTEMCAMERA_ACTIVITY_CODE:
                     SetPassBackgroundColor(_btnSystemCamera, str);
-                    _testResultMap.put(SYSTEMCAMERA_ACTIVITY_CODE, str.equals(PASS) ? true : false);
+                    _testResultMap.put(SYSTEMCAMERA_ACTIVITY_CODE, str.equals(PASS));
                     break;
                 case NFCACTIVITY_CODE:
                     SetPassBackgroundColor(_btnNFC, str);
-                    _testResultMap.put(NFCACTIVITY_CODE, str.equals(PASS) ? true : false);
+                    _testResultMap.put(NFCACTIVITY_CODE, str.equals(PASS));
                     break;
                 case SCANCODE_ACTIVITY_CODE:
                     SetPassBackgroundColor(_btnScanCode, str);
-                    _testResultMap.put(SCANCODE_ACTIVITY_CODE, str.equals(PASS) ? true : false);
+                    _testResultMap.put(SCANCODE_ACTIVITY_CODE, str.equals(PASS));
                     break;
                 case BANKCARD_ACTIVITY_CODE:
                     SetPassBackgroundColor(_btnBankCard, str);
-                    _testResultMap.put(BANKCARD_ACTIVITY_CODE, str.equals(PASS) ? true : false);
+                    _testResultMap.put(BANKCARD_ACTIVITY_CODE, str.equals(PASS));
                     break;
                 case FACE_ACTIVITY_CODE:
                     SetPassBackgroundColor(_btnFace, str);
-                    _testResultMap.put(FACE_ACTIVITY_CODE, str.equals(PASS) ? true : false);
+                    _testResultMap.put(FACE_ACTIVITY_CODE, str.equals(PASS));
                     break;
                 case TFCARD_ACTIVITY_CODE:
                     SetPassBackgroundColor(_btnTfCard, str);
-                    _testResultMap.put(TFCARD_ACTIVITY_CODE, str.equals(PASS) ? true : false);
+                    _testResultMap.put(TFCARD_ACTIVITY_CODE, str.equals(PASS));
                     break;
                 case SENSOR_ACTIVITY_CODE:
                     SetPassBackgroundColor(_btnSensor, str);
-                    _testResultMap.put(SENSOR_ACTIVITY_CODE, str.equals(PASS) ? true : false);
+                    _testResultMap.put(SENSOR_ACTIVITY_CODE, str.equals(PASS));
+                    break;
+                case SHAKE_ACTIVITY_CODE:
+                    SetPassBackgroundColor(_btnShake, str);
+                    _testResultMap.put(SHAKE_ACTIVITY_CODE, str.equals(PASS));
                     break;
             }
             MySharedPreferences.SetMainPassFail(this, _testResultMap);
@@ -288,6 +293,9 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
             case R.id.btn_sensor:
                 startActivityForResult(new Intent(this, SensorActivity.class), SENSOR_ACTIVITY_CODE);
                 break;
+            case R.id.btn_shake:
+                startActivityForResult(new Intent(this, ShakeActivity.class), SHAKE_ACTIVITY_CODE);
+                break;
         }
     }
 
@@ -350,6 +358,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
         _btnFace = findViewById(R.id.btn_face);
         _btnTfCard = findViewById(R.id.btn_tfcard);
         _btnSensor = findViewById(R.id.btn_sensor);
+        _btnShake = findViewById(R.id.btn_shake);
         _btnBluetooth.setOnClickListener(this::onClick);
         _btnWifi.setOnClickListener(this::onClick);
         _btnGPS.setOnClickListener(this::onClick);
@@ -369,6 +378,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
         _btnFace.setOnClickListener(this::onClick);
         _btnTfCard.setOnClickListener(this::onClick);
         _btnSensor.setOnClickListener(this::onClick);
+        _btnShake.setOnClickListener(this::onClick);
         _testBtnMap = new HashMap<Integer, Button>() {{
             put(BLUETOOTH_ACTIVITY_CODE, _btnBluetooth);
             put(WIFI_ACTIVITY_CODE, _btnWifi);
@@ -388,6 +398,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
             put(FACE_ACTIVITY_CODE, _btnFace);
             put(TFCARD_ACTIVITY_CODE, _btnTfCard);
             put(SENSOR_ACTIVITY_CODE, _btnSensor);
+            put(SHAKE_ACTIVITY_CODE, _btnShake);
         }};
         JudgeDeviceType();
         _testResultMap = MySharedPreferences.GetMainPassFail(this);
