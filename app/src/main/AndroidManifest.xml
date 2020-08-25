@@ -3,6 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     package="com.zistone.factorytest0718">
 
+    <uses-permission android:name="android.permission.MODIFY_AUDIO_SETTINGS"/> <!-- 修改声音设置 -->
     <uses-permission android:name="android.permission.VIBRATE" /> <!-- 震动 -->
     <uses-permission android:name="android.permission.RECORD_AUDIO" /> <!-- 录音权限 -->
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" /> <!-- 写入权限 -->

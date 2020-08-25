@@ -288,7 +288,7 @@
                     android:textColor="@color/white" />
 
                 <Button
-                    android:id="@+id/btn_heaset"
+                    android:id="@+id/btn_headset"
                     android:layout_width="wrap_content"
                     android:layout_height="60sp"
                     android:layout_margin="5sp"

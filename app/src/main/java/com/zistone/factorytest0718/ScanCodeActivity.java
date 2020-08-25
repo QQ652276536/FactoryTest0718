@@ -157,7 +157,6 @@ public class ScanCodeActivity extends BaseActivity implements MyScanCodeManager.
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        Log.i(TAG, "onCreate");
         super.onCreate(savedInstanceState);
         //        setContentView(R.layout.activity_scancode);
         SetBaseContentView(R.layout.activity_scancode);

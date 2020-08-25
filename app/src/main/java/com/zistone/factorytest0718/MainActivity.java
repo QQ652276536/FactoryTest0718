@@ -3,10 +3,15 @@ package com.zistone.factorytest0718;
 import androidx.annotation.NonNull;
 
 import android.Manifest;
+import android.content.BroadcastReceiver;
+import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.content.pm.PackageManager;
+import android.net.wifi.WifiManager;
 import android.os.Build;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
@@ -14,6 +19,7 @@ import android.widget.Button;
 import android.widget.Toast;
 
 import com.zistone.factorytest0718.util.MyActivityManager;
+import com.zistone.factorytest0718.util.MyProgressDialogUtil;
 import com.zistone.factorytest0718.util.MySharedPreferences;
 
 import java.util.ArrayList;
@@ -46,12 +52,32 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
     private static final int SYSTEMINFO_ACTIVITY_CODE = 120;
     private static final int FLASHLIGHT_ACTIVITY_CODE = 121;
     private static final int BACKLIGHT_ACTIVITY_CODE = 122;
+    private static final int HEASET_ACTIVITY_CODE = 123;
 
     private boolean _isPermissionRequested = false;
-    private Button _btnBluetooth, _btnWifi, _btnGPS, _btnKeyDown, _btnSIM, _btnScreen, _btnSound, _btnSCM, _btnTouch, _btnIdCard, _btnWaterCamera, _btnSystemCamera, _btnNFC, _btnScanCode, _btnBankCard, _btnTestTest, _btnFace, _btnTfCard, _btnSensor, _btnShake, _btnSystemInfo, _btnFlashLight, _btnBackLight;
+    private Button _btnBluetooth, _btnWifi, _btnGPS, _btnKeyDown, _btnSIM, _btnScreen, _btnSound, _btnSCM, _btnTouch, _btnIdCard, _btnWaterCamera, _btnSystemCamera, _btnNFC, _btnScanCode, _btnBankCard, _btnTestTest, _btnFace, _btnTfCard, _btnSensor, _btnShake, _btnSystemInfo, _btnFlashLight, _btnBackLight, _btnHeadset;
     private long _exitTime = 0;
     private Map<Integer, Boolean> _testResultMap;
     private Map<Integer, Button> _testBtnMap;
+    private boolean _isInsertHeadset = false;
+    private HeadsetBroadcasetReceiver _headsetBroadcasetReceiver;
+
+    /**
+     * 用于检测耳机是否插入
+     */
+    class HeadsetBroadcasetReceiver extends BroadcastReceiver {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            //没有插入耳机
+            if (intent.getIntExtra("state", 0) == 0) {
+                _isInsertHeadset = false;
+            }
+            //已插入耳机
+            else if (intent.getIntExtra("state", 0) == 1) {
+                _isInsertHeadset = true;
+            }
+        }
+    }
 
     /**
      * Android6.0之后需要动态申请权限
@@ -239,6 +265,10 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
                     SetPassBackgroundColor(_btnBackLight, str);
                     _testResultMap.put(BACKLIGHT_ACTIVITY_CODE, str.equals(PASS));
                     break;
+                case HEASET_ACTIVITY_CODE:
+                    SetPassBackgroundColor(_btnHeadset, str);
+                    _testResultMap.put(HEASET_ACTIVITY_CODE, str.equals(PASS));
+                    break;
             }
             MySharedPreferences.SetMainPassFail(this, _testResultMap);
         }
@@ -247,78 +277,110 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
+            //蓝牙测试
             case R.id.btn_bluetooth:
                 startActivityForResult(new Intent(this, BluetoothActivity.class), BLUETOOTH_ACTIVITY_CODE);
                 break;
+            //WIFI测试
             case R.id.btn_wifi:
                 startActivityForResult(new Intent(this, WifiActivity.class), WIFI_ACTIVITY_CODE);
                 break;
+            //GPS测试
             case R.id.btn_gps:
                 startActivityForResult(new Intent(this, GpsActivity.class), GPS_ACTIVITY_CODE);
                 break;
+            //按键测试
             case R.id.btn_keydown:
                 startActivityForResult(new Intent(this, KeyDownActivity.class), KEYDOWN_ACTIVITY_CODE);
                 break;
+            //SIM卡读取
             case R.id.btn_sim:
                 startActivityForResult(new Intent(this, SimActivity.class), SIM_ACTIVITY_CODE);
                 break;
+            //屏幕测试
             case R.id.btn_screen:
                 startActivityForResult(new Intent(this, ScreenActivity.class), SCREEN_ACTIVITY_CODE);
                 break;
+            //音频测试
             case R.id.btn_sound:
                 startActivityForResult(new Intent(this, SoundActivity.class), SOUND_ACTIVITY_CODE);
                 break;
+            //单片机测试
             case R.id.btn_scm:
                 startActivityForResult(new Intent(this, ScmTestActivity.class), SCMTEST_ACTIVITY_CODE);
                 break;
+            //触摸屏测试
             case R.id.btn_touch:
                 startActivityForResult(new Intent(this, TouchActivity.class), TOUCH_ACTIVITY_CODE);
                 break;
+            //身份证读取
             case R.id.btn_idcard:
                 startActivityForResult(new Intent(this, IdCardActivity.class), IDCARD_ACTIVITY_CODE);
                 break;
+            //水印相机
             case R.id.btn_gpscamera:
                 startActivityForResult(new Intent(this, WatermarkCameraActivity.class), WATERMARKCAMERA_ACTIVITY_CODE);
                 break;
+            //系统相机
             case R.id.btn_systemcamera:
                 startActivityForResult(new Intent(this, SystemCameraActivity.class), SYSTEMCAMERA_ACTIVITY_CODE);
                 break;
+            //NFC测试
             case R.id.btn_nfc:
                 startActivityForResult(new Intent(this, NfcActivity.class), NFCACTIVITY_CODE);
                 break;
+            //扫码测试
             case R.id.btn_scancode:
-                Intent intent = new Intent(this, ScanCodeActivity.class);
-                Bundle bundle = new Bundle();
-                bundle.putString("key", "");
-                intent.putExtras(bundle);
-                startActivityForResult(intent, SCANCODE_ACTIVITY_CODE);
+                startActivityForResult(new Intent(this, ScanCodeActivity.class), SCANCODE_ACTIVITY_CODE);
                 break;
+            //银行卡测试
             case R.id.btn_bankcard:
                 startActivityForResult(new Intent(this, BankCardActivity.class), BANKCARD_ACTIVITY_CODE);
                 break;
+            //人脸识别
             case R.id.btn_face:
                 startActivityForResult(new Intent(this, FaceAttributeMenuActivity.class), FACE_ACTIVITY_CODE);
                 break;
-            case R.id.btn_test_test:
-                startActivity(new Intent(this, TestTestActivity.class));
-                break;
+            //TF卡测试
             case R.id.btn_tfcard:
                 startActivityForResult(new Intent(this, TfCardActivity.class), TFCARD_ACTIVITY_CODE);
                 break;
+            //传感器
             case R.id.btn_sensor:
                 startActivityForResult(new Intent(this, SensorActivity.class), SENSOR_ACTIVITY_CODE);
                 break;
+            //震动测试
             case R.id.btn_shake:
                 startActivityForResult(new Intent(this, ShakeActivity.class), SHAKE_ACTIVITY_CODE);
                 break;
+            //系统信息
             case R.id.btn_systeminfo:
                 startActivityForResult(new Intent(this, SystemIntoActivity.class), SYSTEMINFO_ACTIVITY_CODE);
                 break;
+            //闪光灯测试
             case R.id.btn_flashlight:
                 startActivityForResult(new Intent(this, FlashLightActivity.class), FLASHLIGHT_ACTIVITY_CODE);
                 break;
+            //背光测试
             case R.id.btn_backlight:
                 startActivityForResult(new Intent(this, BackLightActivity.class), BACKLIGHT_ACTIVITY_CODE);
+                break;
+            //耳机测试，这里是通过音频测试来测试耳机
+            case R.id.btn_headset: {
+                if (_isInsertHeadset) {
+                    Intent intent = new Intent(this, SoundActivity.class);
+                    Bundle bundle = new Bundle();
+                    bundle.putBoolean("HEADSET", true);
+                    intent.putExtras(bundle);
+                    startActivityForResult(intent, HEASET_ACTIVITY_CODE);
+                } else {
+                    MyProgressDialogUtil.ShowWarning(this, "知道了", "提示", "请先插入耳机", true, null);
+                }
+            }
+            break;
+            //用于测试的一个Activity，不包含功能测试
+            case R.id.btn_test_test:
+                startActivity(new Intent(this, TestTestActivity.class));
                 break;
         }
     }
@@ -353,6 +415,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
     @Override
     protected void onDestroy() {
         super.onDestroy();
+        unregisterReceiver(_headsetBroadcasetReceiver);
     }
 
     @Override
@@ -386,6 +449,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
         _btnSystemInfo = findViewById(R.id.btn_systeminfo);
         _btnFlashLight = findViewById(R.id.btn_flashlight);
         _btnBackLight = findViewById(R.id.btn_backlight);
+        _btnHeadset = findViewById(R.id.btn_headset);
         _btnBluetooth.setOnClickListener(this::onClick);
         _btnWifi.setOnClickListener(this::onClick);
         _btnGPS.setOnClickListener(this::onClick);
@@ -409,6 +473,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
         _btnSystemInfo.setOnClickListener(this::onClick);
         _btnFlashLight.setOnClickListener(this::onClick);
         _btnBackLight.setOnClickListener(this::onClick);
+        _btnHeadset.setOnClickListener(this::onClick);
         _testBtnMap = new HashMap<Integer, Button>() {{
             put(BLUETOOTH_ACTIVITY_CODE, _btnBluetooth);
             put(WIFI_ACTIVITY_CODE, _btnWifi);
@@ -435,6 +500,11 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
         JudgeDeviceType();
         _testResultMap = MySharedPreferences.GetMainPassFail(this);
         JudgePassFail();
+        //检测耳机是否插入
+        _headsetBroadcasetReceiver = new HeadsetBroadcasetReceiver();
+        IntentFilter intentFilter = new IntentFilter();
+        intentFilter.addAction("android.intent.action.HEADSET_PLUG");
+        registerReceiver(_headsetBroadcasetReceiver, intentFilter);
     }
 
 }
