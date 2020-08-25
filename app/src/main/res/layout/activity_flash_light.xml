@@ -13,4 +13,11 @@
         android:layout_gravity="center_horizontal"
         android:text="三色信号灯是否亮起\n背面闪光灯是否亮起"
         android:textSize="22sp" />
+
+    <SurfaceView
+        android:id="@+id/sf_flashlight"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/white" />
+
 </LinearLayout>
