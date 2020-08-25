@@ -52,7 +52,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
     private static final int SYSTEMINFO_ACTIVITY_CODE = 120;
     private static final int FLASHLIGHT_ACTIVITY_CODE = 121;
     private static final int BACKLIGHT_ACTIVITY_CODE = 122;
-    private static final int HEASET_ACTIVITY_CODE = 123;
+    private static final int HEADSET_ACTIVITY_CODE = 123;
 
     private boolean _isPermissionRequested = false;
     private Button _btnBluetooth, _btnWifi, _btnGPS, _btnKeyDown, _btnSIM, _btnScreen, _btnSound, _btnSCM, _btnTouch, _btnIdCard, _btnWaterCamera, _btnSystemCamera, _btnNFC, _btnScanCode, _btnBankCard, _btnTestTest, _btnFace, _btnTfCard, _btnSensor, _btnShake, _btnSystemInfo, _btnFlashLight, _btnBackLight, _btnHeadset;
@@ -246,9 +246,9 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
                     SetPassBackgroundColor(_btnBackLight, str);
                     _testResultMap.put(BACKLIGHT_ACTIVITY_CODE, str.equals(PASS));
                     break;
-                case HEASET_ACTIVITY_CODE:
+                case HEADSET_ACTIVITY_CODE:
                     SetPassBackgroundColor(_btnHeadset, str);
-                    _testResultMap.put(HEASET_ACTIVITY_CODE, str.equals(PASS));
+                    _testResultMap.put(HEADSET_ACTIVITY_CODE, str.equals(PASS));
                     break;
             }
             MySharedPreferences.SetMainPassFail(this, _testResultMap);
@@ -353,7 +353,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
                     Bundle bundle = new Bundle();
                     bundle.putBoolean("HEADSET", true);
                     intent.putExtras(bundle);
-                    startActivityForResult(intent, HEASET_ACTIVITY_CODE);
+                    startActivityForResult(intent, HEADSET_ACTIVITY_CODE);
                 } else {
                     MyProgressDialogUtil.ShowWarning(this, "知道了", "提示", "请先插入耳机", true, null);
                 }
@@ -476,6 +476,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
             put(SHAKE_ACTIVITY_CODE, _btnShake);
             put(SYSTEMINFO_ACTIVITY_CODE, _btnSystemInfo);
             put(FLASHLIGHT_ACTIVITY_CODE, _btnFlashLight);
+            put(HEADSET_ACTIVITY_CODE, _btnHeadset);
         }};
         JudgeDeviceType();
         _testResultMap = MySharedPreferences.GetMainPassFail(this);
