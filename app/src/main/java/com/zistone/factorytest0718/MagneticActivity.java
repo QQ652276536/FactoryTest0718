@@ -3,6 +3,7 @@ package com.zistone.factorytest0718;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.animation.Animation;
 import android.view.animation.RotateAnimation;
 import android.widget.ImageView;
@@ -15,7 +16,7 @@ public class MagneticActivity extends BaseActivity {
 
     private MySensorUtil _mySensorUtil;
     private ImageView _imageView;
-    private float _lastRotateDegree;
+    private float _lastRotateDegree = 0;
 
     @Override
     protected void onDestroy() {
@@ -60,4 +61,5 @@ public class MagneticActivity extends BaseActivity {
         _mySensorUtil.Init(this, mySensorListener);
         _mySensorUtil.Register();
     }
+
 }
