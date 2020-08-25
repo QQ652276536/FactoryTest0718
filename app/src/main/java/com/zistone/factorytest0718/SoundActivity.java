@@ -31,9 +31,7 @@ import java.util.Locale;
 
 /**
  * 音频测试，耳机测试也是在这里实现
- * 当插入耳机的时候使用MediaPlayer，它会自动通过耳机播放，而不是扬声器，这样就不需要改变音频的播放模式
- * 拔出耳机的时候使用Ringtone，无论是否插入耳机扬声器都会播放
- * 注意：该思路仅限于测试设备的硬件
+ * 使用MediaPlayer，因为有耳机的话它会自动通过耳机播放，这样就不需要改变音频的播放模式
  */
 public class SoundActivity extends BaseActivity implements View.OnTouchListener {
 
@@ -42,14 +40,12 @@ public class SoundActivity extends BaseActivity implements View.OnTouchListener 
     private static final String FILE_DIR = "SoundTest/";
     //录音文件名
     private static final String FILENAME_FORMAT = "yyyyMMdd_HHmmss";
-    //系统默认来电铃声
+    //使用系统默认来电铃声当作音源
     private static final Uri URI_NOTIFICATION = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_RINGTONE);
 
     private ImageButton _imgBtnPlay, _imgBtnRecord;
     private TextView _txtCountDown, _txtRecordPath;
     private boolean _isPlaying = false, _isRecording = false, _isPlayingRecord = false;
-    //注意：如果使用Ringtone来播放铃声，那么无论是否插入耳机扬声器都会播放
-    private Ringtone _ringtone;
     private MediaRecorder _mediaRecorder;
     private MediaPlayer _mediaPlayer;
     //录音文件的文件名、录音文件的路径
@@ -75,19 +71,13 @@ public class SoundActivity extends BaseActivity implements View.OnTouchListener 
         _imgBtnRecord.setBackground(getDrawable(R.drawable.sound_record_start2));
         _txtRecordPath.setTextColor(Color.GRAY);
         _txtRecordPath.setBackground(getDrawable(R.drawable.sound_record_txt_border3));
-        //如果插入了耳机则通过耳机播放，不通过扬声器播放，
-        //也就是说通过MediaPlayer来播放，而不是通过Ringtone播放，因为Ringtone播放的时候无论是否插入耳机扬声器都会播放
-        if (_isInsertHeadset) {
-            try {
-                _mediaPlayer.reset();
-                _mediaPlayer.setDataSource(this, URI_NOTIFICATION);
-                _mediaPlayer.prepare();
-                _mediaPlayer.start();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        } else {
-            _ringtone.play();
+        try {
+            _mediaPlayer.reset();
+            _mediaPlayer.setDataSource(this, URI_NOTIFICATION);
+            _mediaPlayer.prepare();
+            _mediaPlayer.start();
+        } catch (IOException e) {
+            e.printStackTrace();
         }
     }
 
@@ -100,12 +90,7 @@ public class SoundActivity extends BaseActivity implements View.OnTouchListener 
         _imgBtnRecord.setBackground(getDrawable(R.drawable.sound_record_start1));
         _txtRecordPath.setTextColor(SPRING_GREEN);
         _txtRecordPath.setBackground(getDrawable(R.drawable.sound_record_txt_border1));
-        //插入了耳机是通过MediaPlayer来播放的，所以停止的是MediaPlayer
-        if (_isInsertHeadset) {
-            _mediaPlayer.stop();
-        } else {
-            _ringtone.stop();
-        }
+        _mediaPlayer.stop();
     }
 
     /**
@@ -231,7 +216,6 @@ public class SoundActivity extends BaseActivity implements View.OnTouchListener 
     protected void onDestroy() {
         try {
             super.onDestroy();
-            _ringtone.stop();
             if (_isRecording && null != _mediaRecorder) {
                 _mediaRecorder.stop();
                 _mediaRecorder.reset();
@@ -276,10 +260,9 @@ public class SoundActivity extends BaseActivity implements View.OnTouchListener 
         super.onCreate(savedInstanceState);
         //        setContentView(R.layout.activity_sound);
         SetBaseContentView(R.layout.activity_sound);
-        //如果已插入耳机，为了测试耳机，切换至耳机模式
+        //如果已插入耳机
         Intent intent = getIntent();
         _isInsertHeadset = intent.getBooleanExtra("HEADSET", false);
-        _ringtone = RingtoneManager.getRingtone(this, URI_NOTIFICATION);
         _mediaRecorder = new MediaRecorder();
         _mediaRecorder.setOnInfoListener(new MediaRecorder.OnInfoListener() {
             @Override
