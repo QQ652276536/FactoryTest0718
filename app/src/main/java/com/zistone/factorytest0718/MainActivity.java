@@ -471,6 +471,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
             put(SHAKE_ACTIVITY_CODE, _btnShake);
             put(SYSTEMINFO_ACTIVITY_CODE, _btnSystemInfo);
             put(FLASHLIGHT_ACTIVITY_CODE, _btnFlashLight);
+            put(BACKLIGHT_ACTIVITY_CODE, _btnBackLight);
             put(HEADSET_ACTIVITY_CODE, _btnHeadset);
         }};
         JudgeDeviceType();
