@@ -59,25 +59,6 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
     private long _exitTime = 0;
     private Map<Integer, Boolean> _testResultMap;
     private Map<Integer, Button> _testBtnMap;
-    private boolean _isInsertHeadset = false;
-    private HeadsetBroadcasetReceiver _headsetBroadcasetReceiver;
-
-    /**
-     * 用于检测耳机是否插入
-     */
-    class HeadsetBroadcasetReceiver extends BroadcastReceiver {
-        @Override
-        public void onReceive(Context context, Intent intent) {
-            //没有插入耳机
-            if (intent.getIntExtra("state", 0) == 0) {
-                _isInsertHeadset = false;
-            }
-            //已插入耳机
-            else if (intent.getIntExtra("state", 0) == 1) {
-                _isInsertHeadset = true;
-            }
-        }
-    }
 
     /**
      * Android6.0之后需要动态申请权限
@@ -415,7 +396,6 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        unregisterReceiver(_headsetBroadcasetReceiver);
     }
 
     @Override
@@ -500,11 +480,6 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
         JudgeDeviceType();
         _testResultMap = MySharedPreferences.GetMainPassFail(this);
         JudgePassFail();
-        //检测耳机是否插入
-        _headsetBroadcasetReceiver = new HeadsetBroadcasetReceiver();
-        IntentFilter intentFilter = new IntentFilter();
-        intentFilter.addAction("android.intent.action.HEADSET_PLUG");
-        registerReceiver(_headsetBroadcasetReceiver, intentFilter);
     }
 
 }

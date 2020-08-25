@@ -47,7 +47,7 @@ public class SoundActivity extends BaseActivity implements View.OnTouchListener 
 
     private ImageButton _imgBtnPlay, _imgBtnRecord;
     private TextView _txtCountDown, _txtRecordPath;
-    private boolean _isPlaying = false, _isRecording = false, _isPlayingRecord = false, _isInsertHeadset = false;
+    private boolean _isPlaying = false, _isRecording = false, _isPlayingRecord = false;
     //注意：如果使用Ringtone来播放铃声，那么无论是否插入耳机扬声器都会播放
     private Ringtone _ringtone;
     private MediaRecorder _mediaRecorder;

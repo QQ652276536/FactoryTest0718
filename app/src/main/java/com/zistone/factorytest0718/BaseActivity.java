@@ -3,8 +3,10 @@ package com.zistone.factorytest0718;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
 
+import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.content.pm.ActivityInfo;
 import android.content.pm.PackageManager;
 import android.graphics.Color;
@@ -38,6 +40,25 @@ public class BaseActivity extends AppCompatActivity implements View.OnClickListe
     public int _screenHeight, _screenWidth;
     //基类布局
     public LinearLayout _baseLinearLayout;
+    public boolean _isInsertHeadset = false;
+    public HeadsetBroadcasetReceiver _headsetBroadcasetReceiver;
+
+    /**
+     * 用于检测耳机是否插入
+     */
+    class HeadsetBroadcasetReceiver extends BroadcastReceiver {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            //没有插入耳机
+            if (intent.getIntExtra("state", 0) == 0) {
+                _isInsertHeadset = false;
+            }
+            //已插入耳机
+            else if (intent.getIntExtra("state", 0) == 1) {
+                _isInsertHeadset = true;
+            }
+        }
+    }
 
     public void TxtToTop(TextView txt) {
         txt.scrollTo(0, 0);
@@ -109,6 +130,12 @@ public class BaseActivity extends AppCompatActivity implements View.OnClickListe
     }
 
     @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        unregisterReceiver(_headsetBroadcasetReceiver);
+    }
+
+    @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
         if (keyCode == KeyEvent.KEYCODE_BACK && event.getAction() == KeyEvent.ACTION_DOWN) {
             Intent intent = new Intent();
@@ -147,5 +174,10 @@ public class BaseActivity extends AppCompatActivity implements View.OnClickListe
         getWindowManager().getDefaultDisplay().getRealSize(point);
         _screenHeight = point.y;
         _screenWidth = point.x;
+        //检测耳机是否插入
+        _headsetBroadcasetReceiver = new HeadsetBroadcasetReceiver();
+        IntentFilter intentFilter = new IntentFilter();
+        intentFilter.addAction("android.intent.action.HEADSET_PLUG");
+        registerReceiver(_headsetBroadcasetReceiver, intentFilter);
     }
 }
