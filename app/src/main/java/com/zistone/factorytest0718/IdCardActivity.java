@@ -341,8 +341,8 @@ public class IdCardActivity extends BaseActivity {
         });
         _btnPass.setEnabled(false);
         _btnVersion.setEnabled(false);
+        //触发点击事件
         _btnRead.performClick();
-        _btnRead.setText("停  止");
     }
 
 }

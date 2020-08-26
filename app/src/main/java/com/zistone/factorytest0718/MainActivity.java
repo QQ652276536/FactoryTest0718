@@ -50,9 +50,10 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
     private static final int HEADSET_ACTIVITY_CODE = 123;
     private static final int MAGNETIC_ACTIVITY_CODE = 124;
     private static final int GRAVITY_ACTIVITY_CODE = 125;
+    private static final int COM485_ACTIVITY_CODE = 126;
 
     private boolean _isPermissionRequested = false;
-    private Button _btnBluetooth, _btnWifi, _btnGPS, _btnKeyDown, _btnSIM, _btnScreen, _btnSound, _btnSCM, _btnTouch, _btnIdCard, _btnWaterCamera, _btnSystemCamera, _btnNFC, _btnScanCode, _btnBankCard, _btnTestTest, _btnFace, _btnTfCard, _btnSensor, _btnShake, _btnSystemInfo, _btnFlashLight, _btnBackLight, _btnHeadset, _btnMagnetic, _btnGravity;
+    private Button _btnBluetooth, _btnWifi, _btnGPS, _btnKeyDown, _btnSIM, _btnScreen, _btnSound, _btnSCM, _btnTouch, _btnIdCard, _btnWaterCamera, _btnSystemCamera, _btnNFC, _btnScanCode, _btnBankCard, _btnTestTest, _btnFace, _btnTfCard, _btnSensor, _btnShake, _btnSystemInfo, _btnFlashLight, _btnBackLight, _btnHeadset, _btnMagnetic, _btnGravity, _btn485;
     private long _exitTime = 0;
     private Map<Integer, Boolean> _testResultMap;
     private Map<Integer, Button> _testBtnMap;
@@ -115,13 +116,13 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
     private void JudgeDeviceType() {
         if (_deviceType.contains("wd220B")) {
             //测试用的Activity
-            _btnTestTest.setVisibility(View.GONE);
+            _btnTestTest.setVisibility(View.INVISIBLE);
             //水印相机
-            _btnWaterCamera.setVisibility(View.GONE);
+            _btnWaterCamera.setVisibility(View.INVISIBLE);
             //人脸识别
-            _btnFace.setVisibility(View.GONE);
+            _btnFace.setVisibility(View.INVISIBLE);
             //银行卡读取（使用浙江中正的身份证模块）
-            _btnBankCard.setVisibility(View.GONE);
+            _btnBankCard.setVisibility(View.INVISIBLE);
         }
     }
 
@@ -255,6 +256,10 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
                     SetPassBackgroundColor(_btnGravity, str);
                     _testResultMap.put(GRAVITY_ACTIVITY_CODE, str.equals(PASS));
                     break;
+                case COM485_ACTIVITY_CODE:
+                    SetPassBackgroundColor(_btn485, str);
+                    _testResultMap.put(COM485_ACTIVITY_CODE, str.equals(PASS));
+                    break;
             }
             MySharedPreferences.SetMainPassFail(this, _testResultMap);
         }
@@ -351,7 +356,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
             case R.id.btn_backlight:
                 startActivityForResult(new Intent(this, BackLightActivity.class), BACKLIGHT_ACTIVITY_CODE);
                 break;
-            //耳机测试，这里是通过音频测试来测试耳机
+            //耳机测试，这里是通过音频测试来实现
             case R.id.btn_headset: {
                 if (_isInsertHeadset) {
                     Intent intent = new Intent(this, SoundActivity.class);
@@ -372,6 +377,17 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
             case R.id.btn_gravity:
                 startActivityForResult(new Intent(this, GravityActivity.class), GRAVITY_ACTIVITY_CODE);
                 break;
+            //485通信，这里是通过单片机测试来实现
+            case R.id.btn_485: {
+                Intent intent = new Intent(this, ScmTestActivity.class);
+                Bundle bundle = new Bundle();
+                bundle.putString("FILENAME", "/dev/ttysWK3");
+                bundle.putInt("RATE", 115200);
+                bundle.putString("DATA", "ABCDEFGHIJKLMNOPQRSTUVWXYZ");
+                intent.putExtras(bundle);
+                startActivityForResult(intent, COM485_ACTIVITY_CODE);
+            }
+            break;
             //用于测试的一个Activity，不包含功能测试
             case R.id.btn_test_test:
                 startActivity(new Intent(this, TestTestActivity.class));
@@ -445,6 +461,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
         _btnHeadset = findViewById(R.id.btn_headset);
         _btnMagnetic = findViewById(R.id.btn_magnetic);
         _btnGravity = findViewById(R.id.btn_gravity);
+        _btn485 = findViewById(R.id.btn_485);
         _btnBluetooth.setOnClickListener(this::onClick);
         _btnWifi.setOnClickListener(this::onClick);
         _btnGPS.setOnClickListener(this::onClick);
@@ -471,6 +488,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
         _btnHeadset.setOnClickListener(this::onClick);
         _btnMagnetic.setOnClickListener(this::onClick);
         _btnGravity.setOnClickListener(this::onClick);
+        _btn485.setOnClickListener(this::onClick);
         _testBtnMap = new HashMap<Integer, Button>() {{
             put(BLUETOOTH_ACTIVITY_CODE, _btnBluetooth);
             put(WIFI_ACTIVITY_CODE, _btnWifi);
@@ -497,6 +515,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
             put(HEADSET_ACTIVITY_CODE, _btnHeadset);
             put(MAGNETIC_ACTIVITY_CODE, _btnMagnetic);
             put(GRAVITY_ACTIVITY_CODE, _btnGravity);
+            put(COM485_ACTIVITY_CODE, _btn485);
         }};
         JudgeDeviceType();
         _testResultMap = MySharedPreferences.GetMainPassFail(this);

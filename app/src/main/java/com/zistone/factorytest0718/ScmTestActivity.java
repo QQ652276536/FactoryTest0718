@@ -2,6 +2,7 @@ package com.zistone.factorytest0718;
 
 import android.app.ActivityManager;
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -26,6 +27,10 @@ import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
 
+/**
+ * 单片机测试，串口自环也是在这里实现
+ * 这两个功能的不同之处在于串口名和接收数据的方式不一样，自环发送的时候需要拉低gpio接收的时候需要拉高gpio
+ */
 public class ScmTestActivity extends BaseActivity {
 
     private static final String TAG = "ScmTestActivity";
@@ -40,12 +45,45 @@ public class ScmTestActivity extends BaseActivity {
     private TimerTask _timerTask;
     private String _portName, _hexData;
     private int _baudRate;
-    private boolean _isAppOnForeground = true, _isPass = false;
+    private boolean _isAppOnForeground = true, _isPass = false, _isTestCom = false;
 
     /**
-     * 定时任务的内容
+     * 串口自环的定时任务
      */
-    private void InitTimerTask() {
+    private void InitComTimerTask() {
+        try {
+            Log.i(TAG, "定时任务执行...");
+            //发送的时候拉低
+            Runtime.getRuntime().exec("gpio-test 3 0");
+            Thread.sleep(200);
+            byte[] byteArray = MyConvertUtil.HexStrToByteArray(_hexData);
+            MySerialPortManager.SendData(byteArray);
+            Thread.sleep(100);
+            //接收的时候拉高
+            Runtime.getRuntime().exec("gpio-test 3 1");
+            //没有数据时这里会阻塞
+            byte[] bytes = MySerialPortManager.ReadData();
+            if (bytes != null && bytes.length > 0) {
+                _isPass = true;
+                String dataStr = MyConvertUtil.ByteArrayToHexStr(bytes);
+                Log.i(TAG, "收到串口数据：" + dataStr);
+                UpdateText(_txtMessag, "收到串口数据：" + dataStr + "\r\n", "Append");
+            } else {
+                Log.i(TAG, "没有收到串口数据，请检查设备是否支持该串口或串口被占用！");
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            _timer.cancel();
+            _timerTask.cancel();
+            UpdateText(_txtMessag, "串口通讯异常：" + e.toString() + "\r\n", "Append");
+            UpdateBtn(_btnSend, "开始发送");
+        }
+    }
+
+    /**
+     * 单片机测试的定时任务
+     */
+    private void InitScmTimerTask() {
         try {
             Log.i(TAG, "定时任务执行...");
             byte[] byteArray = MyConvertUtil.HexStrToByteArray(_hexData);
@@ -71,42 +109,36 @@ public class ScmTestActivity extends BaseActivity {
     }
 
     private void UpdateBtn(final Button btn, final String str) {
-        runOnUiThread(new Runnable() {
-            @Override
-            public void run() {
-                if (null != str && !"".equals(str))
-                    btn.setText(str);
-            }
+        runOnUiThread(() -> {
+            if (null != str && !"".equals(str))
+                btn.setText(str);
         });
     }
 
     private void UpdateText(final TextView txt, final String str, final String setOrAppend) {
         if (null == txt)
             return;
-        runOnUiThread(new Runnable() {
-            @Override
-            public void run() {
-                switch (setOrAppend) {
-                    case "Set":
-                        txt.setText(str);
-                        break;
-                    case "Append":
-                        txt.append(str);
-                        TxtToBottom(txt);
-                        break;
-                }
-                //收到数据即测试通过，同时停止定时任务
-                if (_isPass) {
-                    //防止重复触发
-                    _isPass = false;
-                    _timer.cancel();
-                    _timerTask.cancel();
-                    _btnPass.setEnabled(true);
-                    MyProgressDialogUtil.ShowCountDownTimerWarning(ScmTestActivity.this, "知道了", 3 * 1000, "提示", "串口测试已通过！\n\n收到数据：" + str, false, () -> {
-                        MyProgressDialogUtil.DismissAlertDialog();
-                        Pass();
-                    });
-                }
+        runOnUiThread(() -> {
+            switch (setOrAppend) {
+                case "Set":
+                    txt.setText(str);
+                    break;
+                case "Append":
+                    txt.append(str);
+                    TxtToBottom(txt);
+                    break;
+            }
+            //收到数据即测试通过，同时停止定时任务
+            if (_isPass) {
+                //防止重复触发
+                _isPass = false;
+                _timer.cancel();
+                _timerTask.cancel();
+                _btnPass.setEnabled(true);
+                MyProgressDialogUtil.ShowCountDownTimerWarning(ScmTestActivity.this, "知道了", 3 * 1000, "提示", "串口测试已通过！\n\n收到数据：" + str, false, () -> {
+                    MyProgressDialogUtil.DismissAlertDialog();
+                    Pass();
+                });
             }
         });
     }
@@ -166,13 +198,24 @@ public class ScmTestActivity extends BaseActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        //        setContentView(R.layout.activity_comtest);
-        SetBaseContentView(R.layout.activity_comtest);
-        String str = MySharedPreferences.GetSerialPortNameAndBaudrate(this);
-        String[] strArray = str.split(",");
-        _portName = strArray[0];
-        _baudRate = Integer.parseInt(strArray[1]);
-        _hexData = strArray[2];
+        //        setContentView(R.layout.activity_scm);
+        SetBaseContentView(R.layout.activity_scm);
+        //测试串口自环的参数
+        Intent intent = getIntent();
+        _portName = intent.getStringExtra("FILENAME");
+        _baudRate = intent.getIntExtra("RATE", 115200);
+        _hexData = intent.getStringExtra("DATA");
+        if (null != _portName && !"".equals(_portName) && _baudRate != 0 && null != _hexData && !"".equals(_hexData)) {
+            _isTestCom = true;
+        }
+        //测试单片机的参数
+        else {
+            String str = MySharedPreferences.GetSerialPortNameAndBaudrate(this);
+            String[] strArray = str.split(",");
+            _portName = strArray[0];
+            _baudRate = Integer.parseInt(strArray[1]);
+            _hexData = strArray[2];
+        }
         _edtPortName = findViewById(R.id.edt_name_com);
         _edtPortName.setText(_portName);
         _edtPortName.addTextChangedListener(new TextWatcher() {
@@ -187,7 +230,9 @@ public class ScmTestActivity extends BaseActivity {
             @Override
             public void afterTextChanged(Editable s) {
                 _portName = s.toString();
-                MySharedPreferences.SetSerialPortNameAndBaudrate(ScmTestActivity.this, _portName + "," + _baudRate + "," + _hexData);
+                //仅保存测试单片机串口的参数
+                if (!_isTestCom)
+                    MySharedPreferences.SetSerialPortNameAndBaudrate(ScmTestActivity.this, _portName + "," + _baudRate + "," + _hexData);
             }
         });
         _edtData = findViewById(R.id.edt_data_com);
@@ -204,7 +249,9 @@ public class ScmTestActivity extends BaseActivity {
             @Override
             public void afterTextChanged(Editable s) {
                 _hexData = s.toString();
-                MySharedPreferences.SetSerialPortNameAndBaudrate(ScmTestActivity.this, _portName + "," + _baudRate + "," + _hexData);
+                //仅保存测试单片机串口的参数
+                if (!_isTestCom)
+                    MySharedPreferences.SetSerialPortNameAndBaudrate(ScmTestActivity.this, _portName + "," + _baudRate + "," + _hexData);
             }
         });
         _spinnerRate = findViewById(R.id.spinner_rate_com);
@@ -227,7 +274,9 @@ public class ScmTestActivity extends BaseActivity {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 _baudRate = Integer.parseInt(_spinnerRate.getSelectedItem().toString());
-                MySharedPreferences.SetSerialPortNameAndBaudrate(ScmTestActivity.this, _portName + "," + _baudRate + "," + _hexData);
+                //仅保存测试单片机串口的参数
+                if (!_isTestCom)
+                    MySharedPreferences.SetSerialPortNameAndBaudrate(ScmTestActivity.this, _portName + "," + _baudRate + "," + _hexData);
             }
 
             @Override
@@ -258,7 +307,10 @@ public class ScmTestActivity extends BaseActivity {
                     _timerTask = new TimerTask() {
                         @Override
                         public void run() {
-                            InitTimerTask();
+                            if (_isTestCom)
+                                InitComTimerTask();
+                            else
+                                InitScmTimerTask();
                         }
                     };
                     //任务、延迟执行时间、重复调用间隔
@@ -280,6 +332,7 @@ public class ScmTestActivity extends BaseActivity {
             }
         });
         _btnPass.setEnabled(false);
+        //触发点击事件
         _btnSend.performClick();
     }
 

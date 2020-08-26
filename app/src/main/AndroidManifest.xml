@@ -69,10 +69,6 @@
             android:label="开启闪光灯"
             android:launchMode="singleTask" />
         <activity
-            android:name=".Com485Activity"
-            android:label="串口自环"
-            android:launchMode="singleTask" />
-        <activity
             android:name=".BackLightActivity"
             android:label="背光亮度"
             android:launchMode="singleTask" />
@@ -122,7 +118,7 @@
             android:launchMode="singleTask" />
         <activity
             android:name=".ScmTestActivity"
-            android:label="串口通讯"
+            android:label="单片机"
             android:launchMode="singleTask" />
         <activity
             android:name=".SoundActivity"
