@@ -49,9 +49,10 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
     private static final int BACKLIGHT_ACTIVITY_CODE = 122;
     private static final int HEADSET_ACTIVITY_CODE = 123;
     private static final int MAGNETIC_ACTIVITY_CODE = 124;
+    private static final int GRAVITY_ACTIVITY_CODE = 125;
 
     private boolean _isPermissionRequested = false;
-    private Button _btnBluetooth, _btnWifi, _btnGPS, _btnKeyDown, _btnSIM, _btnScreen, _btnSound, _btnSCM, _btnTouch, _btnIdCard, _btnWaterCamera, _btnSystemCamera, _btnNFC, _btnScanCode, _btnBankCard, _btnTestTest, _btnFace, _btnTfCard, _btnSensor, _btnShake, _btnSystemInfo, _btnFlashLight, _btnBackLight, _btnHeadset, _btnMagnetic;
+    private Button _btnBluetooth, _btnWifi, _btnGPS, _btnKeyDown, _btnSIM, _btnScreen, _btnSound, _btnSCM, _btnTouch, _btnIdCard, _btnWaterCamera, _btnSystemCamera, _btnNFC, _btnScanCode, _btnBankCard, _btnTestTest, _btnFace, _btnTfCard, _btnSensor, _btnShake, _btnSystemInfo, _btnFlashLight, _btnBackLight, _btnHeadset, _btnMagnetic, _btnGravity;
     private long _exitTime = 0;
     private Map<Integer, Boolean> _testResultMap;
     private Map<Integer, Button> _testBtnMap;
@@ -250,6 +251,10 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
                     SetPassBackgroundColor(_btnMagnetic, str);
                     _testResultMap.put(MAGNETIC_ACTIVITY_CODE, str.equals(PASS));
                     break;
+                case GRAVITY_ACTIVITY_CODE:
+                    SetPassBackgroundColor(_btnGravity, str);
+                    _testResultMap.put(GRAVITY_ACTIVITY_CODE, str.equals(PASS));
+                    break;
             }
             MySharedPreferences.SetMainPassFail(this, _testResultMap);
         }
@@ -363,6 +368,10 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
             case R.id.btn_magnetic:
                 startActivityForResult(new Intent(this, MagneticActivity.class), MAGNETIC_ACTIVITY_CODE);
                 break;
+            //重力传感器
+            case R.id.btn_gravity:
+                startActivityForResult(new Intent(this, GravityActivity.class), GRAVITY_ACTIVITY_CODE);
+                break;
             //用于测试的一个Activity，不包含功能测试
             case R.id.btn_test_test:
                 startActivity(new Intent(this, TestTestActivity.class));
@@ -435,6 +444,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
         _btnBackLight = findViewById(R.id.btn_backlight);
         _btnHeadset = findViewById(R.id.btn_headset);
         _btnMagnetic = findViewById(R.id.btn_magnetic);
+        _btnGravity = findViewById(R.id.btn_gravity);
         _btnBluetooth.setOnClickListener(this::onClick);
         _btnWifi.setOnClickListener(this::onClick);
         _btnGPS.setOnClickListener(this::onClick);
@@ -460,6 +470,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
         _btnBackLight.setOnClickListener(this::onClick);
         _btnHeadset.setOnClickListener(this::onClick);
         _btnMagnetic.setOnClickListener(this::onClick);
+        _btnGravity.setOnClickListener(this::onClick);
         _testBtnMap = new HashMap<Integer, Button>() {{
             put(BLUETOOTH_ACTIVITY_CODE, _btnBluetooth);
             put(WIFI_ACTIVITY_CODE, _btnWifi);
@@ -485,6 +496,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
             put(BACKLIGHT_ACTIVITY_CODE, _btnBackLight);
             put(HEADSET_ACTIVITY_CODE, _btnHeadset);
             put(MAGNETIC_ACTIVITY_CODE, _btnMagnetic);
+            put(GRAVITY_ACTIVITY_CODE, _btnGravity);
         }};
         JudgeDeviceType();
         _testResultMap = MySharedPreferences.GetMainPassFail(this);

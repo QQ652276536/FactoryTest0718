@@ -9,6 +9,8 @@ import android.util.Log;
 
 import java.util.List;
 
+import static android.hardware.SensorManager.STANDARD_GRAVITY;
+
 /**
  * 传感器工具类
  */
@@ -130,7 +132,7 @@ public class MySensorUtil implements SensorEventListener {
             //光感
             case Sensor.TYPE_LIGHT: {
                 _lightArray = event.values;
-                Log.i(TAG, "当前光照强度：" + _lightArray[0]);
+                Log.i(TAG, "光照强度：" + _lightArray[0]);
                 _mySensorListener.LightChanged(_lightArray);
             }
             break;
@@ -140,20 +142,20 @@ public class MySensorUtil implements SensorEventListener {
                 float x = _accelerometerArray[0];
                 float y = _accelerometerArray[1];
                 float z = _accelerometerArray[2];
-                Log.i(TAG, "当前X轴： " + x + "，Y轴： " + y + "，Z轴： " + z);
-                //                if (x > STANDARD_GRAVITY) {
-                //                    Log.i(TAG, "重力指向设备左边");
-                //                } else if (x < -STANDARD_GRAVITY) {
-                //                    Log.i(TAG, "重力指向设备右边");
-                //                } else if (y > STANDARD_GRAVITY) {
-                //                    Log.i(TAG, "重力指向设备下边");
-                //                } else if (y < -STANDARD_GRAVITY) {
-                //                    Log.i(TAG, "重力指向设备上边");
-                //                } else if (z > STANDARD_GRAVITY) {
-                //                    Log.i(TAG, "屏幕朝上");
-                //                } else if (z < -STANDARD_GRAVITY) {
-                //                    Log.i(TAG, "屏幕朝下");
-                //                }
+                Log.i(TAG, "加速度，X： " + x + "，Y： " + y + "，Z： " + z);
+                if (x > STANDARD_GRAVITY) {
+                    Log.i(TAG, "重力指向设备左边");
+                } else if (x < -STANDARD_GRAVITY) {
+                    Log.i(TAG, "重力指向设备右边");
+                } else if (y > STANDARD_GRAVITY) {
+                    Log.i(TAG, "重力指向设备下边");
+                } else if (y < -STANDARD_GRAVITY) {
+                    Log.i(TAG, "重力指向设备上边");
+                } else if (z > STANDARD_GRAVITY) {
+                    Log.i(TAG, "屏幕朝上");
+                } else if (z < -STANDARD_GRAVITY) {
+                    Log.i(TAG, "屏幕朝下");
+                }
                 _mySensorListener.AccelerometerChanged(_accelerometerArray);
             }
             break;
@@ -163,7 +165,7 @@ public class MySensorUtil implements SensorEventListener {
                 float x = _magneticArray[0];
                 float y = _magneticArray[1];
                 float z = _magneticArray[2];
-                Log.i(TAG, "当前X方向磁场： " + x + "，Y方向磁场： " + y + "，Z方向磁场： " + z);
+                Log.i(TAG, "磁场方向，X： " + x + "，Y： " + y + "，Z： " + z);
                 _mySensorListener.MagneticChanged(_magneticArray);
             }
             break;
@@ -181,7 +183,7 @@ public class MySensorUtil implements SensorEventListener {
             float x = directionArray[0];
             float y = directionArray[1];
             float z = directionArray[2];
-            Log.i(TAG, "当前X方向： " + x + "，Y方向： " + y + "，Z方向： " + z);
+            Log.i(TAG, "方向（旋转向量），X： " + x + "，Y： " + y + "，Z： " + z);
             _mySensorListener.DirectionChanged(directionArray);
         }
     }

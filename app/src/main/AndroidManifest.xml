@@ -56,6 +56,11 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
+            android:name=".GravityActivity"
+            android:label="重力传感器"
+            android:launchMode="singleTask"
+            android:screenOrientation="nosensor" />
+        <activity
             android:name=".MagneticActivity"
             android:label="地磁传感器"
             android:launchMode="singleTask" />
