@@ -1,5 +1,6 @@
 package com.zistone.factorytest0718;
 
+import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
@@ -22,7 +23,9 @@ import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.zistone.factorytest0718.util.HeadsetKeyReceiver;
 import com.zistone.factorytest0718.util.MyFileUtil;
+import com.zistone.factorytest0718.util.MyProgressDialogUtil;
 
 import java.io.File;
 import java.io.IOException;
@@ -45,7 +48,7 @@ public class SoundActivity extends BaseActivity implements View.OnTouchListener 
 
     private ImageButton _imgBtnPlay, _imgBtnRecord;
     private TextView _txtCountDown, _txtRecordPath;
-    private boolean _isPlaying = false, _isRecording = false, _isPlayingRecord = false;
+    private boolean _isPlaying = false, _isRecording = false, _isPlayingRecord = false, _isTestHeadSet = false;
     private MediaRecorder _mediaRecorder;
     private MediaPlayer _mediaPlayer;
     //录音文件的文件名、录音文件的路径
@@ -61,6 +64,8 @@ public class SoundActivity extends BaseActivity implements View.OnTouchListener 
             _txtCountDown.setVisibility(View.INVISIBLE);
         }
     };
+    public AudioManager _audioManager;
+    public ComponentName _componentName;
 
     /**
      * 扬声器播放
@@ -125,6 +130,10 @@ public class SoundActivity extends BaseActivity implements View.OnTouchListener 
         _imgBtnRecord.setBackground(getDrawable(R.drawable.sound_record_start1));
         _txtRecordPath.setTextColor(SPRING_GREEN);
         _txtRecordPath.setBackground(getDrawable(R.drawable.sound_record_txt_border1));
+        //如果是测试耳机在音频播放完毕以后紧接着要测试耳机上面的按键
+        if (_isTestHeadSet && _isInsertHeadset) {
+            MyProgressDialogUtil.ShowWarning(this, "失败", "提示", "能否清晰听到声音？如果可以请测试耳机上的按钮，否则请点击失败。", false, () -> Fail());
+        }
     }
 
     /**
@@ -235,6 +244,8 @@ public class SoundActivity extends BaseActivity implements View.OnTouchListener 
 
     @Override
     protected void onStop() {
+        super.onStop();
+        _audioManager.unregisterMediaButtonEventReceiver(_componentName);
         //停止播放录音
         _isPlayingRecord = false;
         //记个笔记：MediaPlayer在pause之后可以直接start，但是在stop以后需要perpare才能start
@@ -252,7 +263,6 @@ public class SoundActivity extends BaseActivity implements View.OnTouchListener 
         _imgBtnPlay.setBackground(getDrawable(R.drawable.sound_play_start1));
         //停止扬声器
         StopPlaySound();
-        super.onStop();
     }
 
     @Override
@@ -260,9 +270,9 @@ public class SoundActivity extends BaseActivity implements View.OnTouchListener 
         super.onCreate(savedInstanceState);
         //        setContentView(R.layout.activity_sound);
         SetBaseContentView(R.layout.activity_sound);
-        //如果已插入耳机
+        //测试耳机
         Intent intent = getIntent();
-        _isInsertHeadset = intent.getBooleanExtra("HEADSET", false);
+        _isTestHeadSet = intent.getBooleanExtra("HEADSET", false);
         _mediaRecorder = new MediaRecorder();
         _mediaRecorder.setOnInfoListener(new MediaRecorder.OnInfoListener() {
             @Override
@@ -339,6 +349,15 @@ public class SoundActivity extends BaseActivity implements View.OnTouchListener 
             }
         });
         _txtRecordPath.setVisibility(View.INVISIBLE);
+        //检测耳机按键
+        HeadsetKeyReceiver.SetListener(keyCode -> {
+            if (keyCode > 0 && _isTestHeadSet && _isInsertHeadset) {
+                Pass();
+            }
+        });
+        _audioManager = (AudioManager) getSystemService(Context.AUDIO_SERVICE);
+        _componentName = new ComponentName(getPackageName(), HeadsetKeyReceiver.class.getName());
+        _audioManager.registerMediaButtonEventReceiver(_componentName);
     }
 
 }

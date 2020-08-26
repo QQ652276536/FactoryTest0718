@@ -190,6 +190,14 @@
             </intent-filter>
         </activity>
         <!--
+            有线耳机的按键广播
+        -->
+        <receiver android:name="com.zistone.factorytest0718.util.HeadsetKeyReceiver">
+            <intent-filter android:priority="1000">
+                <action android:name="android.intent.action.MEDIA_BUTTON" />
+            </intent-filter>
+        </receiver>
+        <!--
             用于安装第三方APK或者是在7.0以上通过FileProvider获取URI而不需要文件权限
             7.0之后禁止在应用外部公开file://URI，这里使用FileProvider类临时访授权
         -->

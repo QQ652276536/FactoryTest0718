@@ -123,6 +123,8 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
             _btnFace.setVisibility(View.INVISIBLE);
             //银行卡读取（使用浙江中正的身份证模块）
             _btnBankCard.setVisibility(View.INVISIBLE);
+            //485通信
+            _btn485.setVisibility(View.INVISIBLE);
         }
     }
 

@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
 
 import android.content.BroadcastReceiver;
+import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
@@ -12,6 +13,7 @@ import android.content.pm.PackageManager;
 import android.graphics.Color;
 import android.graphics.Point;
 import android.graphics.Rect;
+import android.media.AudioManager;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Display;
@@ -23,6 +25,8 @@ import android.view.Window;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+
+import com.zistone.factorytest0718.util.HeadsetKeyReceiver;
 
 public class BaseActivity extends AppCompatActivity implements View.OnClickListener {
 
@@ -41,20 +45,22 @@ public class BaseActivity extends AppCompatActivity implements View.OnClickListe
     //基类布局
     public LinearLayout _baseLinearLayout;
     public boolean _isInsertHeadset = false;
-    public HeadsetBroadcasetReceiver _headsetBroadcasetReceiver;
+    public HeadsetReceiver _headsetReceiver;
 
     /**
-     * 用于检测耳机是否插入
+     * 用于检测耳机是否插入及监听耳机按键事件
      */
-    class HeadsetBroadcasetReceiver extends BroadcastReceiver {
+    class HeadsetReceiver extends BroadcastReceiver {
         @Override
         public void onReceive(Context context, Intent intent) {
+            int state = intent.getIntExtra("state", 0);
+            Log.i(TAG, "耳机插拨状态：" + state);
             //没有插入耳机
-            if (intent.getIntExtra("state", 0) == 0) {
+            if (state == 0) {
                 _isInsertHeadset = false;
             }
             //已插入耳机
-            else if (intent.getIntExtra("state", 0) == 1) {
+            else if (state == 1) {
                 _isInsertHeadset = true;
             }
         }
@@ -132,7 +138,17 @@ public class BaseActivity extends AppCompatActivity implements View.OnClickListe
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        unregisterReceiver(_headsetBroadcasetReceiver);
+        unregisterReceiver(_headsetReceiver);
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
     }
 
     @Override
@@ -175,9 +191,9 @@ public class BaseActivity extends AppCompatActivity implements View.OnClickListe
         _screenHeight = point.y;
         _screenWidth = point.x;
         //检测耳机是否插入
-        _headsetBroadcasetReceiver = new HeadsetBroadcasetReceiver();
+        _headsetReceiver = new HeadsetReceiver();
         IntentFilter intentFilter = new IntentFilter();
-        intentFilter.addAction("android.intent.action.HEADSET_PLUG");
-        registerReceiver(_headsetBroadcasetReceiver, intentFilter);
+        intentFilter.addAction(Intent.ACTION_HEADSET_PLUG);
+        registerReceiver(_headsetReceiver, intentFilter);
     }
 }
