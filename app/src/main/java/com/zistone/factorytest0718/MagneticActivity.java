@@ -31,6 +31,7 @@ public class MagneticActivity extends BaseActivity {
         //        setContentView(R.layout.activity_magnetic);
         SetBaseContentView(R.layout.activity_magnetic);
         _imageView = findViewById(R.id.iv_magnetic);
+        _btnPass.setEnabled(false);
         _mySensorUtil = MySensorUtil.GetInstance();
         MySensorUtil.MySensorListener mySensorListener = new MySensorUtil.MySensorListener() {
             @Override
@@ -58,6 +59,7 @@ public class MagneticActivity extends BaseActivity {
                 }
                 if (flag > 50) {
                     if (flagDegree - rotateDegree < -30 || flagDegree - rotateDegree > 30) {
+                        _btnPass.setEnabled(true);
                         Pass();
                     }
                 }
