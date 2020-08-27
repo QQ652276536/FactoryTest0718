@@ -16,6 +16,7 @@
 
 package com.zistone.factorytest0718.util;
 
+import android.os.CountDownTimer;
 import android.util.Log;
 
 import com.zistone.gpio.Gpio;
@@ -37,8 +38,7 @@ import android_serialport_api.SerialPort;
 public final class MyScanCodeManager {
 
     private static final String TAG = "MyScanCodeManager";
-    public static final int MAX_SIZE = 2048;
-
+    private static final int MAX_SIZE = 2048;
     private static SerialPort _serialPort;
     private static OutputStream _outputStream;
     private static InputStream _inputStream;
@@ -46,19 +46,13 @@ public final class MyScanCodeManager {
     private static boolean _isReadThreadFlag = false;
     private static ScanCodeListener _scanCodeListener;
     private static Gpio _gpio = Gpio.getInstance();
+    private static CountDownTimer _countDownTimer;
 
     public interface ScanCodeListener {
-        /**
-         * 扫码回调
-         *
-         * @param data 扫到的数据长度
-         * @param len  数据长度
-         */
         void onReceived(byte[] data, int len);
     }
 
     private static class ReadThread extends Thread {
-
         @Override
         public void run() {
             super.run();
@@ -75,11 +69,15 @@ public final class MyScanCodeManager {
                             size = MAX_SIZE;
                         _scanCodeListener.onReceived(buffer, size);
                         _gpio.set_gpio(0, 99);
+                        _isReadThreadFlag = false;
+                        this.interrupt();
+                        break;
                     }
                 } catch (Exception e) {
                     e.printStackTrace();
                     Log.e(TAG, e.toString());
                     //用interrupt结束线程的话会触发InterruptedException异常，捕获后break即可结束线程
+                    _isReadThreadFlag = false;
                     break;
                 }
             }
@@ -120,10 +118,25 @@ public final class MyScanCodeManager {
      */
     public static void StartReadThread() {
         _isReadThreadFlag = true;
+        if (null != _readThread)
+            _readThread.interrupt();
+        _gpio.set_gpio(1, 99);
         _readThread = new ReadThread();
         _readThread.start();
-        _gpio.set_gpio(1, 99);
         Log.i(TAG, "开启读取扫描串口数据的线程");
+        //根据测试发现扫码开启一次扫描时间在3秒左右，所以这里使用倒计时来关闭线程
+        _countDownTimer = new CountDownTimer(4 * 1000, 1 * 1000) {
+            @Override
+            public void onTick(long millisUntilFinished) {
+            }
+
+            @Override
+            public void onFinish() {
+                Log.i(TAG, "倒计时结束");
+                StopReadThread();
+            }
+        };
+        _countDownTimer.start();
     }
 
     /**
@@ -136,6 +149,7 @@ public final class MyScanCodeManager {
         _readThread = null;
         _gpio.set_gpio(0, 99);
         Log.i(TAG, "停止读取数据的线程");
+        _scanCodeListener.onReceived(null, 0);
     }
 
     public static int Write(byte[] data) {
@@ -153,6 +167,8 @@ public final class MyScanCodeManager {
     }
 
     public static void Close() {
+        if (null != _countDownTimer)
+            _countDownTimer.cancel();
         _isReadThreadFlag = false;
         if (null != _readThread)
             _readThread.interrupt();

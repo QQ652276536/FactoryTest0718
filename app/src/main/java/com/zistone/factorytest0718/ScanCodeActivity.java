@@ -31,7 +31,7 @@ import java.util.List;
  * @date 2020/7/18 9:33
  * @email 652276536@qq.com
  */
-public class ScanCodeActivity extends BaseActivity implements MyScanCodeManager.ScanCodeListener {
+public class ScanCodeActivity extends BaseActivity {
 
     private static final String TAG = "ScanCodeActivity";
 
@@ -39,21 +39,6 @@ public class ScanCodeActivity extends BaseActivity implements MyScanCodeManager.
     private ImageButton _btnTop, _btnBottom, _btnClear;
     private Button _btnScan;
     private boolean _isAppOnForeground = true, _isPass = false;
-
-    @SuppressLint("HandlerLeak")
-    private Handler _handler = new Handler() {
-        public void handleMessage(Message msg) {
-            Log.i(TAG, "msg.what = " + msg.what);
-            Log.i(TAG, "msg.obj = " + msg.obj);
-            switch (msg.what) {
-                case 1:
-                    _isPass = true;
-                    UpdateText(_txt, msg.obj + "\r\n", "Append");
-                    MySoundPlayUtil.SystemSoundPlay(ScanCodeActivity.this);
-                    break;
-            }
-        }
-    };
 
     private void UpdateText(final TextView txt, final String str, final String setOrAppend) {
         if (null == txt)
@@ -76,6 +61,7 @@ public class ScanCodeActivity extends BaseActivity implements MyScanCodeManager.
                     _btnPass.setEnabled(true);
                     _btnScan.setEnabled(true);
                     MyScanCodeManager.StopReadThread();
+                    MySoundPlayUtil.SystemSoundPlay(ScanCodeActivity.this);
                     MyProgressDialogUtil.ShowCountDownTimerWarning(ScanCodeActivity.this, "知道了", 3 * 1000, "提示", "扫码测试已通过！\n\n扫描数据：" + str, false, () -> {
                         MyProgressDialogUtil.DismissAlertDialog();
                         Pass();
@@ -117,19 +103,6 @@ public class ScanCodeActivity extends BaseActivity implements MyScanCodeManager.
     }
 
     @Override
-    public void onReceived(byte[] data, int len) {
-        Log.i(TAG, "len = " + len);
-        Log.i(TAG, "data = " + data);
-        if (len <= 0 || data == null)
-            return;
-        if (data != null && data.length > 1 && len > 0) {
-            String obj = ConvertCharToString(data, len);
-            Log.i(TAG, "msg.obj = " + obj);
-            _handler.obtainMessage(1, obj).sendToTarget();
-        }
-    }
-
-    @Override
     protected void onResume() {
         super.onResume();
         //进入后台后再次回到前台
@@ -149,7 +122,6 @@ public class ScanCodeActivity extends BaseActivity implements MyScanCodeManager.
     protected void onDestroy() {
         super.onDestroy();
         MyScanCodeManager.Close();
-        _handler = null;
     }
 
     @Override
@@ -178,16 +150,20 @@ public class ScanCodeActivity extends BaseActivity implements MyScanCodeManager.
         _btnScan = findViewById(R.id.btn_scan_scancode);
         _btnScan.setOnClickListener(v -> {
             _btnScan.setEnabled(false);
-            MyScanCodeManager.StopReadThread();
             MyScanCodeManager.StartReadThread();
-            try {
-                Thread.sleep(3 * 1000);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
-            _btnScan.setEnabled(true);
         });
-        MyScanCodeManager.Init(this::onReceived);
+        MyScanCodeManager.Init((data, len) -> {
+            if (null == data || len == 0) {
+                _btnScan.setEnabled(true);
+                return;
+            }
+            if (null != data && data.length > 0 && len > 0) {
+                String obj = ConvertCharToString(data, len);
+                Log.i(TAG, "扫描到的数据：" + obj);
+                _isPass = true;
+                UpdateText(_txt, obj + "\n", "Append");
+            }
+        });
         try {
             MyScanCodeManager.OpenSerialPort(new File("/dev/ttyHSL1"), 9600, 0);
             UpdateText(_txt, "串口已打开\r\n", "Append");
@@ -197,9 +173,8 @@ public class ScanCodeActivity extends BaseActivity implements MyScanCodeManager.
             });
         }
         _btnPass.setEnabled(false);
-        //直接开始测试
-        MyScanCodeManager.StopReadThread();
-        MyScanCodeManager.StartReadThread();
+        //触发点击事件
+        _btnScan.performClick();
     }
 
 }
