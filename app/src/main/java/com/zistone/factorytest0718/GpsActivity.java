@@ -182,7 +182,7 @@ public class GpsActivity extends BaseActivity implements LocationListener {
         super.onActivityResult(requestCode, resultCode, data);
         Log.i(TAG, "requestCode=" + requestCode + "，resultCode=" + resultCode);
         switch (requestCode) {
-            //申请定位权限界面只有一个返回按钮，无法确定是允许还是拒绝，这里统一返回，
+            //申请定位权限的界面只有一个返回按钮，无法确定是允许还是拒绝，这里统一返回，
             case 101:
                 Toast.makeText(this, "已修改定位权限，请重新测试GPS！", Toast.LENGTH_LONG).show();
                 Fail();
