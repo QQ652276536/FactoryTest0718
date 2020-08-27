@@ -41,11 +41,15 @@ public class SensorActivity extends BaseActivity {
                 int value4 = intent.getIntExtra(BatteryManager.EXTRA_STATUS, BatteryManager.BATTERY_STATUS_UNKNOWN);
                 //获取电源信息
                 int value5 = intent.getIntExtra(BatteryManager.EXTRA_PLUGGED, -1);
+                boolean usbCharge = value5 == BatteryManager.BATTERY_PLUGGED_USB;
+                boolean acCharge = value5 == BatteryManager.BATTERY_PLUGGED_AC;
                 String batteryState = "未充电";
+                if (usbCharge || acCharge)
+                    batteryState = "充电中";
                 switch (value5) {
                     //充电状态
                     case BatteryManager.BATTERY_STATUS_CHARGING:
-                        batteryState = "充电中";
+                        //                        batteryState = "充电中";
                         break;
                     //放电中
                     case BatteryManager.BATTERY_STATUS_DISCHARGING:
