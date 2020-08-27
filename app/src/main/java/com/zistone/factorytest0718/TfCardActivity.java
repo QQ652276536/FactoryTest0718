@@ -19,6 +19,13 @@ import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.Objects;
 
+/**
+ * TF卡信息
+ *
+ * @author LiWei
+ * @date 2020/7/18 9:33
+ * @email 652276536@qq.com
+ */
 public class TfCardActivity extends BaseActivity {
 
     private static final String TAG = "TfCardActivity";
@@ -89,8 +96,7 @@ public class TfCardActivity extends BaseActivity {
                     _txt.setTextColor(SPRING_GREEN);
                     _txt.setText("检测到SD/TF卡\n共" + String.format("%.2f", total) + "GB");
                     _btnPass.setEnabled(true);
-                    MyProgressDialogUtil.ShowCountDownTimerWarning(this, "知道了", 3 * 1000, "提示",
-                            "TF卡测试已通过！\n\n卡存储空间：" + String.format("%.2f", total) + "GB", false, () -> {
+                    MyProgressDialogUtil.ShowCountDownTimerWarning(this, "知道了", 3 * 1000, "提示", "TF卡测试已通过！\n\n卡存储空间：" + String.format("%.2f", total) + "GB", false, () -> {
                         MyProgressDialogUtil.DismissAlertDialog();
                         Pass();
                     });

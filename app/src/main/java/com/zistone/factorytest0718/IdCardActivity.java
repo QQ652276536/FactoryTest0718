@@ -36,6 +36,13 @@ import com.zz.impl.mifarecard.MifareCardDeviceImpl;
 import java.io.UnsupportedEncodingException;
 import java.util.List;
 
+/**
+ * 身份证、居留证、通行证的读取，使用的是浙江中正的二代证模块，所以该功能只支持誉兴通的装有二代证模块的设备
+ *
+ * @author LiWei
+ * @date 2020/7/18 9:33
+ * @email 652276536@qq.com
+ */
 public class IdCardActivity extends BaseActivity {
 
     private static final String TAG = "IdCardActivity";

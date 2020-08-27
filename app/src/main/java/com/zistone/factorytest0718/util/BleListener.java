@@ -6,8 +6,6 @@ import android.bluetooth.le.ScanResult;
  * 低功耗蓝牙相关的接口
  *
  * @author LiWei
- * @package com.zistone.factorytest0718.util
- * @fileName BleListener
  * @date 2020/7/18 9:33
  * @email 652276536@qq.com
  */

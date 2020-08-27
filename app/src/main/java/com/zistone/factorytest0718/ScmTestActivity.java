@@ -30,6 +30,10 @@ import java.util.TimerTask;
 /**
  * 单片机测试，串口自环也是在这里实现
  * 这两个功能的不同之处在于串口名和接收数据的方式不一样，自环发送的时候需要拉低gpio接收的时候需要拉高gpio
+ *
+ * @author LiWei
+ * @date 2020/7/18 9:33
+ * @email 652276536@qq.com
  */
 public class ScmTestActivity extends BaseActivity {
 

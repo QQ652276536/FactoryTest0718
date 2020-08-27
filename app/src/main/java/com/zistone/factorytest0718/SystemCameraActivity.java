@@ -12,6 +12,13 @@ import android.view.KeyEvent;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+/**
+ * 调用系统相机
+ *
+ * @author LiWei
+ * @date 2020/7/18 9:33
+ * @email 652276536@qq.com
+ */
 public class SystemCameraActivity extends BaseActivity {
 
     private static final String TAG = "SystemCameraActivity";

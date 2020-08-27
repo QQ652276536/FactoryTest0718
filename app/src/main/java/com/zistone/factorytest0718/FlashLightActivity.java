@@ -15,6 +15,14 @@ import com.zistone.factorytest0718.util.MyProgressDialogUtil;
 
 import java.io.IOException;
 
+/**
+ * 闪光灯测试
+ * TODO 信号灯的测试还没有实现，暂时先不用管
+ *
+ * @author LiWei
+ * @date 2020/7/18 9:33
+ * @email 652276536@qq.com
+ */
 public class FlashLightActivity extends BaseActivity implements SurfaceHolder.Callback {
 
     private static final String TAG = "FlashLightActivity";

@@ -8,8 +8,6 @@ import java.util.List;
  * 字符串转换，不支持特殊字符
  *
  * @author LiWei
- * @package com.zistone.factorytest0718.util
- * @fileName BleListener
  * @date 2020/7/18 9:33
  * @email 652276536@qq.com
  */

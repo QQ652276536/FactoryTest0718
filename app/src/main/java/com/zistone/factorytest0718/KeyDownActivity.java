@@ -8,12 +8,18 @@ import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.zistone.factorytest0718.util.MyFileUtil;
 import com.zistone.factorytest0718.util.MyProgressDialogUtil;
 
+/**
+ * 按键测试，目前只支持誉兴通的WD220型号的设备
+ *
+ * @author LiWei
+ * @date 2020/7/18 9:33
+ * @email 652276536@qq.com
+ */
 public class KeyDownActivity extends BaseActivity {
 
     private static final String TAG = "KeyDownActivity";

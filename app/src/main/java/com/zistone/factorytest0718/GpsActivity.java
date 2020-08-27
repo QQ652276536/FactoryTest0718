@@ -22,6 +22,13 @@ import androidx.core.app.ActivityCompat;
 import java.util.List;
 import java.util.Locale;
 
+/**
+ * GPS测试
+ *
+ * @author LiWei
+ * @date 2020/7/18 9:33
+ * @email 652276536@qq.com
+ */
 public class GpsActivity extends BaseActivity implements LocationListener {
 
     private static final String TAG = "GpsActivity";

@@ -23,12 +23,10 @@ import android.os.Environment;
 import android.os.Handler;
 import android.util.DisplayMetrics;
 import android.util.Log;
-import android.view.KeyEvent;
 import android.view.MotionEvent;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 import android.view.View;
-import android.view.Window;
 import android.widget.ImageButton;
 import android.widget.TextClock;
 import android.widget.TextView;
@@ -36,7 +34,6 @@ import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
-import androidx.appcompat.app.AppCompatActivity;
 
 import com.baidu.location.BDAbstractLocationListener;
 import com.baidu.location.BDLocation;
@@ -60,6 +57,13 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 
+/**
+ * 水印相机，GPS定位使用的是百度地图的API
+ *
+ * @author LiWei
+ * @date 2020/7/18 9:33
+ * @email 652276536@qq.com
+ */
 public class WatermarkCameraActivity extends BaseActivity implements SurfaceHolder.Callback, SensorEventListener,
         OnGetGeoCoderResultListener, View.OnClickListener {
 

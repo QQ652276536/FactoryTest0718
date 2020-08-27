@@ -5,6 +5,13 @@ import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
 
+/**
+ * 用来测试一些东西的，没有任何实际功能
+ *
+ * @author LiWei
+ * @date 2020/7/18 9:33
+ * @email 652276536@qq.com
+ */
 public class TestTestActivity extends BaseActivity {
 
     //加载本地库

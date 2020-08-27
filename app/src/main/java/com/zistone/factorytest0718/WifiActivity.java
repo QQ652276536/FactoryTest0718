@@ -27,6 +27,13 @@ import java.util.List;
 
 import pl.droidsonroids.gif.GifImageView;
 
+/**
+ * WIFI测试，只做了扫描，没有连接、通信相关的功能
+ *
+ * @author LiWei
+ * @date 2020/7/18 9:33
+ * @email 652276536@qq.com
+ */
 public class WifiActivity extends BaseActivity {
 
     private static final String TAG = "WifiActivity";

@@ -10,6 +10,13 @@ import android.widget.TextView;
 
 import com.zistone.factorytest0718.util.MySensorUtil;
 
+/**
+ * 传感器信息
+ *
+ * @author LiWei
+ * @date 2020/7/18 9:33
+ * @email 652276536@qq.com
+ */
 public class SensorActivity extends BaseActivity {
 
     private static final String TAG = "SensorActivity";

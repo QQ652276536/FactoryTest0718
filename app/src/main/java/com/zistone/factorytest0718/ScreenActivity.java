@@ -24,6 +24,13 @@ import com.zistone.factorytest0718.util.MyProgressDialogUtil;
 
 import java.io.InputStream;
 
+/**
+ * 屏幕测试
+ *
+ * @author LiWei
+ * @date 2020/7/18 9:33
+ * @email 652276536@qq.com
+ */
 public class ScreenActivity extends BaseActivity {
 
     private static final String TAG = "ScreenActivity";

@@ -23,6 +23,13 @@ import com.zz.impl.cpucard.CPUCardDeviceImpl;
 import java.util.Arrays;
 import java.util.List;
 
+/**
+ * 银行卡测试，使用的是浙江中正的二代证模块来读取银行卡卡号，所以该功能只支持誉兴通的装有二代证模块的设备
+ *
+ * @author LiWei
+ * @date 2020/7/18 9:33
+ * @email 652276536@qq.com
+ */
 public class BankCardActivity extends BaseActivity {
 
     private static final String TAG = "BankCardActivity";

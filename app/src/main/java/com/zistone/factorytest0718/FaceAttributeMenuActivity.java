@@ -36,6 +36,13 @@ import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.Disposable;
 import io.reactivex.schedulers.Schedulers;
 
+/**
+ * 基于虹软的人脸识别
+ *
+ * @author LiWei
+ * @date 2020/7/18 9:33
+ * @email 652276536@qq.com
+ */
 public class FaceAttributeMenuActivity extends BaseActivity implements View.OnClickListener {
 
     private static final String TAG = "FaceAttributeMenuActivity";
@@ -147,11 +154,11 @@ public class FaceAttributeMenuActivity extends BaseActivity implements View.OnCl
             case R.id.btn_face_attribute_video_menu:
                 startActivity(new Intent(this, FaceAttributeDetectionVideoActivity.class));
                 break;
-                //人脸比对1：N（图片VS图片）
+            //人脸比对1：N（图片VS图片）
             case R.id.btn_face_compare_img_menu:
                 startActivity(new Intent(this, FaceCompareImageActivity.class));
                 break;
-                //人证核验
+            //人证核验
             case R.id.btn_faceid_compare_menu:
                 startActivity(new Intent(this, FaceIdCompareMenuActivity.class));
                 break;

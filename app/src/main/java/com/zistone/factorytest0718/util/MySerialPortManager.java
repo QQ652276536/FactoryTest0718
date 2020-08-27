@@ -11,8 +11,6 @@ import android_serialport_api.SerialPort;
  * 串口操作
  *
  * @author LiWei
- * @package com.zistone.factorytest0718.util
- * @fileName BleListener
  * @date 2020/7/18 9:33
  * @email 652276536@qq.com
  */

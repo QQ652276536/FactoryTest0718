@@ -32,6 +32,13 @@ import java.util.Objects;
 
 import pl.droidsonroids.gif.GifImageView;
 
+/**
+ * 蓝牙测试，只做了对传统蓝牙的扫描，没有连接、通信相关的功能
+ *
+ * @author LiWei
+ * @date 2020/7/18 9:33
+ * @email 652276536@qq.com
+ */
 public class BluetoothActivity extends BaseActivity {
 
     private static final String TAG = "BluetoothActivity";

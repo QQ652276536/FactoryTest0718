@@ -9,16 +9,20 @@ import android.nfc.tech.Ndef;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Gravity;
-import android.view.KeyEvent;
 import android.widget.TextView;
-
-import androidx.appcompat.app.AppCompatActivity;
 
 import com.zistone.factorytest0718.util.MyConvertUtil;
 import com.zistone.factorytest0718.util.MyProgressDialogUtil;
 
 import java.util.Arrays;
 
+/**
+ * NFC测试
+ *
+ * @author LiWei
+ * @date 2020/7/18 9:33
+ * @email 652276536@qq.com
+ */
 public class NfcActivity extends BaseActivity {
 
     private static final String TAG = "NfcActivity";

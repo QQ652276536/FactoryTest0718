@@ -22,8 +22,6 @@ import java.util.UUID;
  * 低功耗蓝牙的相关操作
  *
  * @author LiWei
- * @package com.zistone.factorytest0718.util
- * @fileName BleListener
  * @date 2020/7/18 9:33
  * @email 652276536@qq.com
  */

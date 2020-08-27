@@ -9,6 +9,13 @@ import android.widget.LinearLayout;
 
 import com.zistone.factorytest0718.util.MyProgressDialogUtil;
 
+/**
+ * 背光亮度测试
+ *
+ * @author LiWei
+ * @date 2020/7/18 9:33
+ * @email 652276536@qq.com
+ */
 public class BackLightActivity extends BaseActivity implements View.OnTouchListener {
 
     private LinearLayout _ll;

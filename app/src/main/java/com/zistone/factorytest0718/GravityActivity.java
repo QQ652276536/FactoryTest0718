@@ -1,21 +1,20 @@
 package com.zistone.factorytest0718;
 
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
-import android.view.ViewGroup;
-import android.view.animation.Animation;
-import android.view.animation.RotateAnimation;
-import android.widget.ImageView;
 import android.widget.LinearLayout;
 
-import com.zistone.factorytest0718.util.MyProgressDialogUtil;
 import com.zistone.factorytest0718.util.MySensorUtil;
 
 import static android.hardware.SensorManager.STANDARD_GRAVITY;
 
+/**
+ * 重力传感器测试
+ *
+ * @author LiWei
+ * @date 2020/7/18 9:33
+ * @email 652276536@qq.com
+ */
 public class GravityActivity extends BaseActivity {
 
     private static final String TAG = "GravityActivity";

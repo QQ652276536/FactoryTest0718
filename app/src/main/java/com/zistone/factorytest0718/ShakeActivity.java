@@ -1,10 +1,15 @@
 package com.zistone.factorytest0718;
 
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.os.Bundle;
 import android.os.Vibrator;
 
+/**
+ * 震动测试
+ *
+ * @author LiWei
+ * @date 2020/7/18 9:33
+ * @email 652276536@qq.com
+ */
 public class ShakeActivity extends BaseActivity {
 
     private static final String TAG = "ShakeActivity";

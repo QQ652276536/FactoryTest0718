@@ -9,6 +9,11 @@ import com.baidu.mapapi.CoordType;
 import com.baidu.mapapi.SDKInitializer;
 import com.zistone.factorytest0718.util.MyActivityManager;
 
+/**
+ * @author LiWei
+ * @date 2020/7/18 9:33
+ * @email 652276536@qq.com
+ */
 public class MyApplication extends Application {
 
     private static final String TAG = "MyApplication";

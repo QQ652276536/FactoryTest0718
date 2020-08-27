@@ -11,6 +11,13 @@ import android.util.AttributeSet;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 
+/**
+ * 自定义的一个控件，用于测试誉兴通设备的触摸屏
+ *
+ * @author LiWei
+ * @date 2020/7/18 9:33
+ * @email 652276536@qq.com
+ */
 public class MyDrawView extends SurfaceView implements SurfaceHolder.Callback {
 
     protected SurfaceHolder _surfaceHolder;

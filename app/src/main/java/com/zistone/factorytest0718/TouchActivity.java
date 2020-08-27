@@ -21,6 +21,13 @@ import android.view.WindowManager;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+/**
+ * 触摸屏测试
+ *
+ * @author LiWei
+ * @date 2020/7/18 9:33
+ * @email 652276536@qq.com
+ */
 public class TouchActivity extends BaseActivity {
 
     private static final String TAG = "TouchActivity";

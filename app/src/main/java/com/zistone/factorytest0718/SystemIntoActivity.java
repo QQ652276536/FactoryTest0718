@@ -1,15 +1,9 @@
 package com.zistone.factorytest0718;
 
-import androidx.appcompat.app.AppCompatActivity;
-
-import android.app.Activity;
-import android.app.ActivityManager;
-import android.graphics.Point;
 import android.os.Build;
 import android.os.Bundle;
 import android.util.DisplayMetrics;
 import android.util.Log;
-import android.view.Display;
 import android.widget.TextView;
 
 import java.io.BufferedReader;
@@ -17,11 +11,16 @@ import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
-import java.lang.reflect.Method;
-import java.math.BigDecimal;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
+/**
+ * 系统基本信息
+ *
+ * @author LiWei
+ * @date 2020/7/18 9:33
+ * @email 652276536@qq.com
+ */
 public class SystemIntoActivity extends BaseActivity {
 
     private static final String TAG = "SystemIntoActivity";

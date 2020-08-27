@@ -24,6 +24,13 @@ import com.zistone.factorytest0718.util.MySoundPlayUtil;
 import java.io.File;
 import java.util.List;
 
+/**
+ * 扫码测试，只支持誉兴通的设备
+ *
+ * @author LiWei
+ * @date 2020/7/18 9:33
+ * @email 652276536@qq.com
+ */
 public class ScanCodeActivity extends BaseActivity implements MyScanCodeManager.ScanCodeListener {
 
     private static final String TAG = "ScanCodeActivity";

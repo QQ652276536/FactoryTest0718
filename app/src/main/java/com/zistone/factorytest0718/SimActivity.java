@@ -1,7 +1,6 @@
 package com.zistone.factorytest0718;
 
 import android.Manifest;
-import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Color;
 import android.os.Bundle;
@@ -11,12 +10,17 @@ import android.text.TextUtils;
 import android.util.Log;
 import android.widget.TextView;
 
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 
-import com.zistone.factorytest0718.R;
 import com.zistone.factorytest0718.util.MyProgressDialogUtil;
 
+/**
+ * SIM卡信息
+ *
+ * @author LiWei
+ * @date 2020/7/18 9:33
+ * @email 652276536@qq.com
+ */
 public class SimActivity extends BaseActivity {
 
     private static final String TAG = "SimActivity";

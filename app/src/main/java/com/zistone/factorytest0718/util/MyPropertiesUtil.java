@@ -10,8 +10,6 @@ import java.util.Properties;
  * 读取配置文件用的，如果开发环境改变会读取失败
  *
  * @author LiWei
- * @package com.zistone.factorytest0718.util
- * @fileName BleListener
  * @date 2020/7/18 9:33
  * @email 652276536@qq.com
  */

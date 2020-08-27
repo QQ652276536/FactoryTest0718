@@ -28,6 +28,13 @@ import android.widget.TextView;
 
 import com.zistone.factorytest0718.util.HeadsetKeyReceiver;
 
+/**
+ * 所有测试Activity的基类
+ *
+ * @author LiWei
+ * @date 2020/7/18 9:33
+ * @email 652276536@qq.com
+ */
 public class BaseActivity extends AppCompatActivity implements View.OnClickListener {
 
     private static final String TAG = "BaseActivity";

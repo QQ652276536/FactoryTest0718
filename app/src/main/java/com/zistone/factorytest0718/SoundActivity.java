@@ -4,13 +4,10 @@ import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
-import android.media.AudioAttributes;
 import android.media.AudioManager;
 import android.media.MediaPlayer;
 import android.media.MediaRecorder;
-import android.media.Ringtone;
 import android.media.RingtoneManager;
-import android.media.SoundPool;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.CountDownTimer;
@@ -20,8 +17,6 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.widget.ImageButton;
 import android.widget.TextView;
-
-import androidx.appcompat.app.AppCompatActivity;
 
 import com.zistone.factorytest0718.util.HeadsetKeyReceiver;
 import com.zistone.factorytest0718.util.MyFileUtil;
@@ -35,6 +30,10 @@ import java.util.Locale;
 /**
  * 音频测试，耳机测试也是在这里实现
  * 使用MediaPlayer，因为有耳机的话它会自动通过耳机播放，这样就不需要改变音频的播放模式
+ *
+ * @author LiWei
+ * @date 2020/7/18 9:33
+ * @email 652276536@qq.com
  */
 public class SoundActivity extends BaseActivity implements View.OnTouchListener {
 

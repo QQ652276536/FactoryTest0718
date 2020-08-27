@@ -13,8 +13,6 @@ import android.os.Build;
  * 默认以扬声器播放声音
  *
  * @author LiWei
- * @package com.zistone.factorytest0718.util
- * @fileName BleListener
  * @date 2020/7/18 9:33
  * @email 652276536@qq.com
  */
