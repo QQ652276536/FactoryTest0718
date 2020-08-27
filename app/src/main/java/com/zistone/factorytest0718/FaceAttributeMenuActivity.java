@@ -17,12 +17,11 @@ import com.arcsoft.face.ErrorInfo;
 import com.arcsoft.face.FaceEngine;
 import com.arcsoft.face.enums.RuntimeABI;
 import com.zistone.factorytest0718.face.ChooseDetectDegreeDialog;
-import com.zistone.factorytest0718.face.FaceIdCompareMenuActivity;
-import com.zistone.factorytest0718.face.FaceIdCompareVerifyActivity;
-import com.zistone.factorytest0718.face.constants.Constants;
-import com.zistone.factorytest0718.face.FaceAttributeDetectionVideoActivity;
 import com.zistone.factorytest0718.face.FaceAttributeDetectionImageActivity;
+import com.zistone.factorytest0718.face.FaceAttributeDetectionVideoActivity;
 import com.zistone.factorytest0718.face.FaceCompareImageActivity;
+import com.zistone.factorytest0718.face.FaceIdCompareMenuActivity;
+import com.zistone.factorytest0718.face.constants.Constants;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -55,8 +54,7 @@ public class FaceAttributeMenuActivity extends BaseActivity implements View.OnCl
             //人脸相关
             "libarcsoft_face_engine.so", "libarcsoft_face.so",
             //图像库相关
-            "libarcsoft_image_util.so",};
-
+            "libarcsoft_image_util.so"};
     private TextView _txt;
     private Button _btnSetting, _btnActive, _btnFaceAttributeForImage, _btnFaceAttributeForVideo, _btnFaceCompareImage, _btnFaceIdCompare;
     private ChooseDetectDegreeDialog _chooseDetectDegreeDialog;
