@@ -7,6 +7,15 @@ import java.lang.ref.WeakReference;
 import java.util.Iterator;
 import java.util.Stack;
 
+/**
+ * Activity的生命周期管理，目前没什么卵用，就是起个打印生命周期日志的作用
+ *
+ * @author LiWei
+ * @package com.zistone.factorytest0718.util
+ * @fileName BleListener
+ * @date 2020/7/18 9:33
+ * @email 652276536@qq.com
+ */
 public final class MyActivityManager {
 
     private static MyActivityManager _myActivityManager;

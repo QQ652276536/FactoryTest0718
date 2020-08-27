@@ -12,7 +12,13 @@ import java.util.List;
 import static android.hardware.SensorManager.STANDARD_GRAVITY;
 
 /**
- * 传感器工具类
+ * 获取传感器的数据
+ *
+ * @author LiWei
+ * @package com.zistone.factorytest0718.util
+ * @fileName BleListener
+ * @date 2020/7/18 9:33
+ * @email 652276536@qq.com
  */
 public class MySensorUtil implements SensorEventListener {
 

@@ -14,6 +14,15 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
+/**
+ * 本地存储该项目需要的一些参数
+ *
+ * @author LiWei
+ * @package com.zistone.factorytest0718.util
+ * @fileName BleListener
+ * @date 2020/7/18 9:33
+ * @email 652276536@qq.com
+ */
 public final class MySharedPreferences {
 
     private static final String COMTEST_PORTNAMEANDBAUDRATE = "SerialPortNameAndBaudrate";

@@ -9,6 +9,15 @@ import android.media.SoundPool;
 import android.net.Uri;
 import android.os.Build;
 
+/**
+ * 默认以扬声器播放声音
+ *
+ * @author LiWei
+ * @package com.zistone.factorytest0718.util
+ * @fileName BleListener
+ * @date 2020/7/18 9:33
+ * @email 652276536@qq.com
+ */
 public final class MySoundPlayUtil {
 
     private static Context _context;
@@ -21,25 +30,8 @@ public final class MySoundPlayUtil {
     private MySoundPlayUtil() {
     }
 
-    public static void Init() {
-        if (Build.VERSION.SDK_INT > 21) {
-            SoundPool.Builder builder = new SoundPool.Builder();
-            //传入音频数量
-            builder.setMaxStreams(5);
-            //AudioAttributes是一个封装音频各种属性的方法
-            AudioAttributes.Builder attrBuilder = new AudioAttributes.Builder();
-            //设置音频流的合适的属性
-            attrBuilder.setLegacyStreamType(AudioManager.STREAM_SYSTEM);
-            //加载一个AudioAttributes
-            builder.setAudioAttributes(attrBuilder.build());
-            _soundPool = builder.build();
-        } else {
-            _soundPool = new SoundPool(5, AudioManager.STREAM_SYSTEM, 0);
-        }
-    }
-
     /**
-     * 播放系统通知的声音
+     * 以响铃的方式播放系统通知的声音，无论是否插入耳机扬声器都会播放
      */
     public static void SystemSoundPlay(Context context) {
         Uri uri = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);

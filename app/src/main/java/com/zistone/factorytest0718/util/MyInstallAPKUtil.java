@@ -20,6 +20,15 @@ import java.io.FileOutputStream;
 import java.io.InputStream;
 import java.util.List;
 
+/**
+ * 安装第三方APK，不一定兼容所有版本
+ *
+ * @author LiWei
+ * @package com.zistone.factorytest0718.util
+ * @fileName BleListener
+ * @date 2020/7/18 9:33
+ * @email 652276536@qq.com
+ */
 public final class MyInstallAPKUtil {
 
     private static final String TAG = "MyInstallAPKUtil";

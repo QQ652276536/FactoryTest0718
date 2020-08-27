@@ -27,6 +27,15 @@ import java.io.OutputStream;
 
 import android_serialport_api.SerialPort;
 
+/**
+ * 一个通过串口来实现扫码的工具类，只支持誉兴通的设备
+ *
+ * @author LiWei
+ * @package com.zistone.factorytest0718.util
+ * @fileName BleListener
+ * @date 2020/7/18 9:33
+ * @email 652276536@qq.com
+ */
 public final class MyScanCodeManager {
 
     private static final String TAG = "MyScanCodeManager";
