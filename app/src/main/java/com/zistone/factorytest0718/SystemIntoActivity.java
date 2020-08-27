@@ -25,7 +25,7 @@ public class SystemIntoActivity extends BaseActivity {
 
     private static final String TAG = "SystemIntoActivity";
 
-    private TextView _txtType, _txtManu, _txtSystem, _txtHardware, _txtVersion, _txtKernel, _txtResolution, _txtDensity, _txtSize, _txtRoot, _txtBuildId, _txtBoardId, _txtTime, _txtCpu;
+    private TextView _txtType, _txtManu, _txtSystem, _txtHardware, _txtVersion, _txtKernel, _txtResolution, _txtDensity, _txtRoot, _txtBuildId, _txtBoardId, _txtTime, _txtCpu;
 
     /**
      * 判断是否存在su命令并且有执行权限
@@ -115,12 +115,10 @@ public class SystemIntoActivity extends BaseActivity {
         _txtDensity = findViewById(R.id.txt_density_systeminfo);
         int densityDpi = displayMetrics.densityDpi;
         _txtDensity.setText(densityDpi + "dpi");
-        //屏幕尺寸
-        _txtSize = findViewById(R.id.txt_szie_systeminfo);
         //Root状态
         _txtRoot = findViewById(R.id.txt_root_systeminfo);
         _txtRoot.setText(IsRoot() ? "是" : "否");
-        //修订版本
+        //生产编号
         _txtBuildId = findViewById(R.id.txt_buildid_systeminfo);
         _txtBuildId.setText(Build.ID);
         //主板编号
