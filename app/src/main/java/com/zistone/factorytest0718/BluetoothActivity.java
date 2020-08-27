@@ -13,10 +13,12 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
 import com.cjj.MaterialRefreshLayout;
 import com.cjj.MaterialRefreshListener;
 import com.zistone.factorytest0718.util.MyProgressDialogUtil;
@@ -24,8 +26,6 @@ import com.zistone.factorytest0718.util.MyProgressDialogUtil;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
-
-import pl.droidsonroids.gif.GifImageView;
 
 /**
  * 蓝牙测试，只做了对传统蓝牙的扫描，没有连接、通信相关的功能
@@ -186,7 +186,7 @@ public class BluetoothActivity extends BaseActivity {
     private ListView _listView;
     private BluetoothAdapter _bluetoothAdapter;
     private BluetoothBroadcastReceiver _bluetoothBroadcastReceiver;
-    private GifImageView _refreshGif;
+    private ImageView _refreshGif;
     private MaterialRefreshLayout _materialRefreshLayout;
     private DeviceSearchListener _deviceSearchListener;
     private MaterialRefreshListener _materialRefreshListener;
@@ -220,7 +220,7 @@ public class BluetoothActivity extends BaseActivity {
             //                _bluetoothAdapter.enable();
             //第二种方式：友好提示用户打开蓝牙
             Intent intent = new Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE);
-            startActivity(intent);
+            startActivityForResult(intent, 101);
         }
     }
 
@@ -281,6 +281,23 @@ public class BluetoothActivity extends BaseActivity {
     }
 
     @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        Log.i(TAG, "requestCode=" + requestCode + "，resultCode=" + resultCode);
+        switch (requestCode) {
+            case 101:
+                if (resultCode == RESULT_OK) {
+                    _bluetoothAdapter.startDiscovery();
+                }
+                else {
+                    Toast.makeText(this, "蓝牙权限被拒绝", Toast.LENGTH_LONG).show();
+                    Fail();
+                }
+                break;
+        }
+    }
+
+    @Override
     protected void onDestroy() {
         super.onDestroy();
         unregisterReceiver(_bluetoothBroadcastReceiver);
@@ -297,6 +314,7 @@ public class BluetoothActivity extends BaseActivity {
         _listView = findViewById(R.id.lv_bluetooth);
         _listView.setAdapter(_baseAdapter);
         _refreshGif = findViewById(R.id.loading_bluetooth);
+        Glide.with(this).load(R.drawable.bluetooth_loading_eagle).into(_refreshGif);
         _materialRefreshLayout = findViewById(R.id.refresh_bluetooth);
         _txt = findViewById(R.id.txt_bluetooth);
         _txt.setVisibility(View.GONE);

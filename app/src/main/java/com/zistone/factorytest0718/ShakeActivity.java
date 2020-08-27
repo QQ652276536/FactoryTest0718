@@ -2,6 +2,10 @@ package com.zistone.factorytest0718;
 
 import android.os.Bundle;
 import android.os.Vibrator;
+import android.widget.ImageView;
+
+import com.bumptech.glide.Glide;
+import com.zistone.factorytest0718.util.MyImageUtil;
 
 /**
  * 震动测试
@@ -16,6 +20,7 @@ public class ShakeActivity extends BaseActivity {
 
     private Vibrator _vibrator;
     private long[] _patter = {0, 500, 500, 0};
+    private ImageView _imageView;
 
     @Override
     protected void onResume() {
@@ -35,5 +40,7 @@ public class ShakeActivity extends BaseActivity {
         //        setContentView(R.layout.activity_shake);
         SetBaseContentView(R.layout.activity_shake);
         _vibrator = (Vibrator) this.getSystemService(this.VIBRATOR_SERVICE);
+        _imageView = findViewById(R.id.iv_shake);
+        Glide.with(this).load(R.drawable.shaking).into(_imageView);
     }
 }

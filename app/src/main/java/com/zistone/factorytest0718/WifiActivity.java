@@ -18,14 +18,13 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
 import com.cjj.MaterialRefreshLayout;
 import com.cjj.MaterialRefreshListener;
 import com.zistone.factorytest0718.util.MyProgressDialogUtil;
 
 import java.util.ArrayList;
 import java.util.List;
-
-import pl.droidsonroids.gif.GifImageView;
 
 /**
  * WIFI测试，只做了扫描，没有连接、通信相关的功能
@@ -169,7 +168,7 @@ public class WifiActivity extends BaseActivity {
     private List<ScanResult> _scanResultList = new ArrayList<>();
     private ListView _listView;
     private WifiBroadcastReceiver _wifiBroadcastReceiver;
-    private GifImageView _refreshGif;
+    private ImageView _refreshGif;
     private MaterialRefreshLayout _materialRefreshLayout;
     private DeviceSearchListener _deviceSearchListener;
     private MaterialRefreshListener _materialRefreshListener;
@@ -248,6 +247,14 @@ public class WifiActivity extends BaseActivity {
     }
 
     @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        Log.i(TAG, "requestCode=" + requestCode + "，resultCode=" + resultCode);
+        switch (requestCode) {
+        }
+    }
+
+    @Override
     protected void onDestroy() {
         super.onDestroy();
         unregisterReceiver(_wifiBroadcastReceiver);
@@ -263,6 +270,7 @@ public class WifiActivity extends BaseActivity {
         _listView = findViewById(R.id.lv_wifi);
         _listView.setAdapter(_baseAdapter);
         _refreshGif = findViewById(R.id.loading_wifi);
+        Glide.with(this).load(R.drawable.bluetooth_loading_eagle).into(_refreshGif);
         _materialRefreshLayout = findViewById(R.id.refresh_wifi);
         _txt = findViewById(R.id.txt_wifi);
         _txt.setVisibility(View.GONE);

@@ -23,7 +23,7 @@
         android:textColor="@color/deepSkyBlue"
         android:textSize="20sp" />
 
-    <pl.droidsonroids.gif.GifImageView
+    <ImageView
         android:id="@+id/loading_wifi"
         android:layout_width="50dp"
         android:layout_height="50dp"

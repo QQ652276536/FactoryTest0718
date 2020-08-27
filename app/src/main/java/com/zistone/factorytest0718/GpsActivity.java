@@ -16,6 +16,7 @@ import android.os.Bundle;
 import android.provider.Settings;
 import android.util.Log;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.core.app.ActivityCompat;
 
@@ -179,8 +180,12 @@ public class GpsActivity extends BaseActivity implements LocationListener {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
+        Log.i(TAG, "requestCode=" + requestCode + "，resultCode=" + resultCode);
         switch (requestCode) {
-            case 102:
+            //申请定位权限界面只有一个返回按钮，无法确定是允许还是拒绝，这里统一返回，
+            case 101:
+                Toast.makeText(this, "已修改定位权限，请重新测试GPS！", Toast.LENGTH_LONG).show();
+                Fail();
                 break;
         }
     }
@@ -294,16 +299,13 @@ public class GpsActivity extends BaseActivity implements LocationListener {
         Log.i(TAG, "该设备支持的位置提供器：" + providerStr);
         _myLocationListener.OnUpdateProviders(providerStr);
         //实时定位
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
-                while (!_isThreadRun) {
-                    try {
-                        Start(providerList);
-                        Thread.sleep(5 * 1000);
-                    } catch (InterruptedException e) {
-                        e.printStackTrace();
-                    }
+        new Thread(() -> {
+            while (!_isThreadRun) {
+                try {
+                    Start(providerList);
+                    Thread.sleep(5 * 1000);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
                 }
             }
         }).start();
