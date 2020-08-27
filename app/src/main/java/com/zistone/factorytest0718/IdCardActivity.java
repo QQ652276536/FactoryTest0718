@@ -3,35 +3,23 @@ package com.zistone.factorytest0718;
 import android.annotation.SuppressLint;
 import android.app.ActivityManager;
 import android.content.Context;
-import android.content.Intent;
 import android.graphics.Bitmap;
-import android.media.Ringtone;
-import android.media.RingtoneManager;
-import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.text.method.ScrollingMovementMethod;
 import android.view.Menu;
 import android.view.View;
-import android.view.Window;
 import android.widget.Button;
-import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
-import android.widget.ScrollView;
 import android.widget.TextView;
 
-import androidx.appcompat.app.AppCompatActivity;
-
-import com.zistone.factorytest0718.util.MyConvertUtil;
 import com.zistone.factorytest0718.util.MySoundPlayUtil;
 import com.zistone.gpio.Gpio;
 import com.zz.api.CardDriverAPI;
-import com.zz.impl.cpucard.CPUCardDeviceImpl;
 import com.zz.impl.idcard.IDCardDeviceImpl;
 import com.zz.impl.idcard.IDCardInterface;
-import com.zz.impl.mifarecard.MifareCardDeviceImpl;
 
 import java.io.UnsupportedEncodingException;
 import java.util.List;

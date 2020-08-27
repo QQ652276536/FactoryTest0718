@@ -2,7 +2,6 @@ package com.zistone.factorytest0718;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
-import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.Bitmap.Config;
 import android.graphics.BitmapFactory;
@@ -10,16 +9,10 @@ import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.PowerManager;
-import android.view.KeyEvent;
 import android.view.MotionEvent;
-import android.view.Window;
 import android.view.WindowManager;
 import android.widget.LinearLayout;
-import android.widget.Toast;
 
-import androidx.appcompat.app.AppCompatActivity;
-
-import com.zistone.factorytest0718.util.MyActivityManager;
 import com.zistone.factorytest0718.util.MyProgressDialogUtil;
 
 import java.io.InputStream;

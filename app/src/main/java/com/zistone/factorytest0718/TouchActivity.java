@@ -1,7 +1,6 @@
 package com.zistone.factorytest0718;
 
 import android.content.Context;
-import android.content.Intent;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
@@ -9,17 +8,12 @@ import android.graphics.Path;
 import android.graphics.Point;
 import android.graphics.Rect;
 import android.os.Bundle;
-import android.os.Handler;
-import android.os.Message;
 import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.MotionEvent;
 import android.view.View;
-import android.view.Window;
 import android.view.WindowManager;
-
-import androidx.appcompat.app.AppCompatActivity;
 
 /**
  * 触摸屏测试

@@ -2,16 +2,11 @@ package com.zistone.factorytest0718;
 
 import android.app.ActivityManager;
 import android.content.Context;
-import android.content.Intent;
-import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.text.method.ScrollingMovementMethod;
 import android.util.Log;
-import android.view.KeyEvent;
 import android.view.View;
 import android.widget.TextView;
-
-import androidx.appcompat.app.AppCompatActivity;
 
 import com.zistone.factorytest0718.util.MyConvertUtil;
 import com.zistone.factorytest0718.util.MyProgressDialogUtil;

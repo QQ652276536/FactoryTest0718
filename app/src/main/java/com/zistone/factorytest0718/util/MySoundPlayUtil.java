@@ -1,13 +1,10 @@
 package com.zistone.factorytest0718.util;
 
 import android.content.Context;
-import android.media.AudioAttributes;
-import android.media.AudioManager;
 import android.media.Ringtone;
 import android.media.RingtoneManager;
 import android.media.SoundPool;
 import android.net.Uri;
-import android.os.Build;
 
 /**
  * 默认以扬声器播放声音

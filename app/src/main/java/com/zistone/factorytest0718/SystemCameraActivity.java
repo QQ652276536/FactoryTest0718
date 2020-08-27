@@ -7,10 +7,6 @@ import android.os.Handler;
 import android.os.Looper;
 import android.os.Message;
 import android.provider.MediaStore;
-import android.util.Log;
-import android.view.KeyEvent;
-
-import androidx.appcompat.app.AppCompatActivity;
 
 /**
  * 调用系统相机
