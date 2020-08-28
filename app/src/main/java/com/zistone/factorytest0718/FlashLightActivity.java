@@ -13,7 +13,11 @@ import android.view.SurfaceView;
 
 import com.zistone.factorytest0718.util.MyProgressDialogUtil;
 
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.IOException;
+import java.util.Timer;
+import java.util.TimerTask;
 
 /**
  * 闪光灯测试
@@ -26,10 +30,17 @@ import java.io.IOException;
 public class FlashLightActivity extends BaseActivity implements SurfaceHolder.Callback {
 
     private static final String TAG = "FlashLightActivity";
+    private static final String GREEN = "/sys/class/leds/green/brightness";
+    private static final String RED = "/sys/class/leds/red/brightness";
+    private static byte[] OPEN = "0".getBytes();
+    private static byte[] CLOSE = "1".getBytes();
 
     private Camera _camera;
     private SurfaceView _surfaceView;
     private SurfaceHolder _surfaceHolder;
+    private FileOutputStream _fileOutputStream;
+    private Timer _timer;
+    private TimerTask _timerTask;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -57,8 +68,8 @@ public class FlashLightActivity extends BaseActivity implements SurfaceHolder.Ca
     }
 
     @Override
-    protected void onPause() {
-        super.onPause();
+    protected void onStop() {
+        super.onStop();
         if (_camera != null) {
             Log.i(TAG, "关闭闪光灯");
             _camera.getParameters().setFlashMode(Camera.Parameters.FLASH_MODE_OFF);
@@ -67,6 +78,21 @@ public class FlashLightActivity extends BaseActivity implements SurfaceHolder.Ca
             _camera.release();
             _camera = null;
         }
+        if (null != _timerTask)
+            _timerTask.cancel();
+        if (null != _timer)
+            _timer.cancel();
+        try {
+            _fileOutputStream = new FileOutputStream(RED);
+            _fileOutputStream.write(CLOSE);
+            _fileOutputStream.close();
+            _fileOutputStream = new FileOutputStream(GREEN);
+            _fileOutputStream.write(CLOSE);
+            _fileOutputStream.close();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        Log.i(TAG, "关闭信号灯");
     }
 
     @Override
@@ -83,25 +109,40 @@ public class FlashLightActivity extends BaseActivity implements SurfaceHolder.Ca
                 _camera.setParameters(parameter);
                 Log.i(TAG, "闪光灯打开");
             }
+            _timer = new Timer();
+            _timerTask = new TimerTask() {
+                @Override
+                public void run() {
+                    try {
+                        //重置
+                        _fileOutputStream = new FileOutputStream(GREEN);
+                        _fileOutputStream.write(CLOSE);
+                        _fileOutputStream.close();
+                        _fileOutputStream = new FileOutputStream(RED);
+                        _fileOutputStream.write(CLOSE);
+                        _fileOutputStream.close();
+                        //绿灯
+                        _fileOutputStream = new FileOutputStream(GREEN);
+                        _fileOutputStream.write(OPEN);
+                        Thread.sleep(500);
+                        _fileOutputStream.write(CLOSE);
+                        _fileOutputStream.close();
+                        //红灯
+                        _fileOutputStream = new FileOutputStream(RED);
+                        _fileOutputStream.write(OPEN);
+                        Thread.sleep(500);
+                        _fileOutputStream.write(CLOSE);
+                        _fileOutputStream.close();
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                }
+            };
+            _timer.schedule(_timerTask, 0, 1 * 1000);
+            Log.i(TAG, "信号灯打开");
         } catch (Exception e) {
             Log.e(TAG, "相机打开异常：相机被占用，请先关闭！");
         }
-    }
-
-    /**
-     * 判断是否开启了自动亮度调节
-     *
-     * @param
-     * @return
-     */
-    public boolean isAutoBrightness(ContentResolver aContentResolver) {
-        boolean automicBrightness = false;
-        try {
-            automicBrightness = Settings.System.getInt(aContentResolver, Settings.System.SCREEN_BRIGHTNESS_MODE) == Settings.System.SCREEN_BRIGHTNESS_MODE_AUTOMATIC;
-        } catch (SettingNotFoundException e) {
-            e.printStackTrace();
-        }
-        return automicBrightness;
     }
 
     @Override
