@@ -8,7 +8,7 @@ import android.util.Log;
 
 /**
  * 调用系统相机
- * 先测试前置摄像头，通过后测试后置摄像头，也通过后才算功能正常
+ * 先测试前置摄像头，通过后紧接着测试后置摄像头，也通过后才算功能正常
  *
  * @author LiWei
  * @date 2020/7/18 9:33
@@ -59,23 +59,28 @@ public class SystemCameraActivity extends BaseActivity {
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         Log.i(TAG, "requestCode=" + requestCode + "，resultCode=" + resultCode);
-        switch (requestCode) {
-            //先测试前置摄像头，通过后测试后置摄像头，通过后才算该功能正常
-            case 101:
-                if (resultCode == RESULT_OK) {
-                    if (_currentDirection == 1) {
-                        _currentDirection = 2;
-                        //打开后置摄像头
-                        Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-                        intent.putExtra("android.intent.extras.CAMERA_FACING", _currentDirection);
-                        startActivityForResult(intent, 101);
-                    } else if (_currentDirection == 2) {
-                        Pass();
+        try {
+            switch (requestCode) {
+                //先测试前置摄像头，通过后测试后置摄像头，通过后才算该功能正常
+                case 101:
+                    if (resultCode == RESULT_OK) {
+                        if (_currentDirection == 1) {
+                            _currentDirection = 2;
+                            //打开后置摄像头
+                            Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+                            intent.putExtra("android.intent.extras.CAMERA_FACING", _currentDirection);
+                            startActivityForResult(intent, 101);
+                        } else if (_currentDirection == 2) {
+                            Pass();
+                        }
+                    } else {
+                        Fail();
                     }
-                } else {
-                    Fail();
-                }
-                break;
+                    break;
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            Fail();
         }
     }
 
