@@ -11,7 +11,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
-        android:text="三色信号灯是否亮起\n背面闪光灯是否亮起"
+        android:text="顶部信号灯是否亮起\n背面闪光灯是否亮起"
         android:textSize="22sp" />
 
     <SurfaceView

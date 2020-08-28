@@ -21,7 +21,7 @@ import java.util.TimerTask;
 
 /**
  * 闪光灯测试
- * TODO 信号灯的测试还没有实现，暂时先不用管
+ * TODO 信号灯的测试在WD220的设备上现在只有红色和绿色，没有蓝色
  *
  * @author LiWei
  * @date 2020/7/18 9:33
@@ -30,7 +30,9 @@ import java.util.TimerTask;
 public class FlashLightActivity extends BaseActivity implements SurfaceHolder.Callback {
 
     private static final String TAG = "FlashLightActivity";
+    //这个表示绿色信号灯的节点没有任何卵用
     private static final String GREEN = "/sys/class/leds/green/brightness";
+    //这个表示红色信号灯的节点亮起的是绿色...
     private static final String RED = "/sys/class/leds/red/brightness";
     private static byte[] OPEN = "0".getBytes();
     private static byte[] CLOSE = "1".getBytes();
@@ -70,29 +72,26 @@ public class FlashLightActivity extends BaseActivity implements SurfaceHolder.Ca
     @Override
     protected void onStop() {
         super.onStop();
-        if (_camera != null) {
-            Log.i(TAG, "关闭闪光灯");
-            _camera.getParameters().setFlashMode(Camera.Parameters.FLASH_MODE_OFF);
-            _camera.setParameters(_camera.getParameters());
-            _camera.stopPreview();
-            _camera.release();
-            _camera = null;
-        }
-        if (null != _timerTask)
-            _timerTask.cancel();
-        if (null != _timer)
-            _timer.cancel();
         try {
+            if (_camera != null) {
+                Log.i(TAG, "关闭闪光灯");
+                _camera.getParameters().setFlashMode(Camera.Parameters.FLASH_MODE_OFF);
+                _camera.setParameters(_camera.getParameters());
+                _camera.stopPreview();
+                _camera.release();
+                _camera = null;
+            }
+            if (null != _timerTask)
+                _timerTask.cancel();
+            if (null != _timer)
+                _timer.cancel();
             _fileOutputStream = new FileOutputStream(RED);
             _fileOutputStream.write(CLOSE);
             _fileOutputStream.close();
-            _fileOutputStream = new FileOutputStream(GREEN);
-            _fileOutputStream.write(CLOSE);
-            _fileOutputStream.close();
+            Log.i(TAG, "关闭信号灯");
         } catch (Exception e) {
             e.printStackTrace();
         }
-        Log.i(TAG, "关闭信号灯");
     }
 
     @Override
@@ -114,20 +113,6 @@ public class FlashLightActivity extends BaseActivity implements SurfaceHolder.Ca
                 @Override
                 public void run() {
                     try {
-                        //重置
-                        _fileOutputStream = new FileOutputStream(GREEN);
-                        _fileOutputStream.write(CLOSE);
-                        _fileOutputStream.close();
-                        _fileOutputStream = new FileOutputStream(RED);
-                        _fileOutputStream.write(CLOSE);
-                        _fileOutputStream.close();
-                        //绿灯
-                        _fileOutputStream = new FileOutputStream(GREEN);
-                        _fileOutputStream.write(OPEN);
-                        Thread.sleep(500);
-                        _fileOutputStream.write(CLOSE);
-                        _fileOutputStream.close();
-                        //红灯
                         _fileOutputStream = new FileOutputStream(RED);
                         _fileOutputStream.write(OPEN);
                         Thread.sleep(500);
