@@ -2,13 +2,11 @@ package com.zistone.factorytest0718.face;
 
 import android.content.Intent;
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.net.Uri;
 import android.os.Bundle;
-import android.os.Environment;
 import android.provider.MediaStore;
 import android.util.Log;
 import android.view.View;
@@ -17,12 +15,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.documentfile.provider.DocumentFile;
-import androidx.recyclerview.widget.DividerItemDecoration;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 
 import com.arcsoft.face.AgeInfo;
 import com.arcsoft.face.ErrorInfo;
@@ -39,11 +32,9 @@ import com.arcsoft.imageutil.ArcSoftImageUtilError;
 import com.bumptech.glide.Glide;
 import com.zistone.factorytest0718.R;
 import com.zistone.factorytest0718.face.util.FaceServer;
-import com.zistone.factorytest0718.face.widget.MultiFaceInfoAdapter;
 import com.zistone.factorytest0718.util.MyImageUtil;
 import com.zistone.factorytest0718.util.MyProgressDialogUtil;
 
-import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
@@ -235,7 +226,7 @@ public class FaceIdCompareMenuActivity extends AppCompatActivity {
      * @param data
      */
     @Override
-    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (data == null || data.getData() == null) {
             Toast.makeText(this, "获取图片失败", Toast.LENGTH_SHORT).show();

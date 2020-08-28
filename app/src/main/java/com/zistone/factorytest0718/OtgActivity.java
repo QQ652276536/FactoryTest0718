@@ -1,7 +1,10 @@
 package com.zistone.factorytest0718;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+
+import com.zistone.factorytest0718.util.MyProgressDialogUtil;
 
 /**
  * OTG测试
@@ -14,23 +17,47 @@ public class OtgActivity extends BaseActivity {
 
     private static final String TAG = "OtgActivity";
 
-    private void SwitchUSBMode(int value) {
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        Log.i(TAG, "requestCode=" + requestCode + "，resultCode=" + resultCode);
+        switch (requestCode) {
+            case 101:
+                MyProgressDialogUtil.ShowConfirm(this, "通过", "失败", "提示", "OTG测试是否通过？", false, new MyProgressDialogUtil.ConfirmListener() {
+                    @Override
+                    public void OnConfirm() {
+                        Pass();
+                    }
+
+                    @Override
+                    public void OnCancel() {
+                        Fail();
+                    }
+                });
+                break;
+        }
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        //关闭OTG
         try {
-            switch (value) {
-                case 0:
-                    Runtime.getRuntime().exec("gpio-test 66 0");
-                    Runtime.getRuntime().exec("gpio-test 137 0");
-                    Log.i(TAG, "设备已切换至USB模式");
-                    break;
-                case 1:
-                    Runtime.getRuntime().exec("gpio-test 66 1");
-                    Runtime.getRuntime().exec("gpio-test 137 1");
-                    Log.i(TAG, "设备已切换至HUB模式");
-                    break;
-            }
+            Runtime.getRuntime().exec("gpio-test 1 0");
+            Log.i(TAG, "关闭OTG");
         } catch (Exception e) {
             e.printStackTrace();
         }
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
     }
 
     @Override
@@ -38,7 +65,17 @@ public class OtgActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         //        setContentView(R.layout.activity_otg);
         SetBaseContentView(R.layout.activity_otg);
-        SwitchUSBMode(1);
+        //开启OTG
+        try {
+            //            Runtime.getRuntime().exec("gpio-test 1 1");
+            Log.i(TAG, "开启OTG");
+            Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
+            intent.setType("*/*");
+            intent.addCategory(Intent.CATEGORY_OPENABLE);
+            startActivityForResult(intent, 101);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
 }
