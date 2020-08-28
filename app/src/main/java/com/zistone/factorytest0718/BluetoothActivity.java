@@ -288,8 +288,7 @@ public class BluetoothActivity extends BaseActivity {
             case 101:
                 if (resultCode == RESULT_OK) {
                     _bluetoothAdapter.startDiscovery();
-                }
-                else {
+                } else {
                     Toast.makeText(this, "蓝牙权限被拒绝", Toast.LENGTH_LONG).show();
                     Fail();
                 }
@@ -322,6 +321,6 @@ public class BluetoothActivity extends BaseActivity {
         InitListener();
         _materialRefreshLayout.setMaterialRefreshListener(_materialRefreshListener);
         //        _materialRefreshLayout.autoRefresh();
-        _btnPass.setEnabled(false);
+        //        _btnPass.setEnabled(false);
     }
 }

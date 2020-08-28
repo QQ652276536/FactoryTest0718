@@ -56,6 +56,11 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
+            android:name=".OtgActivity"
+            android:label="OTG"
+            android:launchMode="singleTask"
+            android:screenOrientation="nosensor" />
+        <activity
             android:name=".GravityActivity"
             android:label="重力传感器"
             android:launchMode="singleTask"
@@ -63,113 +68,141 @@
         <activity
             android:name=".MagneticActivity"
             android:label="地磁传感器"
-            android:launchMode="singleTask" />
+            android:launchMode="singleTask"
+            android:screenOrientation="nosensor" />
         <activity
             android:name=".FlashLightActivity"
             android:label="开启闪光灯"
-            android:launchMode="singleTask" />
+            android:launchMode="singleTask"
+            android:screenOrientation="nosensor" />
         <activity
             android:name=".BackLightActivity"
             android:label="背光亮度"
-            android:launchMode="singleTask" />
+            android:launchMode="singleTask"
+            android:screenOrientation="nosensor" />
         <activity
             android:name=".SystemIntoActivity"
             android:label="系统信息"
-            android:launchMode="singleTask" />
+            android:launchMode="singleTask"
+            android:screenOrientation="nosensor" />
         <activity
             android:name=".ShakeActivity"
             android:label="设备震动"
-            android:launchMode="singleTask" />
+            android:launchMode="singleTask"
+            android:screenOrientation="nosensor" />
         <activity
             android:name=".SensorActivity"
             android:label="传感器信息"
-            android:launchMode="singleTask" />
+            android:launchMode="singleTask"
+            android:screenOrientation="nosensor" />
         <activity
             android:name=".TfCardActivity"
             android:label="TF卡信息"
-            android:launchMode="singleTask" />
+            android:launchMode="singleTask"
+            android:screenOrientation="nosensor" />
         <activity
             android:name=".face.FaceIdCompareMenuActivity"
             android:label="人脸识别-人证核验"
-            android:launchMode="singleTask" />
+            android:launchMode="singleTask"
+            android:screenOrientation="nosensor" />
         <activity
             android:name=".face.FaceIdCompareVerifyActivity"
             android:label="人脸识别-人证核验"
-            android:launchMode="singleTask" />
+            android:launchMode="singleTask"
+            android:screenOrientation="nosensor" />
         <activity
             android:name=".face.FaceCompareImageActivity"
             android:label="人脸识别-人脸比对1：N"
-            android:launchMode="singleTask" />
+            android:launchMode="singleTask"
+            android:screenOrientation="nosensor" />
         <activity
             android:name=".face.FaceAttributeDetectionVideoActivity"
             android:label="人脸识别-人脸属性检测"
-            android:launchMode="singleTask" />
+            android:launchMode="singleTask"
+            android:screenOrientation="nosensor" />
         <activity
             android:name=".face.FaceAttributeDetectionImageActivity"
             android:label="人脸识别-人脸属性检测"
-            android:launchMode="singleTask" />
+            android:launchMode="singleTask"
+            android:screenOrientation="nosensor" />
         <activity
             android:name=".FaceAttributeMenuActivity"
             android:label="人脸识别"
-            android:launchMode="singleTask" />
+            android:launchMode="singleTask"
+            android:screenOrientation="nosensor" />
         <activity
             android:name=".TestTestActivity"
             android:label="该Activity仅用于测试代码，无任何作用"
-            android:launchMode="singleTask" />
+            android:launchMode="singleTask"
+            android:screenOrientation="nosensor" />
         <activity
             android:name=".ScmTestActivity"
             android:label="单片机"
-            android:launchMode="singleTask" />
+            android:launchMode="singleTask"
+            android:screenOrientation="nosensor" />
         <activity
             android:name=".SoundActivity"
             android:label="音频输入输出"
-            android:launchMode="singleTask" />
+            android:launchMode="singleTask"
+            android:screenOrientation="nosensor" />
         <activity
             android:name=".KeyDownActivity"
             android:label="功能键"
-            android:launchMode="singleTask" />
+            android:launchMode="singleTask"
+            android:screenOrientation="nosensor" />
         <activity
             android:name=".GpsActivity"
-            android:label="系统位置信息" />
+            android:label="系统位置信息"
+            android:screenOrientation="nosensor" />
         <activity
             android:name=".SimActivity"
-            android:label="SIM卡信息" />
+            android:label="SIM卡信息"
+            android:screenOrientation="nosensor" />
         <activity
             android:name=".WifiActivity"
-            android:label="Wifi列表" />
+            android:label="Wifi列表"
+            android:screenOrientation="nosensor" />
         <activity
             android:name=".BluetoothActivity"
-            android:label="蓝牙列表" />
+            android:label="蓝牙列表"
+            android:screenOrientation="nosensor" />
         <activity
             android:name=".SystemCameraActivity"
             android:label="系统相机"
-            android:launchMode="singleTask" />
+            android:launchMode="singleTask"
+            android:screenOrientation="nosensor" />
         <activity
             android:name=".ScreenActivity"
             android:label="屏幕坏点"
             android:launchMode="singleTask"
+            android:screenOrientation="nosensor"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar" /> <!-- 全屏不显示标题栏，仅限于继承AppCompatActivity的时候 -->
         <activity
             android:name=".ScanCodeActivity"
             android:label="二维码/条形码扫描"
-            android:launchMode="singleTask" />
+            android:launchMode="singleTask"
+            android:screenOrientation="nosensor" />
         <activity
             android:name=".TouchActivity"
             android:configChanges="keyboardHidden|orientation"
             android:launchMode="singleTask"
+            android:screenOrientation="nosensor"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar" /> <!-- 全屏不显示标题栏，仅限于继承AppCompatActivity的时候 -->
         <activity
             android:name=".BankCardActivity"
             android:label="银行卡"
-            android:launchMode="singleTask" />
+            android:launchMode="singleTask"
+            android:screenOrientation="nosensor" />
         <activity
             android:name=".IdCardActivity"
             android:label="二代身份证读取"
-            android:launchMode="singleTask" />
+            android:launchMode="singleTask"
+            android:screenOrientation="nosensor" />
         <activity
             android:name=".NfcActivity"
             android:label="NFC"
-            android:launchMode="singleTask">
+            android:launchMode="singleTask"
+            android:screenOrientation="nosensor">
             <intent-filter>
                 <action android:name="android.nfc.action.NDEF_DISCOVERED" /> <!-- 最高优先级的过滤规则 -->
             </intent-filter>
@@ -177,10 +210,11 @@
         <activity
             android:name=".WatermarkCameraActivity"
             android:label="水印相机"
-            android:launchMode="singleTask" />
+            android:launchMode="singleTask"
+            android:screenOrientation="nosensor" />
         <activity
             android:name=".BaseActivity"
-            android:label="相同布局的基类"
+            android:label="测试的Activity的基类"
             android:launchMode="singleTask" />
         <activity android:name=".MainActivity">
             <intent-filter>
@@ -189,10 +223,8 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <!--
-            有线耳机的按键广播
-        -->
-        <receiver android:name="com.zistone.factorytest0718.util.HeadsetKeyReceiver">
+        <!--             有线耳机的按键广播 -->
+        <receiver android:name=".util.HeadsetKeyReceiver">
             <intent-filter android:priority="1000">
                 <action android:name="android.intent.action.MEDIA_BUTTON" />
             </intent-filter>

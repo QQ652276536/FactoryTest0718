@@ -322,6 +322,41 @@
                     android:textColor="@color/white" />
 
                 <Button
+                    android:id="@+id/btn_otg"
+                    android:layout_width="wrap_content"
+                    android:layout_height="60sp"
+                    android:layout_margin="5sp"
+                    android:layout_weight="1"
+                    android:background="@drawable/btn_style_main_1"
+                    android:text="OTG测试"
+                    android:textColor="@color/white" />
+            </TableRow>
+
+            <TableRow
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <Button
+                    android:layout_width="wrap_content"
+                    android:layout_height="60sp"
+                    android:layout_margin="5sp"
+                    android:layout_weight="1"
+                    android:background="@drawable/btn_style_main_2"
+                    android:text=""
+                    android:textColor="@color/white"
+                    android:visibility="invisible" />
+
+                <Button
+                    android:layout_width="wrap_content"
+                    android:layout_height="60sp"
+                    android:layout_margin="5sp"
+                    android:layout_weight="1"
+                    android:background="@drawable/btn_style_main_2"
+                    android:text=""
+                    android:textColor="@color/white"
+                    android:visibility="invisible" />
+
+                <Button
                     android:id="@+id/btn_test_test"
                     android:layout_width="wrap_content"
                     android:layout_height="60sp"

@@ -278,6 +278,6 @@ public class WifiActivity extends BaseActivity {
         InitListener();
         _materialRefreshLayout.setMaterialRefreshListener(_materialRefreshListener);
         //        _materialRefreshLayout.autoRefresh();
-        _btnPass.setEnabled(false);
+        //        _btnPass.setEnabled(false);
     }
 }

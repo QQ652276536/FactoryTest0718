@@ -58,9 +58,10 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
     private static final int MAGNETIC_ACTIVITY_CODE = 124;
     private static final int GRAVITY_ACTIVITY_CODE = 125;
     private static final int COM485_ACTIVITY_CODE = 126;
+    private static final int OTG_ACTIVITY_CODE = 127;
 
     private boolean _isPermissionRequested = false;
-    private Button _btnBluetooth, _btnWifi, _btnGPS, _btnKeyDown, _btnSIM, _btnScreen, _btnSound, _btnSCM, _btnTouch, _btnIdCard, _btnWaterCamera, _btnSystemCamera, _btnNFC, _btnScanCode, _btnBankCard, _btnTestTest, _btnFace, _btnTfCard, _btnSensor, _btnShake, _btnSystemInfo, _btnFlashLight, _btnBackLight, _btnHeadset, _btnMagnetic, _btnGravity, _btn485;
+    private Button _btnBluetooth, _btnWifi, _btnGPS, _btnKeyDown, _btnSIM, _btnScreen, _btnSound, _btnSCM, _btnTouch, _btnIdCard, _btnWaterCamera, _btnSystemCamera, _btnNFC, _btnScanCode, _btnBankCard, _btnTestTest, _btnFace, _btnTfCard, _btnSensor, _btnShake, _btnSystemInfo, _btnFlashLight, _btnBackLight, _btnHeadset, _btnMagnetic, _btnGravity, _btn485, _btnOtg;
     private long _exitTime = 0;
     private Map<Integer, Boolean> _testResultMap;
     private Map<Integer, Button> _testBtnMap;
@@ -269,6 +270,10 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
                     SetPassBackgroundColor(_btn485, str);
                     _testResultMap.put(COM485_ACTIVITY_CODE, str.equals(PASS));
                     break;
+                case OTG_ACTIVITY_CODE:
+                    SetPassBackgroundColor(_btnOtg, str);
+                    _testResultMap.put(OTG_ACTIVITY_CODE, str.equals(PASS));
+                    break;
             }
             MySharedPreferences.SetMainPassFail(this, _testResultMap);
         }
@@ -397,6 +402,10 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
                 startActivityForResult(intent, COM485_ACTIVITY_CODE);
             }
             break;
+            //OTG测试
+            case R.id.btn_otg:
+                startActivityForResult(new Intent(this, OtgActivity.class), OTG_ACTIVITY_CODE);
+                break;
             //用于测试的一个Activity，不包含功能测试
             case R.id.btn_test_test:
                 startActivity(new Intent(this, TestTestActivity.class));
@@ -471,6 +480,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
         _btnMagnetic = findViewById(R.id.btn_magnetic);
         _btnGravity = findViewById(R.id.btn_gravity);
         _btn485 = findViewById(R.id.btn_485);
+        _btnOtg = findViewById(R.id.btn_otg);
         _btnBluetooth.setOnClickListener(this::onClick);
         _btnWifi.setOnClickListener(this::onClick);
         _btnGPS.setOnClickListener(this::onClick);
@@ -498,6 +508,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
         _btnMagnetic.setOnClickListener(this::onClick);
         _btnGravity.setOnClickListener(this::onClick);
         _btn485.setOnClickListener(this::onClick);
+        _btnOtg.setOnClickListener(this::onClick);
         _testBtnMap = new HashMap<Integer, Button>() {{
             put(BLUETOOTH_ACTIVITY_CODE, _btnBluetooth);
             put(WIFI_ACTIVITY_CODE, _btnWifi);
@@ -525,6 +536,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
             put(MAGNETIC_ACTIVITY_CODE, _btnMagnetic);
             put(GRAVITY_ACTIVITY_CODE, _btnGravity);
             put(COM485_ACTIVITY_CODE, _btn485);
+            put(OTG_ACTIVITY_CODE, _btnOtg);
         }};
         JudgeDeviceType();
         _testResultMap = MySharedPreferences.GetMainPassFail(this);
