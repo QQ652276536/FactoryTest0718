@@ -118,10 +118,8 @@ public final class MyProgressDialogUtil {
                             listener.OnDismiss();
                     }
                 });
-                _alertDialog.show();
-            } else {
-                _alertDialog.show();
             }
+            _alertDialog.show();
         }
     }
 
@@ -158,7 +156,7 @@ public final class MyProgressDialogUtil {
                     listener.OnCancel();
             });
             builder.setCancelable(touchOut);
-            builder.show();
+            _alertDialog = builder.show();
         }
     }
 
@@ -183,7 +181,7 @@ public final class MyProgressDialogUtil {
                     listener.OnIKnow();
             });
             builder.setCancelable(touchOut);
-            builder.show();
+            _alertDialog = builder.show();
         }
     }
 

@@ -351,6 +351,7 @@ public class SoundActivity extends BaseActivity implements View.OnTouchListener 
         //检测耳机按键
         HeadsetKeyReceiver.SetListener(keyCode -> {
             if (keyCode > 0 && _isTestHeadSet && _isInsertHeadset) {
+                MyProgressDialogUtil.DismissAlertDialog();
                 Pass();
             }
         });

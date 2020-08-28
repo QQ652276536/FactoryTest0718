@@ -215,8 +215,11 @@
         <activity
             android:name=".BaseActivity"
             android:label="测试的Activity的基类"
-            android:launchMode="singleTask" />
-        <activity android:name=".MainActivity">
+            android:launchMode="singleTask"
+            android:screenOrientation="nosensor" />
+        <activity
+            android:name=".MainActivity"
+            android:screenOrientation="nosensor">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

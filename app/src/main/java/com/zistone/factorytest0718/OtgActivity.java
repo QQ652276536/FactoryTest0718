@@ -27,11 +27,13 @@ public class OtgActivity extends BaseActivity {
                     @Override
                     public void OnConfirm() {
                         Pass();
+                        MyProgressDialogUtil.DismissAlertDialog();
                     }
 
                     @Override
                     public void OnCancel() {
                         Fail();
+                        MyProgressDialogUtil.DismissAlertDialog();
                     }
                 });
                 break;
@@ -67,7 +69,7 @@ public class OtgActivity extends BaseActivity {
         SetBaseContentView(R.layout.activity_otg);
         //开启OTG
         try {
-            //            Runtime.getRuntime().exec("gpio-test 1 1");
+            Runtime.getRuntime().exec("gpio-test 1 1");
             Log.i(TAG, "开启OTG");
             Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
             intent.setType("*/*");
