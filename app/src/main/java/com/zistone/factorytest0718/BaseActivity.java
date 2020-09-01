@@ -14,6 +14,7 @@ import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -66,10 +67,45 @@ public class BaseActivity extends AppCompatActivity implements View.OnClickListe
         }
     }
 
+    /**
+     * 显示键盘
+     *
+     * @param view
+     */
+    public void ShowKeyboard(View view) {
+        InputMethodManager inputMethodManager = (InputMethodManager) view.getContext().getSystemService(Context.INPUT_METHOD_SERVICE);
+        if (null != inputMethodManager) {
+            view.requestFocus();
+            inputMethodManager.showSoftInput(view, 0);
+        }
+    }
+
+    /**
+     * 隐藏键盘
+     *
+     * @param view
+     */
+    public void HideKeyboard(View view) {
+        InputMethodManager inputMethodManager = (InputMethodManager) view.getContext().getSystemService(Context.INPUT_METHOD_SERVICE);
+        if (null != inputMethodManager) {
+            inputMethodManager.hideSoftInputFromWindow(view.getWindowToken(), 0);
+        }
+    }
+
+    /**
+     * 到TextView顶部
+     *
+     * @param txt
+     */
     public void TxtToTop(TextView txt) {
         txt.scrollTo(0, 0);
     }
 
+    /**
+     * 到TextView底部
+     *
+     * @param txt
+     */
     public void TxtToBottom(TextView txt) {
         int offset = txt.getLineCount() * txt.getLineHeight();
         if (offset > txt.getHeight()) {
@@ -77,6 +113,11 @@ public class BaseActivity extends AppCompatActivity implements View.OnClickListe
         }
     }
 
+    /**
+     * 清除TextView的内容
+     *
+     * @param txt
+     */
     public void TxtClear(TextView txt) {
         txt.setText("");
         txt.scrollTo(0, 0);
