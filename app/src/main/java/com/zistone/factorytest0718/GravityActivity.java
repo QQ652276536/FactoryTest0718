@@ -56,20 +56,21 @@ public class GravityActivity extends BaseActivity {
                 float x = array[0];
                 float y = array[1];
                 float z = array[2];
+                //修改重力值便于测试
                 //重力指向设备左边
-                if (x > STANDARD_GRAVITY) {
+                if (x > STANDARD_GRAVITY - 7) {
                     _llLeft.setVisibility(View.VISIBLE);
                 }
                 //重力指向设备右边
-                else if (x < -STANDARD_GRAVITY) {
+                else if (x < -STANDARD_GRAVITY + 7) {
                     _llRight.setVisibility(View.VISIBLE);
                 }
                 //重力指向设备下边
-                else if (y > STANDARD_GRAVITY) {
+                else if (y > STANDARD_GRAVITY - 7) {
                     _llBottom.setVisibility(View.VISIBLE);
                 }
                 //重力指向设备上边
-                else if (y < -STANDARD_GRAVITY) {
+                else if (y < -STANDARD_GRAVITY + 7) {
                     _llTop.setVisibility(View.VISIBLE);
                 }
                 //屏幕朝上
