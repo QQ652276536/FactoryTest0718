@@ -30,35 +30,19 @@ public class ScanCodeActivity extends BaseActivity {
     private TextView _txt;
     private ImageButton _btnTop, _btnBottom, _btnClear;
     private Button _btnScan;
-    private boolean _isAppOnForeground = true, _isPass = false;
 
     private void UpdateText(final TextView txt, final String str, final String setOrAppend) {
         if (null == txt)
             return;
-        runOnUiThread(new Runnable() {
-            @Override
-            public void run() {
-                switch (setOrAppend) {
-                    case "Set":
-                        txt.setText(str);
-                        break;
-                    case "Append":
-                        txt.append(str);
-                        TxtToBottom(txt);
-                        break;
-                }
-                if (_isPass) {
-                    //防止重复触发
-                    _isPass = false;
-                    _btnPass.setEnabled(true);
-                    _btnScan.setEnabled(true);
-                    MyScanCodeManager.StopReadThread();
-                    MySoundPlayUtil.SystemSoundPlay(ScanCodeActivity.this);
-                    MyProgressDialogUtil.ShowCountDownTimerWarning(ScanCodeActivity.this, "知道了", 3 * 1000, "提示", "扫码测试已通过！\n\n扫描数据：" + str, false, () -> {
-                        MyProgressDialogUtil.DismissAlertDialog();
-                        Pass();
-                    });
-                }
+        runOnUiThread(() -> {
+            switch (setOrAppend) {
+                case "Set":
+                    txt.setText(str);
+                    break;
+                case "Append":
+                    txt.append(str);
+                    TxtToBottom(txt);
+                    break;
             }
         });
     }
@@ -97,12 +81,6 @@ public class ScanCodeActivity extends BaseActivity {
     @Override
     protected void onResume() {
         super.onResume();
-        //进入后台后再次回到前台
-        if (!_isAppOnForeground) {
-            MyScanCodeManager.StopReadThread();
-            MyScanCodeManager.StartReadThread();
-            _isAppOnForeground = true;
-        }
     }
 
     @Override
@@ -119,11 +97,7 @@ public class ScanCodeActivity extends BaseActivity {
     @Override
     protected void onStop() {
         super.onStop();
-        _isAppOnForeground = IsAppOnForeground();
-        if (!_isAppOnForeground) {
-            MyScanCodeManager.StopReadThread();
-            UpdateText(_txt, "\r\n程序进入后台，扫描已停止！", "Append");
-        }
+        MyScanCodeManager.StopReadThread();
     }
 
     @Override
@@ -131,6 +105,7 @@ public class ScanCodeActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         //        setContentView(R.layout.activity_scancode);
         SetBaseContentView(R.layout.activity_scancode);
+        _btnPass.setEnabled(false);
         _txt = findViewById(R.id.txt_scancode);
         _txt.setMovementMethod(ScrollingMovementMethod.getInstance());
         _btnTop = findViewById(R.id.btn_top_scancode);
@@ -141,32 +116,44 @@ public class ScanCodeActivity extends BaseActivity {
         _btnClear.setOnClickListener(v -> TxtClear(_txt));
         _btnScan = findViewById(R.id.btn_scan_scancode);
         _btnScan.setOnClickListener(v -> {
+            _btnScan.setText("正在扫描...");
             _btnScan.setEnabled(false);
             MyScanCodeManager.StartReadThread();
         });
         MyScanCodeManager.Init((data, len) -> {
             if (null == data || len == 0) {
+                //定时时间到，恢复扫描按钮状态
+                _btnScan.setText("开始扫描");
                 _btnScan.setEnabled(true);
                 return;
             }
             if (null != data && data.length > 0 && len > 0) {
                 String obj = ConvertCharToString(data, len);
                 Log.i(TAG, "扫描到的数据：" + obj);
-                _isPass = true;
                 UpdateText(_txt, obj + "\n", "Append");
+                runOnUiThread(() -> {
+                    _btnPass.setEnabled(true);
+                    MyScanCodeManager.StopReadThread();
+                    MySoundPlayUtil.SystemSoundPlay(ScanCodeActivity.this);
+                    MyProgressDialogUtil.ShowCountDownTimerWarning(ScanCodeActivity.this, "知道了", 3 * 1000, "提示", "扫码测试已通过！\n\n扫描数据：" + obj, false, () -> {
+                        MyProgressDialogUtil.DismissAlertDialog();
+                        Pass();
+                    });
+                });
             }
         });
         try {
             MyScanCodeManager.OpenSerialPort(new File("/dev/ttyHSL1"), 9600, 0);
             UpdateText(_txt, "串口已打开\r\n", "Append");
+            //触发点击事件
+            _btnScan.performClick();
+            _btnScan.setText("正在扫描...");
+            _btnScan.setEnabled(false);
         } catch (Exception e) {
             MyProgressDialogUtil.ShowWarning(this, "知道了", "警告", "该设备不支持扫码，无法使用此功能！", false, () -> {
                 Fail();
             });
         }
-        _btnPass.setEnabled(false);
-        //触发点击事件
-        _btnScan.performClick();
     }
 
 }
