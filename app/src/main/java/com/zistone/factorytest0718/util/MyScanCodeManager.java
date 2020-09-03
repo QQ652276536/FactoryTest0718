@@ -74,7 +74,7 @@ public final class MyScanCodeManager {
     private void ScanTestSerialPortManager() {
     }
 
-    public static void Init(ScanCodeListener listener) {
+    public static void SetListener(ScanCodeListener listener) {
         _scanCodeListener = listener;
     }
 
@@ -95,6 +95,31 @@ public final class MyScanCodeManager {
                 Log.i(TAG, "打开扫描串口");
             }
         }
+    }
+
+    /**
+     * 该方法属于特殊处理！！！
+     * 开启读取串口数据的线程
+     */
+    public static void StartReadThread_Temp() {
+        _isReadThreadFlag = true;
+        if (null != _readThread)
+            _readThread.interrupt();
+        _readThread = new ReadThread();
+        _readThread.start();
+        Log.i(TAG, "开启读取扫描串口数据的线程");
+    }
+
+    /**
+     * 该方法属于特殊处理！！！
+     * 停止读取数据的线程
+     */
+    public static void StopReadThread_Temp() {
+        _isReadThreadFlag = false;
+        if (null != _readThread)
+            _readThread.interrupt();
+        _readThread = null;
+        Log.i(TAG, "停止读取数据的线程");
     }
 
     /**
@@ -151,9 +176,9 @@ public final class MyScanCodeManager {
     }
 
     public static void Close() {
+        _isReadThreadFlag = false;
         if (null != _countDownTimer)
             _countDownTimer.cancel();
-        _isReadThreadFlag = false;
         if (null != _readThread)
             _readThread.interrupt();
         _readThread = null;

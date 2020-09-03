@@ -336,7 +336,9 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
                 break;
             //扫码测试
             case R.id.btn_scancode:
-                startActivityForResult(new Intent(this, ScanCodeActivity.class), SCANCODE_ACTIVITY_CODE);
+                //startActivityForResult(new Intent(this, ScanCodeActivity.class), SCANCODE_ACTIVITY_CODE);
+                //该Activity属于特殊处理
+                startActivityForResult(new Intent(this, ScanCodeActivity_Temp.class), SCANCODE_ACTIVITY_CODE);
                 break;
             //银行卡测试
             case R.id.btn_bankcard:

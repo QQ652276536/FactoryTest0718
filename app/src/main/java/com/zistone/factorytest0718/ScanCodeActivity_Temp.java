@@ -5,7 +5,6 @@ import android.content.Context;
 import android.os.Bundle;
 import android.text.method.ScrollingMovementMethod;
 import android.util.Log;
-import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
@@ -20,16 +19,15 @@ import java.util.List;
  * 扫码测试，只支持誉兴通的设备
  *
  * @author LiWei
- * @date 2020/7/18 9:33
+ * @date 2020/9/3 18:50
  * @email 652276536@qq.com
  */
-public class ScanCodeActivity extends BaseActivity {
+public class ScanCodeActivity_Temp extends BaseActivity {
 
-    private static final String TAG = "ScanCodeActivity";
+    private static final String TAG = "ScanCodeActivity_Temp";
 
     private TextView _txt;
     private ImageButton _btnTop, _btnBottom, _btnClear;
-    private Button _btnScan;
 
     private void UpdateText(final TextView txt, final String str, final String setOrAppend) {
         if (null == txt)
@@ -81,6 +79,7 @@ public class ScanCodeActivity extends BaseActivity {
     @Override
     protected void onResume() {
         super.onResume();
+        MyScanCodeManager.StartReadThread_Temp();
     }
 
     @Override
@@ -97,14 +96,14 @@ public class ScanCodeActivity extends BaseActivity {
     @Override
     protected void onStop() {
         super.onStop();
-        MyScanCodeManager.StopReadThread();
+        MyScanCodeManager.StopReadThread_Temp();
     }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        //        setContentView(R.layout.activity_scancode);
-        SetBaseContentView(R.layout.activity_scancode);
+        //        setContentView(R.layout.activity_scancode_temp);
+        SetBaseContentView(R.layout.activity_scancode_temp);
         _btnPass.setEnabled(false);
         _txt = findViewById(R.id.txt_scancode);
         _txt.setMovementMethod(ScrollingMovementMethod.getInstance());
@@ -114,28 +113,16 @@ public class ScanCodeActivity extends BaseActivity {
         _btnBottom.setOnClickListener(v -> TxtToBottom(_txt));
         _btnClear = findViewById(R.id.btn_clear_scancode);
         _btnClear.setOnClickListener(v -> TxtClear(_txt));
-        _btnScan = findViewById(R.id.btn_scan_scancode);
-        _btnScan.setOnClickListener(v -> {
-            _btnScan.setText("正在扫描...");
-            _btnScan.setEnabled(false);
-            MyScanCodeManager.StartReadThread();
-        });
         MyScanCodeManager.SetListener((data, len) -> {
-            if (null == data || len == 0) {
-                //定时时间到，恢复扫描按钮状态
-                _btnScan.setText("开始扫描");
-                _btnScan.setEnabled(true);
-                return;
-            }
             if (null != data && data.length > 0 && len > 0) {
                 String obj = ConvertCharToString(data, len);
                 Log.i(TAG, "扫描到的数据：" + obj);
                 UpdateText(_txt, obj + "\n", "Append");
                 runOnUiThread(() -> {
                     _btnPass.setEnabled(true);
-                    MyScanCodeManager.StopReadThread();
-                    MySoundPlayUtil.SystemSoundPlay(ScanCodeActivity.this);
-                    MyProgressDialogUtil.ShowCountDownTimerWarning(ScanCodeActivity.this, "知道了", 3 * 1000, "提示", "扫码测试已通过！\n\n扫描数据：" + obj, false, () -> {
+                    MyScanCodeManager.StopReadThread_Temp();
+                    MySoundPlayUtil.SystemSoundPlay(ScanCodeActivity_Temp.this);
+                    MyProgressDialogUtil.ShowCountDownTimerWarning(ScanCodeActivity_Temp.this, "知道了", 3 * 1000, "提示", "扫码测试已通过！\n\n扫描数据：" + obj, false, () -> {
                         MyProgressDialogUtil.DismissAlertDialog();
                         Pass();
                     });
@@ -145,10 +132,6 @@ public class ScanCodeActivity extends BaseActivity {
         try {
             MyScanCodeManager.OpenSerialPort(new File("/dev/ttyHSL1"), 9600, 0);
             UpdateText(_txt, "串口已打开\r\n", "Append");
-            //触发点击事件
-            _btnScan.performClick();
-            _btnScan.setText("正在扫描...");
-            _btnScan.setEnabled(false);
         } catch (Exception e) {
             MyProgressDialogUtil.ShowWarning(this, "知道了", "警告", "该设备不支持扫码，无法使用此功能！", false, () -> {
                 Fail();

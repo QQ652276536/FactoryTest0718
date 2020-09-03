@@ -183,6 +183,11 @@
             android:launchMode="singleTask"
             android:screenOrientation="nosensor" />
         <activity
+            android:name=".ScanCodeActivity_Temp"
+            android:label="二维码/条形码扫描"
+            android:launchMode="singleTask"
+            android:screenOrientation="nosensor" />
+        <activity
             android:name=".TouchActivity"
             android:configChanges="keyboardHidden|orientation"
             android:launchMode="singleTask"
