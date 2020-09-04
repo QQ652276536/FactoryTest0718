@@ -231,7 +231,9 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <!--             有线耳机的按键广播 -->
+        <!--
+            有线耳机的按键广播
+        -->
         <receiver android:name=".util.HeadsetKeyReceiver">
             <intent-filter android:priority="1000">
                 <action android:name="android.intent.action.MEDIA_BUTTON" />
