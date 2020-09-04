@@ -57,10 +57,7 @@ public class KeyDownActivity extends BaseActivity {
             _keyPasss[5] = true;
             if (_keyPasss[0] && _keyPasss[1] && _keyPasss[2] && _keyPasss[3] && _keyPasss[4] && _keyPasss[5] && _keyPasss[6] && _keyPasss[7]) {
                 _btnPass.setEnabled(true);
-                MyProgressDialogUtil.ShowCountDownTimerWarning(this, "知道了", 3 * 1000, "提示", "按键测试已通过！", false, () -> {
-                    MyProgressDialogUtil.DismissAlertDialog();
-                    Pass();
-                });
+                Pass();
             }
             Log.i(TAG, "屏蔽Bank键已执行...");
             return true;
@@ -105,10 +102,7 @@ public class KeyDownActivity extends BaseActivity {
         }
         if (_keyPasss[0] && _keyPasss[1] && _keyPasss[2] && _keyPasss[3] && _keyPasss[4] && _keyPasss[5] && _keyPasss[6] && _keyPasss[7]) {
             _btnPass.setEnabled(true);
-            MyProgressDialogUtil.ShowCountDownTimerWarning(this, "知道了", 3 * 1000, "提示", "按键测试已通过！", false, () -> {
-                MyProgressDialogUtil.DismissAlertDialog();
-                Pass();
-            });
+            Pass();
         }
         return false;
     }
