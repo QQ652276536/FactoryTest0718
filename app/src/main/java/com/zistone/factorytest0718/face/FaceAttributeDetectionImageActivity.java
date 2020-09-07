@@ -348,7 +348,6 @@ public class FaceAttributeDetectionImageActivity extends AppCompatActivity imple
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == ACTION_CHOOSE_IMAGE) {
             if (data == null || data.getData() == null) {
-                _txt.setText("图片获取失败！");
                 return;
             }
             try {
