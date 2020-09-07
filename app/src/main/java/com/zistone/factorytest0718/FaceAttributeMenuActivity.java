@@ -156,7 +156,7 @@ public class FaceAttributeMenuActivity extends BaseActivity implements View.OnCl
             case R.id.btn_face_compare_img_menu:
                 startActivity(new Intent(this, FaceCompareImageActivity.class));
                 break;
-            //人证核验
+            //人脸识别
             case R.id.btn_faceid_compare_menu:
                 startActivity(new Intent(this, FaceIdCompareMenuActivity.class));
                 break;

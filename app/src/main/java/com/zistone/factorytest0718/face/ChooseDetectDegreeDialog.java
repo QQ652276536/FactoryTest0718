@@ -29,7 +29,7 @@ public class ChooseDetectDegreeDialog extends DialogFragment implements View.OnC
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View dialogView = inflater.inflate(R.layout.dialog_choose_face_direction, container);
+        View dialogView = inflater.inflate(R.layout.dialog_face_choose_direction, container);
         initView(dialogView);
         return dialogView;
     }
