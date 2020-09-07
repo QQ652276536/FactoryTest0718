@@ -197,7 +197,7 @@ public class FaceAttributeMenuActivity extends BaseActivity implements View.OnCl
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        //        setContentView(R.layout.activity_bankcard);
+        //        setContentView(R.layout.activity_face_attribute_menu);
         SetBaseContentView(R.layout.activity_face_attribute_menu);
         ApplicationInfo applicationInfo = getApplicationInfo();
         Log.i(TAG, "onCreate: " + applicationInfo.nativeLibraryDir);
