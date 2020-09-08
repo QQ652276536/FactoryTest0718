@@ -101,7 +101,7 @@
             android:launchMode="singleTask"
             android:screenOrientation="nosensor" />
         <activity
-            android:name=".face.FaceIdCompareMenuActivity"
+            android:name=".face.FaceIdCompareChooseActivity"
             android:label="人脸识别-人证核验"
             android:launchMode="singleTask"
             android:screenOrientation="nosensor" />

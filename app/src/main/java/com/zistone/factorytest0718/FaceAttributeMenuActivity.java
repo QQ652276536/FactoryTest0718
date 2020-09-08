@@ -20,7 +20,7 @@ import com.zistone.factorytest0718.face.ChooseDetectDegreeDialog;
 import com.zistone.factorytest0718.face.FaceAttributeDetectionImageActivity;
 import com.zistone.factorytest0718.face.FaceAttributeDetectionVideoActivity;
 import com.zistone.factorytest0718.face.FaceCompareImageActivity;
-import com.zistone.factorytest0718.face.FaceIdCompareMenuActivity;
+import com.zistone.factorytest0718.face.FaceIdCompareChooseActivity;
 import com.zistone.factorytest0718.face.constants.Constants;
 
 import java.io.File;
@@ -158,7 +158,7 @@ public class FaceAttributeMenuActivity extends BaseActivity implements View.OnCl
                 break;
             //人脸识别
             case R.id.btn_faceid_compare_menu:
-                startActivity(new Intent(this, FaceIdCompareMenuActivity.class));
+                startActivity(new Intent(this, FaceIdCompareChooseActivity.class));
                 break;
             //通过
             case R.id.btn_pass_base:

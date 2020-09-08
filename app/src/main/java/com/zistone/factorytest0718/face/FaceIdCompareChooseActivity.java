@@ -1,5 +1,6 @@
 package com.zistone.factorytest0718.face;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
@@ -7,10 +8,13 @@ import android.graphics.Color;
 import android.graphics.Paint;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.provider.MediaStore;
 import android.util.Log;
 import android.view.View;
 import android.view.WindowManager;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -34,18 +38,35 @@ import com.zistone.factorytest0718.R;
 import com.zistone.factorytest0718.face.util.FaceServer;
 import com.zistone.factorytest0718.util.MyImageUtil;
 import com.zistone.factorytest0718.util.MyProgressDialogUtil;
+import com.zistone.factorytest0718.util.MySoundPlayUtil;
+import com.zistone.gpio.Gpio;
+import com.zz.impl.idcard.IDCardDeviceImpl;
+import com.zz.impl.idcard.IDCardInterface;
 
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class FaceIdCompareMenuActivity extends AppCompatActivity {
+public class FaceIdCompareChooseActivity extends AppCompatActivity {
 
-    private static final String TAG = "FaceIdCompareMenuActivity";
+    private static final String TAG = "FaceIdCompareChooseActivity";
     private static final int ACTION_CHOOSE_MAIN_IMAGE = 0x201;
     //用于进行比对的证件照名称
     private static final String IMAGE_NAME = "FaceIdCompareTest";
+    private static final String PORT_NAME = "/dev/ttyHSL2";
+    private static final int BAUDRATE = 115200;
+    //读卡成功
+    private static final int READ_CARD_SUCCESS = 100;
+    //读卡失败
+    private static final int READ_CARD_FAIL = 101;
 
+    private ReadIDCardThread _readIDCardThread;
+    private Handler _handler;
+    private byte[] _message = new byte[100];
+    private IDCardInterface _idCardInterface;
+    //线程开关、是否正在读取
+    private static volatile boolean _readThreadFlag = true, _radingFlag = false;
+    private Button _btnReader;
     private ImageView _image;
     private TextView _txt;
     private FaceFeature _faceFeature;
@@ -55,6 +76,80 @@ public class FaceIdCompareMenuActivity extends AppCompatActivity {
     private List<FaceInfo> _faceInfoList;
     private boolean _registerSuccess = false;
     private Uri _imageUri;
+
+    /**
+     * 读取身份证的线程
+     */
+    class ReadIDCardThread extends Thread {
+        @Override
+        public void run() {
+            synchronized (this) {
+                while (!_readThreadFlag) {
+                    if (_radingFlag) {
+                        continue;
+                    }
+                    Message message = new Message();
+                    _radingFlag = true;
+                    int result = 0;
+                    try {
+                        //超时10秒
+                        int timeOut = 10;
+                        //不读取指纹
+                        result = _idCardInterface.readIDCard(PORT_NAME, BAUDRATE, false, timeOut, _message);
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                    _radingFlag = false;
+                    if (result != 0) {
+                        try {
+                            String str = new String(_message, "GBK");
+                            message.what = READ_CARD_FAIL;
+                            message.obj = String.format("错误信息:%s", str);
+                            _handler.sendMessage(message);
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
+                    } else {
+                        message.what = READ_CARD_SUCCESS;
+                        _handler.sendMessage(message);
+                    }
+                    try {
+                        Thread.sleep(1000);
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+                }
+            }
+        }
+    }
+
+    @SuppressLint("HandlerLeak")
+    private void InitHandlerMessage() {
+        //初始化handle，绑定在主线程中的队列消息中
+        _handler = new Handler() {
+            @Override
+            public void handleMessage(Message msg) {
+                super.handleMessage(msg);
+                //读卡成功
+                if (msg.what == READ_CARD_SUCCESS) {
+                    //读取成功后停止循环读取，并发出提示音
+                    _readThreadFlag = true;
+                    //从模块获取读到的身份证图像
+                    Bitmap bitmap = _idCardInterface.getPhotoBmp();
+                    MyProgressDialogUtil.ShowProgressDialog(FaceIdCompareChooseActivity.this, false, null, "正在注册...");
+                    //图像处理
+                    ProcessImage(bitmap);
+                    MySoundPlayUtil.SystemSoundPlay(FaceIdCompareChooseActivity.this);
+                    _btnReader.setText("模块读取");
+                }
+                //读卡失败
+                else if (msg.what == READ_CARD_FAIL) {
+                    _txt.setText(msg.obj.toString());
+                    Log.e(TAG, msg.obj.toString());
+                }
+            }
+        };
+    }
 
     /**
      * 初始化引擎
@@ -182,12 +277,22 @@ public class FaceIdCompareMenuActivity extends AppCompatActivity {
     }
 
     /**
-     * 从读卡器读取照片
+     * 从模块读取照片
      *
      * @param view
      */
     public void ReaderImage(View view) {
-        Toast.makeText(this, "该设备不支持读卡器读取", Toast.LENGTH_SHORT).show();
+        _txt.setText("");
+        //通过身份证模块读取照片
+        if (_btnReader.getText().equals("模块读取")) {
+            _readThreadFlag = false;
+            _btnReader.setText("停   止");
+            _readIDCardThread = new ReadIDCardThread();
+            _readIDCardThread.start();
+        } else {
+            _readThreadFlag = true;
+            _btnReader.setText("模块读取");
+        }
     }
 
     /**
@@ -253,15 +358,23 @@ public class FaceIdCompareMenuActivity extends AppCompatActivity {
     }
 
     @Override
-    protected void onResume() {
-        super.onResume();
+    protected void onDestroy() {
+        super.onDestroy();
+        Gpio.getInstance().set_gpio(0, 66);
+        UnInitEngine();
+        FaceServer.getInstance().UnInit();
     }
 
     @Override
-    protected void onDestroy() {
-        UnInitEngine();
-        FaceServer.getInstance().UnInit();
-        super.onDestroy();
+    protected void onResume() {
+        super.onResume();
+        Gpio.getInstance().set_gpio(1, 66);
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        Gpio.getInstance().set_gpio(0, 66);
     }
 
     @Override
@@ -269,11 +382,14 @@ public class FaceIdCompareMenuActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         //保持亮屏
         getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
-        setContentView(R.layout.activity_face_id_compare_menu);
-        _image = findViewById(R.id.img_faceid_compare_menu);
-        _txt = findViewById(R.id.txt_faceid_compare_menu);
+        setContentView(R.layout.activity_face_id_compare_choose);
+        _btnReader = findViewById(R.id.btn_reader_faceid_compare_choose);
+        _image = findViewById(R.id.img_faceid_compare_choose);
+        _txt = findViewById(R.id.txt_faceid_compare_choose);
         InitEngine();
         FaceServer.getInstance().Init(this);
+        _idCardInterface = new IDCardDeviceImpl();
+        InitHandlerMessage();
     }
 
 }
