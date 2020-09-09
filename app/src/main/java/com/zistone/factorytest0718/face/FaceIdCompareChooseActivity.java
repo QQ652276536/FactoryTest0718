@@ -139,6 +139,8 @@ public class FaceIdCompareChooseActivity extends AppCompatActivity {
                     MyProgressDialogUtil.ShowProgressDialog(FaceIdCompareChooseActivity.this, false, null, "正在注册...");
                     //图像处理
                     ProcessImage(bitmap);
+                    //                    //显示选择的本地图片
+                    //                    runOnUiThread(() -> Glide.with(_image.getContext()).load(bitmap).into(_image));
                     MySoundPlayUtil.SystemSoundPlay(FaceIdCompareChooseActivity.this);
                     _btnReader.setText("模块读取");
                 }
@@ -200,24 +202,24 @@ public class FaceIdCompareChooseActivity extends AppCompatActivity {
                 }
                 //绘制bitmap
                 Bitmap compyBitmap = bitmap.copy(Bitmap.Config.RGB_565, true);
-                //显示选择的本地图片
+                //                Canvas canvas = new Canvas(compyBitmap);
+                //                Paint paint = new Paint();
+                //                paint.setAntiAlias(true);
+                //                paint.setStrokeWidth(10);
+                //                paint.setColor(Color.YELLOW);
+                //                if (_faceInfoList.size() > 0) {
+                //                    for (int i = 0; i < _faceInfoList.size(); i++) {
+                //                        //绘制人脸框
+                //                        paint.setStyle(Paint.Style.STROKE);
+                //                        canvas.drawRect(_faceInfoList.get(i).getRect(), paint);
+                //                        //绘制人脸序号
+                //                        paint.setStyle(Paint.Style.FILL_AND_STROKE);
+                //                        paint.setTextSize(_faceInfoList.get(i).getRect().width() / 2);
+                //                        canvas.drawText("" + i, _faceInfoList.get(i).getRect().left, _faceInfoList.get(i).getRect().top, paint);
+                //                    }
+                //                }
+                //显示经过重绘的本地图片
                 runOnUiThread(() -> Glide.with(_image.getContext()).load(compyBitmap).into(_image));
-                Canvas canvas = new Canvas(compyBitmap);
-                Paint paint = new Paint();
-                paint.setAntiAlias(true);
-                paint.setStrokeWidth(10);
-                paint.setColor(Color.YELLOW);
-                if (_faceInfoList.size() > 0) {
-                    for (int i = 0; i < _faceInfoList.size(); i++) {
-                        //绘制人脸框
-                        paint.setStyle(Paint.Style.STROKE);
-                        canvas.drawRect(_faceInfoList.get(i).getRect(), paint);
-                        //绘制人脸序号
-                        paint.setStyle(Paint.Style.FILL_AND_STROKE);
-                        paint.setTextSize(_faceInfoList.get(i).getRect().width() / 2);
-                        canvas.drawText("" + i, _faceInfoList.get(i).getRect().left, _faceInfoList.get(i).getRect().top, paint);
-                    }
-                }
                 int faceProcessCode = _faceEngine.process(bgr24, width, height, FaceEngine.CP_PAF_BGR24, _faceInfoList, FaceEngine.ASF_AGE | FaceEngine.ASF_GENDER | FaceEngine.ASF_FACE3DANGLE);
                 if (faceProcessCode != ErrorInfo.MOK) {
                     runOnUiThread(() -> {
@@ -345,7 +347,7 @@ public class FaceIdCompareChooseActivity extends AppCompatActivity {
                 _txt.setText("获取图片失败：" + e.toString());
                 return;
             }
-            if (_bitmap == null) {
+            if (null == _bitmap) {
                 Toast.makeText(this, "获取图片失败", Toast.LENGTH_SHORT).show();
                 _txt.setText("获取图片失败");
                 return;

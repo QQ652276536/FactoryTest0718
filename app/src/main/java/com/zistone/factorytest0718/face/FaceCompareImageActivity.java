@@ -222,9 +222,7 @@ public class FaceCompareImageActivity extends AppCompatActivity {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-
         if (data == null || data.getData() == null) {
-            Toast.makeText(this,"获取图片失败",Toast.LENGTH_SHORT).show();
             return;
         }
         if (requestCode == ACTION_CHOOSE_MAIN_IMAGE) {
@@ -235,7 +233,7 @@ public class FaceCompareImageActivity extends AppCompatActivity {
                 Toast.makeText(this,"获取图片失败",Toast.LENGTH_SHORT).show();
                 return;
             }
-            if (_mainBitmap == null) {
+            if (null == _mainBitmap) {
                 Toast.makeText(this,"获取图片失败",Toast.LENGTH_SHORT).show();
                 return;
             }
@@ -249,7 +247,7 @@ public class FaceCompareImageActivity extends AppCompatActivity {
                 Toast.makeText(this,"获取图片失败",Toast.LENGTH_SHORT).show();
                 return;
             }
-            if (bitmap == null) {
+            if (null == bitmap) {
                 Toast.makeText(this,"获取图片失败",Toast.LENGTH_SHORT).show();
                 return;
             }
