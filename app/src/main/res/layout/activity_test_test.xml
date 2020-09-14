@@ -15,6 +15,12 @@
         .none-task-blog-BlogCommendFromMachineLearnPai2-2.channel_param"
         android:textColor="@color/read"
         android:textSize="22sp" />
+
+    <com.zistone.factorytest0718.view.MyRemoteControlButton
+        android:id="@+id/mrcb_test_test"
+        android:layout_width="200sp"
+        android:layout_height="200sp"
+        android:layout_gravity="center_horizontal" />
 </LinearLayout>
 
 

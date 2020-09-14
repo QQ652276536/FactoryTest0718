@@ -201,7 +201,7 @@ public final class MyImageUtil {
      * @param newHeight 新图的高
      * @return new Bitmap
      */
-    public static Bitmap scaleBitmap(Bitmap origin, int newWidth, int newHeight) {
+    public static Bitmap ScaleBitmap(Bitmap origin, int newWidth, int newHeight) {
         if (origin == null) {
             return null;
         }
@@ -210,27 +210,10 @@ public final class MyImageUtil {
         float scaleWidth = ((float) newWidth) / width;
         float scaleHeight = ((float) newHeight) / height;
         Matrix matrix = new Matrix();
-        matrix.postScale(scaleWidth, scaleHeight);// 使用后乘
-        Bitmap newBM = Bitmap.createBitmap(origin, 0, 0, width, height, matrix, false);
+        matrix.postScale(scaleWidth, scaleHeight);
+        Bitmap bitmap = Bitmap.createBitmap(origin, 0, 0, width, height, matrix, false);
         if (!origin.isRecycled()) {
             origin.recycle();
-        }
-        return newBM;
-    }
-
-
-    public static Bitmap yuv420spToBitmap(byte[] data, int width, int height) {
-        Bitmap bitmap = null;
-        YuvImage image = new YuvImage(data, ImageFormat.NV21, width, height, null);
-        if (image != null) {
-            ByteArrayOutputStream stream = new ByteArrayOutputStream();
-            image.compressToJpeg(new Rect(0, 0, width, height), 100, stream);
-            bitmap = BitmapFactory.decodeByteArray(stream.toByteArray(), 0, stream.size());
-            try {
-                stream.close();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
         }
         return bitmap;
     }

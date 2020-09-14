@@ -132,7 +132,7 @@
             android:screenOrientation="nosensor" />
         <activity
             android:name=".TestTestActivity"
-            android:label="该Activity仅用于测试代码，无任何作用"
+            android:label="该Activity仅用于测试代码，无任何功能"
             android:launchMode="singleTask"
             android:screenOrientation="nosensor" />
         <activity

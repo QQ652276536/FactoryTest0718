@@ -11,6 +11,6 @@ Java_com_zistone_myapplication_MainActivity_stringFromJNI(
 
 extern "C" JNIEXPORT jstring JNICALL
 Java_com_zistone_factorytest0718_TestTestActivity_stringFromJNI(JNIEnv *env, jobject thiz) {
-    std::string hello = "寒光照铁衣";
+    std::string hello = "Hello from C++";
     return env->NewStringUTF(hello.c_str());
 }
