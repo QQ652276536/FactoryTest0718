@@ -35,7 +35,7 @@ public class MyRemoteControlButton extends View {
     //描边的粗细
     private static final int SIZE_STROKE = 8;
     //半径的长度比
-    private double DISTANCE_RADIUS = 0.4;
+    private static final double DISTANCE_RADIUS = 0.4;
 
     //控件中心的坐标
     private int _centerX, _centerY;
@@ -52,7 +52,7 @@ public class MyRemoteControlButton extends View {
     //点击状态，-2是无点击，-1是点击中心圆，其它是点击扇形菜单，这样定义方便和菜单列表的下标对应
     private int _clickState = -2;
     //中心圆的半径 = 大圆半径 * 半径长度比
-    private int _roundRadius;
+    private int _centerRoundRadius;
     //按下时间，抬起的时候判断一下，超过这个时间算点击
     private long _touchTime;
 
@@ -60,14 +60,14 @@ public class MyRemoteControlButton extends View {
      * 扇形的对象类
      */
     public static class RoundMenu {
-        //绘制的扇形是否连接中心点的直线
+        //绘制的扇形是否连接中心点
         public boolean isCenter = true;
         //图标
         public Bitmap bitmap;
         //点击事件
         public OnClickListener onClickListener;
         //图标距离中心点的距离
-        public double iconDistance = 0.63;
+        public double iconDistance = 0.65;
     }
 
     public MyRemoteControlButton(Context context) {
@@ -93,7 +93,7 @@ public class MyRemoteControlButton extends View {
      * @param onClickListener
      */
     public void SetCenterButton(Bitmap bitmap, OnClickListener onClickListener) {
-        //该方法被调用则说明添加了中心圆按钮，将状态改变
+        //该方法被调用则说明添加了中心圆按钮，所以要将状态改变
         _isHaveCenterButton = true;
         _centerBitmap = bitmap;
         _centerOnClickListener = onClickListener;
@@ -175,12 +175,13 @@ public class MyRemoteControlButton extends View {
         //绘制扇形菜单
         if (null != _roundMenuList && !_roundMenuList.isEmpty()) {
             //中心圆的半径
-            _roundRadius = (int) (_centerX * DISTANCE_RADIUS);
+            _centerRoundRadius = (int) (_centerX * DISTANCE_RADIUS);
             RectF rectF = new RectF(0, 0, getWidth(), getHeight());
             //根据菜单列表计算每个弧的角度
             float sweepAngle = 360 / _roundMenuList.size();
             //真实的偏移角度，比如扇形是“X”形状，而不是“+”形状
             _offsetAngle = sweepAngle / 2;
+            float bitmapStartAngle = 0;
             for (int i = 0; i < _roundMenuList.size(); i++) {
                 RoundMenu roundMenu = _roundMenuList.get(i);
                 //绘制
@@ -193,25 +194,28 @@ public class MyRemoteControlButton extends View {
                 else
                     paint.setColor(COLOR_BACK);
                 //绘制圆弧
-                canvas.drawArc(rectF, _offsetAngle + (i * sweepAngle), sweepAngle, true, paint);
+                canvas.drawArc(rectF, _offsetAngle + i * sweepAngle, sweepAngle, true, paint);
                 //绘制边
                 paint = new Paint();
                 paint.setAntiAlias(true);
                 paint.setStrokeWidth(SIZE_STROKE);
                 paint.setStyle(Paint.Style.STROKE);
                 paint.setColor(COLOR_STROKE);
-                canvas.drawArc(rectF, _offsetAngle + (i * sweepAngle), sweepAngle, roundMenu.isCenter, paint);
-                //绘制图案
+                canvas.drawArc(rectF, _offsetAngle + i * sweepAngle, sweepAngle, roundMenu.isCenter, paint);
+                //绘制扇形图标
+                //如果菜单共用一个图标使用下面代码即可，已做旋转处理
+                float bitmapX = (float) ((_centerX + getWidth() / 2 * roundMenu.iconDistance) - (roundMenu.bitmap.getWidth() / 2));
+                float bitmapY = _centerY - (roundMenu.bitmap.getHeight() / 2);
                 Matrix matrix = new Matrix();
-                matrix.postTranslate((float) ((_centerX + getWidth() / 2 * roundMenu.iconDistance) - (roundMenu.bitmap.getWidth() / 2)), _centerY - (roundMenu.bitmap.getHeight() / 2));
-                matrix.postRotate(((i + 1) * sweepAngle), _centerX, _centerY);
+                matrix.postTranslate(bitmapX, bitmapY);
+                matrix.postRotate((i + 1) * sweepAngle, _centerX, _centerY);
                 canvas.drawBitmap(roundMenu.bitmap, matrix, null);
             }
         }
         //绘制中心圆
         if (_isHaveCenterButton) {
             //填充
-            RectF rectF = new RectF(_centerX - _roundRadius, _centerY - _roundRadius, _centerX + _roundRadius, _centerY + _roundRadius);
+            RectF rectF = new RectF(_centerX - _centerRoundRadius, _centerY - _centerRoundRadius, _centerX + _centerRoundRadius, _centerY + _centerRoundRadius);
             Paint paint = new Paint();
             paint.setAntiAlias(true);
             paint.setStrokeWidth(SIZE_STROKE);
@@ -246,7 +250,7 @@ public class MyRemoteControlButton extends View {
                 float textY = event.getY();
                 int distanceLine = (int) GetTwoPointDistance(_centerX, _centerY, textX, textY);
                 //按下的点到中心点距离小于中心圆半径，那就是点击中心圆了
-                if (distanceLine <= _roundRadius) {
+                if (distanceLine <= _centerRoundRadius) {
                     _clickState = -1;
                 }
                 //按下的点到中心点的距离大于中心圆半径小于大圆半径，那就是点击的某个扇形了

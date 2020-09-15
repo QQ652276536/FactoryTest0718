@@ -40,22 +40,22 @@ public class TestTestActivity extends BaseActivity {
         _txt.setText(stringFromJNI());
         _myRemoteControlButton = findViewById(R.id.mrcb_test_test);
         MyRemoteControlButton.RoundMenu roundMenu = new MyRemoteControlButton.RoundMenu();
-        roundMenu.bitmap = BitmapFactory.decodeResource(getResources(), R.drawable.com_test_bottom);
+        roundMenu.bitmap = BitmapFactory.decodeResource(getResources(), R.drawable.sound_record_start1);
         roundMenu.onClickListener = v -> Toast.makeText(TestTestActivity.this, "下", Toast.LENGTH_SHORT).show();
         _myRemoteControlButton.AddRoundMenu(roundMenu);
 
         roundMenu = new MyRemoteControlButton.RoundMenu();
-        roundMenu.bitmap = BitmapFactory.decodeResource(getResources(), R.drawable.camera_ok);
+        roundMenu.bitmap = BitmapFactory.decodeResource(getResources(), R.drawable.sound_record_start1);
         roundMenu.onClickListener = v -> Toast.makeText(TestTestActivity.this, "左", Toast.LENGTH_SHORT).show();
         _myRemoteControlButton.AddRoundMenu(roundMenu);
 
         roundMenu = new MyRemoteControlButton.RoundMenu();
-        roundMenu.bitmap = BitmapFactory.decodeResource(getResources(), R.drawable.com_test_top);
+        roundMenu.bitmap = BitmapFactory.decodeResource(getResources(), R.drawable.sound_record_start1);
         roundMenu.onClickListener = v -> Toast.makeText(TestTestActivity.this, "上", Toast.LENGTH_SHORT).show();
         _myRemoteControlButton.AddRoundMenu(roundMenu);
 
         roundMenu = new MyRemoteControlButton.RoundMenu();
-        roundMenu.bitmap = BitmapFactory.decodeResource(getResources(), R.drawable.com_test_clear);
+        roundMenu.bitmap = BitmapFactory.decodeResource(getResources(), R.drawable.sound_record_start1);
         roundMenu.onClickListener = v -> Toast.makeText(TestTestActivity.this, "右", Toast.LENGTH_SHORT).show();
         _myRemoteControlButton.AddRoundMenu(roundMenu);
 
