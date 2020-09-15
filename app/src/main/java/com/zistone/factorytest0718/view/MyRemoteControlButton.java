@@ -31,9 +31,9 @@ public class MyRemoteControlButton extends View {
     //点击时的背景色
     private static final int COLOR_CLICK = Color.parseColor("#808080");
     //描边的颜色
-    private static final int COLOR_STROKE = Color.parseColor("#FF0000");
+    private static final int COLOR_STROKE = Color.parseColor("#FFFFFF");
     //描边的粗细
-    private static final int SIZE_STROKE = 2;
+    private static final int SIZE_STROKE = 8;
     //半径的长度比
     private double DISTANCE_RADIUS = 0.4;
 
@@ -173,7 +173,7 @@ public class MyRemoteControlButton extends View {
         _centerX = getWidth() / 2;
         _centerY = getHeight() / 2;
         //绘制扇形菜单
-        if (!_roundMenuList.isEmpty()) {
+        if (null != _roundMenuList && !_roundMenuList.isEmpty()) {
             //中心圆的半径
             _roundRadius = (int) (_centerX * DISTANCE_RADIUS);
             RectF rectF = new RectF(0, 0, getWidth(), getHeight());
@@ -188,13 +188,10 @@ public class MyRemoteControlButton extends View {
                 //抗锯齿
                 paint.setAntiAlias(true);
                 //点击时的颜色
-                if (_clickState == i) {
+                if (_clickState == i)
                     paint.setColor(COLOR_CLICK);
-                }
-                //未点击的颜色
-                else {
+                else
                     paint.setColor(COLOR_BACK);
-                }
                 //绘制圆弧
                 canvas.drawArc(rectF, _offsetAngle + (i * sweepAngle), sweepAngle, true, paint);
                 //绘制边
@@ -218,11 +215,11 @@ public class MyRemoteControlButton extends View {
             Paint paint = new Paint();
             paint.setAntiAlias(true);
             paint.setStrokeWidth(SIZE_STROKE);
+            //点击时的颜色
             if (_clickState == -1)
                 paint.setColor(COLOR_CLICK);
             else
                 paint.setColor(COLOR_BACK);
-            paint.setColor(COLOR_BACK);
             canvas.drawArc(rectF, 0, 360, true, paint);
             //绘制边线
             paint = new Paint();
