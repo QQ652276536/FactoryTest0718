@@ -10,6 +10,9 @@ import android.widget.Toast;
 
 import com.arcsoft.face.util.ImageUtils;
 import com.zistone.factorytest0718.view.MyRemoteControlButton;
+import com.zistone.factorytest0718.view.MySectorView;
+
+import java.util.ArrayList;
 
 /**
  * 用来测试一些东西的，没有任何实际功能...
@@ -29,6 +32,7 @@ public class TestTestActivity extends BaseActivity {
 
     private TextView _txt;
     private MyRemoteControlButton _myRemoteControlButton;
+    private MySectorView _mySectorView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -61,6 +65,14 @@ public class TestTestActivity extends BaseActivity {
 
         Bitmap centerBitmap = BitmapFactory.decodeResource(getResources(), R.drawable.camera_before);
         _myRemoteControlButton.SetCenterButton(centerBitmap, v -> Toast.makeText(TestTestActivity.this, "点击了中心圆圈", Toast.LENGTH_SHORT).show());
+
+        _mySectorView = findViewById(R.id.msv_test_test);
+        _mySectorView.setData(new ArrayList<MySectorView.ViewData>(){{
+            add(new MySectorView.ViewData(4,"A"));
+            add(new MySectorView.ViewData(4,"B"));
+            add(new MySectorView.ViewData(4,"C"));
+            add(new MySectorView.ViewData(4,"D"));
+        }});
     }
 
     public native String stringFromJNI();

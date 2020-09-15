@@ -178,10 +178,9 @@ public class MyRemoteControlButton extends View {
             _centerRoundRadius = (int) (_centerX * DISTANCE_RADIUS);
             RectF rectF = new RectF(0, 0, getWidth(), getHeight());
             //根据菜单列表计算每个弧的角度
-            float sweepAngle = 360 / _roundMenuList.size();
+            float everyAngle = 360 / _roundMenuList.size();
             //真实的偏移角度，比如扇形是“X”形状，而不是“+”形状
-            _offsetAngle = sweepAngle / 2;
-            float bitmapStartAngle = 0;
+            _offsetAngle = everyAngle / 2;
             for (int i = 0; i < _roundMenuList.size(); i++) {
                 RoundMenu roundMenu = _roundMenuList.get(i);
                 //绘制
@@ -194,21 +193,21 @@ public class MyRemoteControlButton extends View {
                 else
                     paint.setColor(COLOR_BACK);
                 //绘制圆弧
-                canvas.drawArc(rectF, _offsetAngle + i * sweepAngle, sweepAngle, true, paint);
+                canvas.drawArc(rectF, _offsetAngle + i * everyAngle, everyAngle, true, paint);
                 //绘制边
                 paint = new Paint();
                 paint.setAntiAlias(true);
                 paint.setStrokeWidth(SIZE_STROKE);
                 paint.setStyle(Paint.Style.STROKE);
                 paint.setColor(COLOR_STROKE);
-                canvas.drawArc(rectF, _offsetAngle + i * sweepAngle, sweepAngle, roundMenu.isCenter, paint);
+                canvas.drawArc(rectF, _offsetAngle + i * everyAngle, everyAngle, roundMenu.isCenter, paint);
                 //绘制扇形图标
                 //如果菜单共用一个图标使用下面代码即可，已做旋转处理
                 float bitmapX = (float) ((_centerX + getWidth() / 2 * roundMenu.iconDistance) - (roundMenu.bitmap.getWidth() / 2));
                 float bitmapY = _centerY - (roundMenu.bitmap.getHeight() / 2);
                 Matrix matrix = new Matrix();
                 matrix.postTranslate(bitmapX, bitmapY);
-                matrix.postRotate((i + 1) * sweepAngle, _centerX, _centerY);
+                matrix.postRotate((i + 1) * everyAngle, _centerX, _centerY);
                 canvas.drawBitmap(roundMenu.bitmap, matrix, null);
             }
         }

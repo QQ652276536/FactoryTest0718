@@ -22,6 +22,12 @@
         android:layout_height="200sp"
         android:layout_gravity="center_horizontal" />
 
+    <com.zistone.factorytest0718.view.MySectorView
+        android:id="@+id/msv_test_test"
+        android:layout_width="200sp"
+        android:layout_height="200sp"
+        android:layout_gravity="center_horizontal" />
+
 </LinearLayout>
 
 
