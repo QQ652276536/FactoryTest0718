@@ -44,26 +44,25 @@ public class MySectorView extends View {
 
     public MySectorView(Context context) {
         super(context);
-        initPaint();
+        InitPaint();
     }
 
     public MySectorView(Context context, AttributeSet attrs) {
         super(context, attrs);
-        initPaint();
+        InitPaint();
     }
 
     public MySectorView(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
-        initPaint();
+        InitPaint();
     }
 
-    public void setData(ArrayList<ViewData> _viewDatas) {
+    public void SetData(ArrayList<ViewData> _viewDatas) {
         this._viewDatas = _viewDatas;
-        initData();
-        invalidate();
+        InitData();
     }
 
-    private void initPaint() {
+    private void InitPaint() {
         _paint = new Paint();
         _paint.setColor(Color.WHITE);
         _paint.setStyle(Paint.Style.FILL);
@@ -71,7 +70,7 @@ public class MySectorView extends View {
         _rectF = new RectF();
     }
 
-    private void initData() {
+    private void InitData() {
         if (null == _viewDatas || _viewDatas.size() == 0) {
             return;
         }
@@ -110,8 +109,6 @@ public class MySectorView extends View {
         Log.i(TAG, "饼状图半径：" + r);
         //设置将要用来画扇形的矩形的轮廓
         _rectF.set(-r, -r, r, r);
-        //根据菜单列表计算每个弧的角度
-        float everyAngle = 360 / _viewDatas.size();
         for (int i = 0; i < _viewDatas.size(); i++) {
             ViewData viewData = _viewDatas.get(i);
             _paint.setColor(viewData.color);
@@ -122,9 +119,9 @@ public class MySectorView extends View {
             float textAngle = currentStartAngle + viewData.angle / 2;
             Log.i(TAG, "文字[" + i + "]角度：" + textAngle);
             _paint.setColor(Color.BLACK);
-            float x = (float) ((r + 0) / 2 * Math.cos(textAngle * Math.PI / 180));
-            float y = (float) ((r + 0) / 2 * Math.sin(textAngle * Math.PI / 180));
-            Log.i(TAG, (r + 0) / 2 + "文字[" + i + "]坐标：" + x + "，" + y);
+            float x = (float) (r / 2 * Math.cos(textAngle * Math.PI / 180));
+            float y = (float) (r / 2 * Math.sin(textAngle * Math.PI / 180));
+            Log.i(TAG, "文字[" + i + "]坐标：" + x + "，" + y);
             _paint.setColor(Color.YELLOW);
             canvas.drawText(viewData.name, x, y, _paint);
             currentStartAngle += viewData.angle;

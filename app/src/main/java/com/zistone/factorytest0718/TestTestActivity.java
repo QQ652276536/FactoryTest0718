@@ -64,11 +64,11 @@ public class TestTestActivity extends BaseActivity {
         _myRemoteControlButton.SetCenterButton(centerBitmap, v -> Toast.makeText(TestTestActivity.this, "点击了中心圆圈", Toast.LENGTH_SHORT).show());
 
         _mySectorView = findViewById(R.id.msv_test_test);
-        _mySectorView.setData(new ArrayList<MySectorView.ViewData>(){{
-            add(new MySectorView.ViewData(4,"A"));
-            add(new MySectorView.ViewData(4,"B"));
-            add(new MySectorView.ViewData(4,"C"));
-            add(new MySectorView.ViewData(4,"D"));
+        _mySectorView.SetData(new ArrayList<MySectorView.ViewData>(){{
+            add(new MySectorView.ViewData(1,"A"));
+            add(new MySectorView.ViewData(1,"B"));
+            add(new MySectorView.ViewData(2,"C"));
+            add(new MySectorView.ViewData(2,"D"));
         }});
 
 
