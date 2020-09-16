@@ -22,22 +22,19 @@ public class MySectorView extends View {
 
     private static final String TAG = "MySectorView";
 
-    private int[] mColors = {Color.BLUE, Color.DKGRAY, Color.CYAN, Color.RED, Color.GREEN};
-    private Paint paint;    //画笔
-    private ArrayList<ViewData> viewDatas;    //数据集
-    private int w;          //View宽高
-    private int h;
-    private RectF rectF;    //矩形
-    //偏移角度
-    private float _offsetAngle;
+    private int[] _colors = {Color.BLUE, Color.DKGRAY, Color.CYAN, Color.RED, Color.GREEN};
+    private Paint _paint;
+    private ArrayList<ViewData> _viewDatas;
+    private int _width;
+    private int _height;
+    private RectF _rectF;
 
     public static class ViewData {
-        public String name; //名字
-        public int value;   //数值
-
-        public int color;   //颜色
-        public float percentage; //百分比
-        public float angle; //角度
+        public String name;
+        public int value;
+        public int color;
+        public float percentage;
+        public float angle;
 
         public ViewData(int value, String name) {
             this.value = value;
@@ -47,7 +44,7 @@ public class MySectorView extends View {
 
     public MySectorView(Context context) {
         super(context);
-        initPaint();    //设置画笔
+        initPaint();
     }
 
     public MySectorView(Context context, AttributeSet attrs) {
@@ -60,85 +57,77 @@ public class MySectorView extends View {
         initPaint();
     }
 
-    //设置数据
-    public void setData(ArrayList<ViewData> viewDatas) {
-        this.viewDatas = viewDatas;
-        initData();     //设置数据的百分度和角度
-        invalidate();   //刷新UI
+    public void setData(ArrayList<ViewData> _viewDatas) {
+        this._viewDatas = _viewDatas;
+        initData();
+        invalidate();
     }
 
-    //初始化画笔
     private void initPaint() {
-        paint = new Paint();
-        //设置画笔默认颜色
-        paint.setColor(Color.WHITE);
-        //设置画笔模式：填充
-        paint.setStyle(Paint.Style.FILL);
-        //
-        paint.setTextSize(30);
-        //初始化区域
-        rectF = new RectF();
+        _paint = new Paint();
+        _paint.setColor(Color.WHITE);
+        _paint.setStyle(Paint.Style.FILL);
+        _paint.setTextSize(30);
+        _rectF = new RectF();
     }
 
-    //确定View大小
+    private void initData() {
+        if (null == _viewDatas || _viewDatas.size() == 0) {
+            return;
+        }
+        float sumValue = 0;
+        for (int i = 0; i < _viewDatas.size(); i++) {
+            ViewData viewData = _viewDatas.get(i);
+            sumValue += viewData.value;
+            int j = i % _colors.length;
+            viewData.color = _colors[j];
+        }
+        for (ViewData data : _viewDatas) {
+            //计算百分比
+            float percentage = data.value / sumValue;
+            //对应的角度
+            float angle = percentage * 360;
+            data.percentage = percentage;
+            data.angle = angle;
+        }
+    }
+
     @Override
-    protected void onSizeChanged(int w, int h, int oldw, int oldh) {
-        super.onSizeChanged(w, h, oldw, oldh);
-        this.w = w;     //获取宽高
-        this.h = h;
+    protected void onSizeChanged(int _width, int _height, int oldw, int oldh) {
+        super.onSizeChanged(_width, _height, oldw, oldh);
+        this._width = _width;
+        this._height = _height;
     }
 
     @Override
     protected void onDraw(Canvas canvas) {
         super.onDraw(canvas);
-        Log.i(TAG, "宽：" + w + "，高：" + h);
-        canvas.translate(w / 2, h / 2);             //将画布坐标原点移到中心位置
-        float currentStartAngle = 0;                //起始角度
-        float r = (float) (Math.max(w, h) / 2);     //饼状图半径(取宽高里最小的值)
+        Log.i(TAG, "宽：" + _width + "，高：" + _height);
+        canvas.translate(_width / 2, _height / 2);
+        float currentStartAngle = 0;
+        //饼状图半径(取宽高里最小的值)
+        float r = (float) (Math.max(_width, _height) / 2);
         Log.i(TAG, "饼状图半径：" + r);
-        rectF.set(-r, -r, r, r);                    //设置将要用来画扇形的矩形的轮廓.
+        //设置将要用来画扇形的矩形的轮廓
+        _rectF.set(-r, -r, r, r);
         //根据菜单列表计算每个弧的角度
-        float everyAngle = 360 / viewDatas.size();
-        //真实的偏移角度，比如扇形是“X”形状，而不是“+”形状
-        _offsetAngle = everyAngle / 2;
-        for (int i = 0; i < viewDatas.size(); i++) {
-            ViewData viewData = viewDatas.get(i);
-            paint.setColor(viewData.color);
+        float everyAngle = 360 / _viewDatas.size();
+        for (int i = 0; i < _viewDatas.size(); i++) {
+            ViewData viewData = _viewDatas.get(i);
+            _paint.setColor(viewData.color);
             //绘制扇形(通过绘制圆弧)
-            canvas.drawArc(rectF, currentStartAngle, viewData.angle, true, paint);
+            canvas.drawArc(_rectF, currentStartAngle, viewData.angle, true, _paint);
             Log.i(TAG, "扇形" + i + "角度：" + viewData.angle);
             //绘制扇形上文字
-            float textAngle = currentStartAngle + viewData.angle / 2;    //计算文字位置角度
-            Log.i(TAG, "文字角度：" + textAngle);
-            paint.setColor(Color.BLACK);
-            float x = (float) ((r + 0) / 2 * Math.cos(textAngle * Math.PI / 180));    //计算文字位置坐标
+            float textAngle = currentStartAngle + viewData.angle / 2;
+            Log.i(TAG, "文字[" + i + "]角度：" + textAngle);
+            _paint.setColor(Color.BLACK);
+            float x = (float) ((r + 0) / 2 * Math.cos(textAngle * Math.PI / 180));
             float y = (float) ((r + 0) / 2 * Math.sin(textAngle * Math.PI / 180));
-            Log.i(TAG, (r + 0) / 2+"文字[" + i + "]坐标：" + x + "，" + y);
-            paint.setColor(Color.YELLOW);        //文字颜色
-            canvas.drawText(viewData.name, x, y, paint);    //绘制文字
-
-            currentStartAngle += viewData.angle;     //改变起始角度
-        }
-    }
-
-    private void initData() {
-        if (null == viewDatas || viewDatas.size() == 0) {
-            return;
-        }
-
-        float sumValue = 0;                 //数值和
-        for (int i = 0; i < viewDatas.size(); i++) {
-            ViewData viewData = viewDatas.get(i);
-            sumValue += viewData.value;
-            int j = i % mColors.length;     //设置颜色
-            viewData.color = mColors[j];
-        }
-
-        for (ViewData data : viewDatas) {
-            float percentage = data.value / sumValue;    //计算百分比
-            float angle = percentage * 360;           //对应的角度
-            data.percentage = percentage;
-            data.angle = angle;
+            Log.i(TAG, (r + 0) / 2 + "文字[" + i + "]坐标：" + x + "，" + y);
+            _paint.setColor(Color.YELLOW);
+            canvas.drawText(viewData.name, x, y, _paint);
+            currentStartAngle += viewData.angle;
         }
     }
 
