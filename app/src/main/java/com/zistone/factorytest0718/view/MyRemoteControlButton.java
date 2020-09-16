@@ -8,6 +8,7 @@ import android.graphics.Matrix;
 import android.graphics.Paint;
 import android.graphics.RectF;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 
@@ -17,7 +18,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * 自定义的一个仿遥控器的圆形按钮
+ * 仿遥控器的圆形按钮控件
  *
  * @author LiWei
  * @date 2020/9/14 9:12
@@ -174,13 +175,16 @@ public class MyRemoteControlButton extends View {
         _centerY = getHeight() / 2;
         //绘制扇形菜单
         if (null != _roundMenuList && !_roundMenuList.isEmpty()) {
-            //中心圆的半径
+            //中心圆的半径 = 大圆半径 * 半径长度比
             _centerRoundRadius = (int) (_centerX * DISTANCE_RADIUS);
             RectF rectF = new RectF(0, 0, getWidth(), getHeight());
-            //根据菜单列表计算每个弧的角度
+            //根据菜单列表计算每个弧的角度，这个角度是没有偏移的
             float everyAngle = 360 / _roundMenuList.size();
-            //真实的偏移角度，比如扇形是“X”形状，而不是“+”形状
+            //偏移角度，偏移后扇形就能绘制成“X”形状，否则是“+”形状
             _offsetAngle = everyAngle / 2;
+            Log.i(TAG, "偏移角度：" + _offsetAngle);
+            //每个扇形的实际角度，也就是偏移后的角度，用于计算扇形中心位置
+            float offsetAfterAngle;
             for (int i = 0; i < _roundMenuList.size(); i++) {
                 RoundMenu roundMenu = _roundMenuList.get(i);
                 //绘制
@@ -194,6 +198,8 @@ public class MyRemoteControlButton extends View {
                     paint.setColor(COLOR_BACK);
                 //绘制圆弧
                 canvas.drawArc(rectF, _offsetAngle + i * everyAngle, everyAngle, true, paint);
+                offsetAfterAngle = ((i + 1) * 2 - 1) * (everyAngle / 2);
+                Log.i(TAG, "扇形[" + i + "]的1/2夹角：" + offsetAfterAngle);
                 //绘制边
                 paint = new Paint();
                 paint.setAntiAlias(true);

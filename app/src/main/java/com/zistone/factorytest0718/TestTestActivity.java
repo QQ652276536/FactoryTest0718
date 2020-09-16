@@ -3,12 +3,9 @@ package com.zistone.factorytest0718;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
-import android.util.Log;
-import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.arcsoft.face.util.ImageUtils;
 import com.zistone.factorytest0718.view.MyRemoteControlButton;
 import com.zistone.factorytest0718.view.MySectorView;
 
@@ -73,6 +70,8 @@ public class TestTestActivity extends BaseActivity {
             add(new MySectorView.ViewData(4,"C"));
             add(new MySectorView.ViewData(4,"D"));
         }});
+
+
     }
 
     public native String stringFromJNI();

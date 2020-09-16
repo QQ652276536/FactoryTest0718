@@ -12,7 +12,7 @@ import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 
 /**
- * 自定义的一个控件，用于测试誉兴通设备的触摸屏
+ * 用于测试誉兴通设备的触摸屏控件
  *
  * @author LiWei
  * @date 2020/7/18 9:33

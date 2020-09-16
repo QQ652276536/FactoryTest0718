@@ -6,16 +6,21 @@ import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.RectF;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.View;
 
 import java.util.ArrayList;
 
 /**
+ * 扇形图控件
+ *
  * @author LiWei
  * @date 2020/9/15 17:44
  * @email 652276536@qq.com
  */
 public class MySectorView extends View {
+
+    private static final String TAG = "MySectorView";
 
     private int[] mColors = {Color.BLUE, Color.DKGRAY, Color.CYAN, Color.RED, Color.GREEN};
     private Paint paint;    //画笔
@@ -86,9 +91,11 @@ public class MySectorView extends View {
     @Override
     protected void onDraw(Canvas canvas) {
         super.onDraw(canvas);
+        Log.i(TAG, "宽：" + w + "，高：" + h);
         canvas.translate(w / 2, h / 2);             //将画布坐标原点移到中心位置
         float currentStartAngle = 0;                //起始角度
-        float r = (float) (Math.min(w, h) / 2);     //饼状图半径(取宽高里最小的值)
+        float r = (float) (Math.max(w, h) / 2);     //饼状图半径(取宽高里最小的值)
+        Log.i(TAG, "饼状图半径：" + r);
         rectF.set(-r, -r, r, r);                    //设置将要用来画扇形的矩形的轮廓.
         //根据菜单列表计算每个弧的角度
         float everyAngle = 360 / viewDatas.size();
@@ -99,11 +106,14 @@ public class MySectorView extends View {
             paint.setColor(viewData.color);
             //绘制扇形(通过绘制圆弧)
             canvas.drawArc(rectF, currentStartAngle, viewData.angle, true, paint);
+            Log.i(TAG, "扇形" + i + "角度：" + viewData.angle);
             //绘制扇形上文字
             float textAngle = currentStartAngle + viewData.angle / 2;    //计算文字位置角度
+            Log.i(TAG, "文字角度：" + textAngle);
             paint.setColor(Color.BLACK);
-            float x = (float) (r / 2 * Math.cos(textAngle * Math.PI / 180));    //计算文字位置坐标
-            float y = (float) (r / 2 * Math.sin(textAngle * Math.PI / 180));
+            float x = (float) ((r + 0) / 2 * Math.cos(textAngle * Math.PI / 180));    //计算文字位置坐标
+            float y = (float) ((r + 0) / 2 * Math.sin(textAngle * Math.PI / 180));
+            Log.i(TAG, (r + 0) / 2+"文字[" + i + "]坐标：" + x + "，" + y);
             paint.setColor(Color.YELLOW);        //文字颜色
             canvas.drawText(viewData.name, x, y, paint);    //绘制文字
 
