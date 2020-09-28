@@ -24,7 +24,7 @@
                     android:layout_height="60sp"
                     android:layout_margin="5sp"
                     android:layout_weight="1"
-                    android:background="@drawable/btn_style_main_1"
+                    android:background="@drawable/btn_style_main1"
                     android:text="人脸识别"
                     android:textColor="@color/white" />
 
@@ -34,7 +34,7 @@
                     android:layout_height="60sp"
                     android:layout_margin="5sp"
                     android:layout_weight="1"
-                    android:background="@drawable/btn_style_main_1"
+                    android:background="@drawable/btn_style_main1"
                     android:text="水印相机"
                     android:textColor="@color/white" />
 
@@ -44,7 +44,7 @@
                     android:layout_height="60sp"
                     android:layout_margin="5sp"
                     android:layout_weight="1"
-                    android:background="@drawable/btn_style_main_1"
+                    android:background="@drawable/btn_style_main1"
                     android:text="系统相机"
                     android:textColor="@color/white" />
             </TableRow>
@@ -59,7 +59,7 @@
                     android:layout_height="60sp"
                     android:layout_margin="5sp"
                     android:layout_weight="1"
-                    android:background="@drawable/btn_style_main_2"
+                    android:background="@drawable/btn_style_main1"
                     android:text="系统信息"
                     android:textColor="@color/white" />
 
@@ -69,7 +69,7 @@
                     android:layout_height="60sp"
                     android:layout_margin="5sp"
                     android:layout_weight="1"
-                    android:background="@drawable/btn_style_main_1"
+                    android:background="@drawable/btn_style_main1"
                     android:text="SIM卡信息"
                     android:textColor="@color/white" />
 
@@ -79,7 +79,7 @@
                     android:layout_height="60sp"
                     android:layout_margin="5sp"
                     android:layout_weight="1"
-                    android:background="@drawable/btn_style_main_2"
+                    android:background="@drawable/btn_style_main1"
                     android:text="传感器信息"
                     android:textColor="@color/white" />
             </TableRow>
@@ -94,7 +94,7 @@
                     android:layout_height="60sp"
                     android:layout_margin="5sp"
                     android:layout_weight="1"
-                    android:background="@drawable/btn_style_main_1"
+                    android:background="@drawable/btn_style_main1"
                     android:text="蓝牙测试"
                     android:textColor="@color/white" />
 
@@ -104,7 +104,7 @@
                     android:layout_height="60sp"
                     android:layout_margin="5sp"
                     android:layout_weight="1"
-                    android:background="@drawable/btn_style_main_1"
+                    android:background="@drawable/btn_style_main1"
                     android:text="WIFI测试"
                     android:textColor="@color/white" />
 
@@ -114,7 +114,7 @@
                     android:layout_height="60sp"
                     android:layout_margin="5sp"
                     android:layout_weight="1"
-                    android:background="@drawable/btn_style_main_1"
+                    android:background="@drawable/btn_style_main1"
                     android:text="GPS测试"
                     android:textColor="@color/white" />
 
@@ -130,7 +130,7 @@
                     android:layout_height="60sp"
                     android:layout_margin="5sp"
                     android:layout_weight="1"
-                    android:background="@drawable/btn_style_main_2"
+                    android:background="@drawable/btn_style_main1"
                     android:text="背光亮度测试"
                     android:textColor="@color/white" />
 
@@ -140,7 +140,7 @@
                     android:layout_height="60sp"
                     android:layout_margin="5sp"
                     android:layout_weight="1"
-                    android:background="@drawable/btn_style_main_1"
+                    android:background="@drawable/btn_style_main1"
                     android:text="触摸屏测试"
                     android:textColor="@color/white" />
 
@@ -150,7 +150,7 @@
                     android:layout_height="60sp"
                     android:layout_margin="5sp"
                     android:layout_weight="1"
-                    android:background="@drawable/btn_style_main_1"
+                    android:background="@drawable/btn_style_main1"
                     android:text="屏幕测试"
                     android:textColor="@color/white" />
 
@@ -166,7 +166,7 @@
                     android:layout_height="60sp"
                     android:layout_margin="5sp"
                     android:layout_weight="1"
-                    android:background="@drawable/btn_style_main_2"
+                    android:background="@drawable/btn_style_main1"
                     android:text="震动测试"
                     android:textColor="@color/white" />
 
@@ -176,7 +176,7 @@
                     android:layout_height="60sp"
                     android:layout_margin="5sp"
                     android:layout_weight="1"
-                    android:background="@drawable/btn_style_main_2"
+                    android:background="@drawable/btn_style_main1"
                     android:text="重力传感器"
                     android:textColor="@color/white" />
 
@@ -186,7 +186,7 @@
                     android:layout_height="60sp"
                     android:layout_margin="5sp"
                     android:layout_weight="1"
-                    android:background="@drawable/btn_style_main_1"
+                    android:background="@drawable/btn_style_main1"
                     android:text="地磁传感器"
                     android:textColor="@color/white" />
             </TableRow>
@@ -201,7 +201,7 @@
                     android:layout_height="60sp"
                     android:layout_margin="5sp"
                     android:layout_weight="1"
-                    android:background="@drawable/btn_style_main_1"
+                    android:background="@drawable/btn_style_main1"
                     android:text="音频测试"
                     android:textColor="@color/white" />
 
@@ -211,7 +211,7 @@
                     android:layout_height="60sp"
                     android:layout_margin="5sp"
                     android:layout_weight="1"
-                    android:background="@drawable/btn_style_main_1"
+                    android:background="@drawable/btn_style_main1"
                     android:text="耳机测试"
                     android:textColor="@color/white" />
 
@@ -221,7 +221,7 @@
                     android:layout_height="60sp"
                     android:layout_margin="5sp"
                     android:layout_weight="1"
-                    android:background="@drawable/btn_style_main_1"
+                    android:background="@drawable/btn_style_main1"
                     android:text="按键测试"
                     android:textColor="@color/white" />
 
@@ -237,7 +237,7 @@
                     android:layout_height="60sp"
                     android:layout_margin="5sp"
                     android:layout_weight="1"
-                    android:background="@drawable/btn_style_main_2"
+                    android:background="@drawable/btn_style_main1"
                     android:text="身份证测试"
                     android:textColor="@color/white" />
 
@@ -247,7 +247,7 @@
                     android:layout_height="60sp"
                     android:layout_margin="5sp"
                     android:layout_weight="1"
-                    android:background="@drawable/btn_style_main_2"
+                    android:background="@drawable/btn_style_main1"
                     android:text="银行卡读取"
                     android:textColor="@color/white" />
 
@@ -257,7 +257,7 @@
                     android:layout_height="60sp"
                     android:layout_margin="5sp"
                     android:layout_weight="1"
-                    android:background="@drawable/btn_style_main_2"
+                    android:background="@drawable/btn_style_main1"
                     android:text="扫码测试"
                     android:textColor="@color/white" />
             </TableRow>
@@ -272,7 +272,7 @@
                     android:layout_height="60sp"
                     android:layout_margin="5sp"
                     android:layout_weight="1"
-                    android:background="@drawable/btn_style_main_2"
+                    android:background="@drawable/btn_style_main1"
                     android:text="NFC测试"
                     android:textColor="@color/white" />
 
@@ -282,7 +282,7 @@
                     android:layout_height="60sp"
                     android:layout_margin="5sp"
                     android:layout_weight="1"
-                    android:background="@drawable/btn_style_main_2"
+                    android:background="@drawable/btn_style_main1"
                     android:text="TF卡测试"
                     android:textColor="@color/white" />
 
@@ -292,7 +292,7 @@
                     android:layout_height="60sp"
                     android:layout_margin="5sp"
                     android:layout_weight="1"
-                    android:background="@drawable/btn_style_main_2"
+                    android:background="@drawable/btn_style_main1"
                     android:text="闪光灯测试"
                     android:textColor="@color/white" />
             </TableRow>
@@ -307,7 +307,7 @@
                     android:layout_height="60sp"
                     android:layout_margin="5sp"
                     android:layout_weight="1"
-                    android:background="@drawable/btn_style_main_2"
+                    android:background="@drawable/btn_style_main1"
                     android:text="单片机测试"
                     android:textColor="@color/white" />
 
@@ -317,7 +317,7 @@
                     android:layout_height="60sp"
                     android:layout_margin="5sp"
                     android:layout_weight="1"
-                    android:background="@drawable/btn_style_main_2"
+                    android:background="@drawable/btn_style_main1"
                     android:text="485通信"
                     android:textColor="@color/white" />
 
@@ -327,7 +327,7 @@
                     android:layout_height="60sp"
                     android:layout_margin="5sp"
                     android:layout_weight="1"
-                    android:background="@drawable/btn_style_main_1"
+                    android:background="@drawable/btn_style_main1"
                     android:text="OTG测试"
                     android:textColor="@color/white" />
             </TableRow>
@@ -341,7 +341,7 @@
                     android:layout_height="60sp"
                     android:layout_margin="5sp"
                     android:layout_weight="1"
-                    android:background="@drawable/btn_style_main_2"
+                    android:background="@drawable/btn_style_main1"
                     android:text=""
                     android:textColor="@color/white"
                     android:visibility="invisible" />
@@ -351,7 +351,7 @@
                     android:layout_height="60sp"
                     android:layout_margin="5sp"
                     android:layout_weight="1"
-                    android:background="@drawable/btn_style_main_2"
+                    android:background="@drawable/btn_style_main1"
                     android:text=""
                     android:textColor="@color/white"
                     android:visibility="invisible" />
@@ -362,7 +362,7 @@
                     android:layout_height="60sp"
                     android:layout_margin="5sp"
                     android:layout_weight="1"
-                    android:background="@drawable/btn_style_main_1"
+                    android:background="@drawable/btn_style_main1"
                     android:text="★★★"
                     android:textColor="@color/white" />
             </TableRow>

@@ -142,32 +142,6 @@ public final class MyConvertUtil {
         return text.replaceFirst("(?s)" + strToReplace + "(?!.*?" + strToReplace + ")", replaceWithThis);
     }
 
-    public static byte BitToByte(String bit) {
-        int result, len;
-        if (null == bit) {
-            return 0;
-        }
-        len = bit.length();
-        if (len != 4 && len != 8) {
-            return 0;
-        }
-        if (len == 8) {
-            //正数
-            if (bit.charAt(0) == '0') {
-                result = Integer.parseInt(bit, 2);
-            }
-            //负数
-            else {
-                result = Integer.parseInt(bit, 2) - 256;
-            }
-        }
-        //4bit处理
-        else {
-            result = Integer.parseInt(bit, 2);
-        }
-        return (byte) result;
-    }
-
     /**
      * 大端模式，低字节在前
      *

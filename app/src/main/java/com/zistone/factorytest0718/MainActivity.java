@@ -143,6 +143,22 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
             btn.setBackground(getDrawable(R.drawable.main_btn_background1));
     }
 
+    /**
+     * 动态授权的回调
+     *
+     * @param requestCode
+     * @param permissions
+     * @param grantResults
+     */
+    @Override
+    public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
+        String content = "动态授权的回调:";
+        for (int i = 0; i < permissions.length; i++) {
+            content += "\r\n权限" + permissions[i] + "【" + (grantResults[i] != -1 ? "允许" : "拒绝") + "】";
+        }
+        Log.i(TAG, content);
+    }
+
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
         if (keyCode == KeyEvent.KEYCODE_BACK && event.getAction() == KeyEvent.ACTION_DOWN) {
@@ -413,22 +429,6 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
                 startActivity(new Intent(this, TestTestActivity.class));
                 break;
         }
-    }
-
-    /**
-     * 动态授权的回调
-     *
-     * @param requestCode
-     * @param permissions
-     * @param grantResults
-     */
-    @Override
-    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
-        String content = "动态授权的回调:";
-        for (int i = 0; i < permissions.length; i++) {
-            content += "\r\n权限" + permissions[i] + "【" + (grantResults[i] != -1 ? "允许" : "拒绝") + "】";
-        }
-        Log.i(TAG, content);
     }
 
     @Override
