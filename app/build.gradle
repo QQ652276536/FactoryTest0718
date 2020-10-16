@@ -15,14 +15,17 @@ android {
 
         externalNativeBuild {
             cmake {
+                //默认情况下cmake会生成4种ABI，“armeabi-v7a”、“arm64-v8a”、“x86”、“x86_64”，这里设置为不生成
                 cppFlags ""
             }
         }
 
+        //指定需要的ABI
         ndk {
             abiFilters 'armeabi-v7a'
         }
     }
+
     /**
      * Google在Jetpack中推出的一款数据绑定的支持库（暂时没用上）
      */
