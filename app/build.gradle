@@ -45,6 +45,9 @@ android {
         targetCompatibility = '1.8'
     }
 
+    /**
+     * 设置 CMakeLists.txt的路径和编译版本
+     */
     externalNativeBuild {
         cmake {
             path "src/main/cpp/CMakeLists.txt"
